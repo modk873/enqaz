@@ -446,17 +446,12 @@ const menuToggle = document.getElementById('menu-toggle');
 const mainNav = document.getElementById('main-nav');
 const menuClose = document.getElementById('menu-close');
 const menuBackdrop = document.getElementById('menu-backdrop');
-function openMenu() {
+// Remove menu open/close logic and always show the menu
+if (mainNav) {
   mainNav.style.display = 'flex';
-  menuBackdrop.style.display = 'block';
-  document.body.classList.add('menu-open');
+  mainNav.classList.remove('side-nav', 'open');
 }
-function closeMenu() {
-  mainNav.style.display = 'none';
-  menuBackdrop.style.display = 'none';
-  document.body.classList.remove('menu-open');
-}
-if (menuToggle) menuToggle.onclick = openMenu;
-if (menuClose) menuClose.onclick = closeMenu;
-if (menuBackdrop) menuBackdrop.onclick = closeMenu;
+if (menuToggle) menuToggle.style.display = 'none';
+if (menuBackdrop) menuBackdrop.style.display = 'none';
+if (menuClose) menuClose.style.display = 'none';
 window.closeMenu = closeMenu; 
