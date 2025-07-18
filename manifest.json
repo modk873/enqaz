@@ -1,0 +1,21 @@
+{
+  "name": "Enqaz SOS App",
+  "short_name": "EnqazSOS",
+  "start_url": "./src/index.html",
+  "display": "standalone",
+  "background_color": "#dc3545",
+  "theme_color": "#dc3545",
+  "description": "A simple and smart safety tool for emergencies.",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+} 

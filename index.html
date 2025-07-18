@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#dc3545" />
+  <title>Enqaz SOS App</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="apple-touch-icon" href="/icon-192.png" />
+</head>
+<body>
+  <nav>
+    <button id="nav-home" onclick="showPage('home')">Home</button>
+    <button id="nav-login" onclick="showPage('login')">Login</button>
+    <button id="nav-signup" onclick="showPage('signup')">Sign Up</button>
+    <button id="nav-dashboard" onclick="showPage('dashboard')">Dashboard</button>
+    <button id="nav-community" onclick="showPage('community')">Community</button>
+    <button id="nav-profile" onclick="showPage('profile')">Profile</button>
+  </nav>
+  <main>
+    <section id="home" class="page"> 
+      <h1>Welcome to Enqaz SOS App</h1>
+      <div class="sos-buttons">
+        <button id="emergency-sos-btn" class="sos-btn emergency">Emergency SOS</button>
+        <button id="normal-sos-btn" class="sos-btn normal">Normal</button>
+      </div>
+      <div id="sos-message" class="message"></div>
+    </section>
+    <section id="login" class="page" style="display:none"> 
+      <h1>Login</h1> 
+      <form id="login-form">
+        <label for="login-username">Username</label>
+        <input id="login-username" type="text" placeholder="Enter your username" required />
+        <label for="login-password">Password</label>
+        <input id="login-password" type="password" placeholder="Enter your password" required />
+        <button type="submit">Login</button>
+        <div class="form-hint">Don't have an account? <a href="#" onclick="showPage('signup');return false;">Sign up</a></div>
+      </form>
+      <div id="login-message" class="message"></div>
+    </section>
+    <section id="signup" class="page" style="display:none"> 
+      <h1>Sign Up</h1> 
+      <form id="signup-form">
+        <label for="signup-username">Username</label>
+        <input id="signup-username" type="text" placeholder="Choose a username" required />
+        <label for="signup-email">Email</label>
+        <input id="signup-email" type="email" placeholder="Enter your email" required />
+        <label for="signup-password">Password</label>
+        <input id="signup-password" type="password" placeholder="Create a password" required />
+        <button type="submit">Sign Up</button>
+        <div class="form-hint">Already have an account? <a href="#" onclick="showPage('login');return false;">Login</a></div>
+      </form>
+      <div id="signup-message" class="message"></div>
+    </section>
+    <section id="dashboard" class="page" style="display:none"> 
+      <h1>Dashboard</h1> 
+      <div id="dashboard-welcome"></div>
+      <ul id="user-alerts"></ul>
+      <p>Your dashboard content goes here.</p> 
+    </section>
+    <section id="community" class="page" style="display:none"> 
+      <h1>Community</h1> 
+      <div id="community-map" style="height:320px;width:100%;max-width:600px;margin:0 auto 1.5em auto;border-radius:12px;overflow:hidden;"></div>
+      <ul id="volunteer-list"></ul>
+      <ul id="post-list"></ul>
+    </section>
+    <section id="normal-cases" class="page" style="display:none">
+      <h1>Common Non-Emergency Cases</h1>
+      <ul class="case-list">
+        <li>
+          <button class="case-title" onclick="toggleCase('lost-item')">Lost Item</button>
+          <div class="case-details" id="case-lost-item" style="display:none">
+            <p><strong>How to solve:</strong></p>
+            <ol>
+              <li>Stay calm and retrace your steps.</li>
+              <li>Check with lost and found or local authorities.</li>
+              <li>Ask people nearby if they have seen your item.</li>
+            </ol>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Lost Item')">Still need help? Send alert</button>
+          </div>
+        </li>
+        <li>
+          <button class="case-title" onclick="toggleCase('minor-injury')">Minor Injury</button>
+          <div class="case-details" id="case-minor-injury" style="display:none">
+            <p><strong>How to solve:</strong></p>
+            <ol>
+              <li>Clean the wound with water.</li>
+              <li>Apply a bandage or dressing.</li>
+              <li>Seek medical help if needed.</li>
+            </ol>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Minor Injury')">Still need help? Send alert</button>
+          </div>
+        </li>
+        <li>
+          <button class="case-title" onclick="toggleCase('need-directions')">Need Directions</button>
+          <div class="case-details" id="case-need-directions" style="display:none">
+            <p><strong>How to solve:</strong></p>
+            <ol>
+              <li>Use a map or navigation app.</li>
+              <li>Ask a local or staff for directions.</li>
+              <li>Look for signs or information desks.</li>
+            </ol>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Need Directions')">Still need help? Send alert</button>
+          </div>
+        </li>
+        <li>
+          <button class="case-title" onclick="toggleCase('flat-tire')">Flat Tire</button>
+          <div class="case-details" id="case-flat-tire" style="display:none">
+            <p><strong>How to solve:</strong></p>
+            <ol>
+              <li>Move to a safe location.</li>
+              <li>Use a spare tire and jack if available.</li>
+              <li>Call roadside assistance if needed.</li>
+            </ol>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Flat Tire')">Still need help? Send alert</button>
+          </div>
+        </li>
+        <li>
+          <button class="case-title" onclick="toggleCase('locked-out')">Locked Out</button>
+          <div class="case-details" id="case-locked-out" style="display:none">
+            <p><strong>How to solve:</strong></p>
+            <ol>
+              <li>Check for spare keys.</li>
+              <li>Contact a family member or roommate.</li>
+              <li>Call a locksmith if necessary.</li>
+            </ol>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Locked Out')">Still need help? Send alert</button>
+          </div>
+        </li>
+      </ul>
+      <button onclick="showPage('home')">Back to Home</button>
+    </section>
+    <section id="profile" class="page" style="display:none">
+      <h1>User Profile & Registration</h1>
+      <form id="profile-form">
+        <label for="profile-name">Full Name</label>
+        <input id="profile-name" type="text" placeholder="Enter your full name" required />
+
+        <label for="profile-photo">Photo</label>
+        <input id="profile-photo" type="file" accept="image/*" />
+        <img id="profile-photo-preview" src="" alt="Photo Preview" style="display:none;max-width:120px;margin:1em 0;" />
+
+        <label>Emergency Contacts (up to 3)</label>
+        <div id="contacts-list">
+          <div class="contact-row">
+            <input type="text" class="contact-name" placeholder="Contact Name" />
+            <input type="tel" class="contact-phone" placeholder="Phone Number" />
+          </div>
+        </div>
+        <button type="button" id="add-contact-btn">Add Another Contact</button>
+
+        <label>Location</label>
+        <div style="display:flex;gap:1em;align-items:center;">
+          <input id="profile-location" type="text" placeholder="Location (auto or manual)" readonly />
+          <button type="button" id="get-location-btn">Get Current Location</button>
+        </div>
+
+        <button type="submit">Save Profile</button>
+      </form>
+      <div id="profile-message" class="message"></div>
+    </section>
+  </main>
+  <script src="main.js"></script>
+</body>
+</html> 
