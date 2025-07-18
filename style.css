@@ -141,12 +141,52 @@ button[type="submit"]:hover {
 .case-title:hover {
   background: #e2e6ea;
 }
+.normal-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2em;
+  margin: 2em 0;
+}
+.normal-card {
+  background: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  padding: 0.5em 0.5em 0 0.5em;
+  transition: box-shadow 0.2s;
+}
+.normal-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  font-size: 1.15em;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 1em 0.5em;
+  border-radius: 10px 10px 0 0;
+  background: #fff;
+  user-select: none;
+  transition: background 0.2s;
+}
+.normal-card-header:hover {
+  background: #e2e6ea;
+}
+.normal-icon {
+  font-size: 1.5em;
+  margin-left: 0.3em;
+}
+.accordion-arrow {
+  margin-right: auto;
+  font-size: 1.1em;
+  color: #888;
+  transition: transform 0.2s;
+}
 .case-details {
   background: #fffbe6;
   border-left: 4px solid #ffc107;
   padding: 1em 1.5em;
-  margin-bottom: 1.5em;
-  border-radius: 0 8px 8px 8px;
+  margin-bottom: 1em;
+  border-radius: 0 0 8px 8px;
+  font-size: 1em;
 }
 .send-alert-btn {
   background: #ffc107;
@@ -200,6 +240,63 @@ button[type="submit"]:hover {
 #profile-form button[type="submit"] {
   margin-top: 1.5em;
 }
+.side-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 80vw;
+  max-width: 320px;
+  height: 100vh;
+  background: #222;
+  color: #fff;
+  z-index: 1002;
+  box-shadow: 2px 0 12px rgba(0,0,0,0.18);
+  padding: 2em 1em 1em 1em;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s;
+}
+.side-nav .nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  margin-top: 2em;
+}
+.side-nav button {
+  background: #fff;
+  color: #222;
+  border: none;
+  padding: 0.7em 1em;
+  border-radius: 4px;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.side-nav button.active, .side-nav button:focus {
+  background: #007bff;
+  color: #fff;
+}
+#menu-toggle {
+  position: fixed;
+  top: 1em;
+  left: 1em;
+  z-index: 1003;
+  font-size: 2em;
+  background: none;
+  border: none;
+  color: #222;
+  cursor: pointer;
+  outline: none;
+}
+#menu-close {
+  background: none;
+  color: #fff;
+  border: none;
+  font-size: 2em;
+  cursor: pointer;
+  margin-bottom: 1em;
+  align-self: flex-end;
+}
 @media (max-width: 700px) {
   main {
     padding: 0.5em;
@@ -226,12 +323,17 @@ button[type="submit"]:hover {
     font-size: 1em;
     padding: 0.7em 0.7em;
   }
+  .normal-card-header {
+    font-size: 1em;
+    padding: 0.8em 0.4em;
+  }
   .case-details {
     padding: 0.7em 1em;
+    font-size: 0.98em;
   }
-  #community-map {
-    height: 220px !important;
-    min-height: 180px;
+  #community-map, #dashboard-map {
+    height: 180px !important;
+    min-height: 120px;
     max-width: 100vw;
   }
   #volunteer-list li {
@@ -250,6 +352,16 @@ button[type="submit"]:hover {
   input, button, select, textarea {
     font-size: 1em;
   }
+  .side-nav {
+    width: 90vw;
+    max-width: 95vw;
+    padding: 1.5em 0.5em 1em 0.5em;
+  }
+  #menu-toggle {
+    font-size: 2.2em;
+    top: 0.7em;
+    left: 0.7em;
+  }
 }
 
 html {
@@ -260,7 +372,7 @@ button, .sos-btn, .case-title, .send-alert-btn, .volunteer-contact-btn {
   min-height: 48px;
   min-width: 48px;
 }
-#community-map {
+#community-map, #dashboard-map {
   margin-bottom: 1.5em;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
@@ -269,7 +381,7 @@ button, .sos-btn, .case-title, .send-alert-btn, .volunteer-contact-btn {
   list-style: none;
   padding: 0;
   margin: 1em 0 2em 0;
-  max-width: 600px;
+  max-width: 700px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -282,8 +394,23 @@ button, .sos-btn, .case-title, .send-alert-btn, .volunteer-contact-btn {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1em;
 }
-.volunteer-contact-btn {
+.volunteer-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #007bff;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-right: 0.7em;
+  flex-shrink: 0;
+}
+.volunteer-contact-btn, .volunteer-message-btn {
   background: #007bff;
   color: #fff;
   border: none;
@@ -292,7 +419,17 @@ button, .sos-btn, .case-title, .send-alert-btn, .volunteer-contact-btn {
   font-size: 1em;
   cursor: pointer;
   transition: background 0.2s;
+  margin-left: 0.5em;
 }
-.volunteer-contact-btn:hover {
+.volunteer-contact-btn:hover, .volunteer-message-btn:hover {
   background: #0056b3;
+}
+body.menu-open {
+  overflow: hidden;
+}
+#menu-backdrop {
+  transition: opacity 0.2s;
+}
+#main-nav.side-nav {
+  transition: transform 0.2s;
 } 

@@ -12,13 +12,18 @@
   <link rel="apple-touch-icon" href="/icon-192.png" />
 </head>
 <body>
-  <nav>
-    <button id="nav-home" onclick="showPage('home')">Home</button>
-    <button id="nav-login" onclick="showPage('login')">Login</button>
-    <button id="nav-signup" onclick="showPage('signup')">Sign Up</button>
-    <button id="nav-dashboard" onclick="showPage('dashboard')">Dashboard</button>
-    <button id="nav-community" onclick="showPage('community')">Community</button>
-    <button id="nav-profile" onclick="showPage('profile')">Profile</button>
+  <div id="menu-backdrop" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.25);z-index:1000;"></div>
+  <button id="menu-toggle" aria-label="Open menu" style="position:fixed;top:1em;left:1em;z-index:1001;font-size:2em;background:none;border:none;cursor:pointer;">☰</button>
+  <nav id="main-nav" class="side-nav" style="display:none;">
+    <button id="menu-close" aria-label="Close menu" style="font-size:2em;background:none;border:none;cursor:pointer;float:right;">×</button>
+    <div class="nav-links">
+      <button id="nav-home" onclick="showPage('home');closeMenu();">Home</button>
+      <button id="nav-login" onclick="showPage('login');closeMenu();">Login</button>
+      <button id="nav-signup" onclick="showPage('signup');closeMenu();">Sign Up</button>
+      <button id="nav-dashboard" onclick="showPage('dashboard');closeMenu();">Dashboard</button>
+      <button id="nav-community" onclick="showPage('community');closeMenu();">Community</button>
+      <button id="nav-profile" onclick="showPage('profile');closeMenu();">Profile</button>
+    </div>
   </nav>
   <main>
     <section id="home" class="page"> 
@@ -55,82 +60,175 @@
       </form>
       <div id="signup-message" class="message"></div>
     </section>
-    <section id="dashboard" class="page" style="display:none"> 
-      <h1>Dashboard</h1> 
+    <section id="dashboard" class="page" style="display:none">
+      <h1>Dashboard</h1>
       <div id="dashboard-welcome"></div>
+      <div id="dashboard-map" style="height:300px;width:100%;max-width:700px;margin:0 auto 1.5em auto;border-radius:12px;overflow:hidden;"></div>
       <ul id="user-alerts"></ul>
-      <p>Your dashboard content goes here.</p> 
+      <p>Your dashboard content goes here.</p>
     </section>
     <section id="community" class="page" style="display:none"> 
       <h1>Community</h1> 
-      <div id="community-map" style="height:320px;width:100%;max-width:600px;margin:0 auto 1.5em auto;border-radius:12px;overflow:hidden;"></div>
+      <button id="refresh-community-map" style="margin-bottom:1em;">Refresh Map</button>
+      <div id="community-map" style="height:380px;width:100%;max-width:700px;margin:0 auto 1.5em auto;border-radius:12px;overflow:hidden;"></div>
       <ul id="volunteer-list"></ul>
       <ul id="post-list"></ul>
     </section>
     <section id="normal-cases" class="page" style="display:none">
-      <h1>Common Non-Emergency Cases</h1>
-      <ul class="case-list">
-        <li>
-          <button class="case-title" onclick="toggleCase('lost-item')">Lost Item</button>
-          <div class="case-details" id="case-lost-item" style="display:none">
-            <p><strong>How to solve:</strong></p>
-            <ol>
-              <li>Stay calm and retrace your steps.</li>
-              <li>Check with lost and found or local authorities.</li>
-              <li>Ask people nearby if they have seen your item.</li>
-            </ol>
-            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Lost Item')">Still need help? Send alert</button>
+      <h1>Normal Help Cases</h1>
+      <div class="normal-cards">
+        <div class="normal-card">
+          <div class="normal-card-header" onclick="toggleCase('lost-item')">
+            <span class="normal-icon">🔎</span> Lost Item
+            <span class="accordion-arrow">▼</span>
           </div>
-        </li>
-        <li>
-          <button class="case-title" onclick="toggleCase('minor-injury')">Minor Injury</button>
+          <div class="case-details" id="case-lost-item" style="display:none">
+            <p><strong>Solution:</strong></p>
+            <ol>
+              <li>Stay calm and try to remember where you last had the item.</li>
+              <li>Ask at the lost and found or with local authorities.</li>
+              <li>Check with people nearby.</li>
+            </ol>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Lost Item')">Request Help</button>
+          </div>
+        </div>
+        <div class="normal-card">
+          <div class="normal-card-header" onclick="toggleCase('minor-injury')">
+            <span class="normal-icon">🩹</span> Minor Injury
+            <span class="accordion-arrow">▼</span>
+          </div>
           <div class="case-details" id="case-minor-injury" style="display:none">
-            <p><strong>How to solve:</strong></p>
+            <p><strong>Solution:</strong></p>
             <ol>
               <li>Clean the wound with water.</li>
-              <li>Apply a bandage or dressing.</li>
+              <li>Apply a bandage or plaster.</li>
               <li>Seek medical help if needed.</li>
             </ol>
-            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Minor Injury')">Still need help? Send alert</button>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Minor Injury')">Request Help</button>
           </div>
-        </li>
-        <li>
-          <button class="case-title" onclick="toggleCase('need-directions')">Need Directions</button>
+        </div>
+        <div class="normal-card">
+          <div class="normal-card-header" onclick="toggleCase('need-directions')">
+            <span class="normal-icon">🗺️</span> Need Directions
+            <span class="accordion-arrow">▼</span>
+          </div>
           <div class="case-details" id="case-need-directions" style="display:none">
-            <p><strong>How to solve:</strong></p>
+            <p><strong>Solution:</strong></p>
             <ol>
-              <li>Use a map or navigation app.</li>
-              <li>Ask a local or staff for directions.</li>
+              <li>Use a map or GPS app.</li>
+              <li>Ask a local or staff member.</li>
               <li>Look for signs or information desks.</li>
             </ol>
-            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Need Directions')">Still need help? Send alert</button>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Need Directions')">Request Help</button>
           </div>
-        </li>
-        <li>
-          <button class="case-title" onclick="toggleCase('flat-tire')">Flat Tire</button>
+        </div>
+        <div class="normal-card">
+          <div class="normal-card-header" onclick="toggleCase('flat-tire')">
+            <span class="normal-icon">🚗</span> Flat Tire
+            <span class="accordion-arrow">▼</span>
+          </div>
           <div class="case-details" id="case-flat-tire" style="display:none">
-            <p><strong>How to solve:</strong></p>
+            <p><strong>Solution:</strong></p>
             <ol>
               <li>Move to a safe location.</li>
-              <li>Use a spare tire and jack if available.</li>
+              <li>Use the spare tire if available.</li>
               <li>Call roadside assistance if needed.</li>
             </ol>
-            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Flat Tire')">Still need help? Send alert</button>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Flat Tire')">Request Help</button>
           </div>
-        </li>
-        <li>
-          <button class="case-title" onclick="toggleCase('locked-out')">Locked Out</button>
+        </div>
+        <div class="normal-card">
+          <div class="normal-card-header" onclick="toggleCase('locked-out')">
+            <span class="normal-icon">🔑</span> Locked Out
+            <span class="accordion-arrow">▼</span>
+          </div>
           <div class="case-details" id="case-locked-out" style="display:none">
-            <p><strong>How to solve:</strong></p>
+            <p><strong>Solution:</strong></p>
             <ol>
-              <li>Check for spare keys.</li>
-              <li>Contact a family member or roommate.</li>
-              <li>Call a locksmith if necessary.</li>
+              <li>Look for a spare key.</li>
+              <li>Contact a family member or friend.</li>
+              <li>Call a locksmith if needed.</li>
             </ol>
-            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Locked Out')">Still need help? Send alert</button>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Locked Out')">Request Help</button>
           </div>
-        </li>
-      </ul>
+        </div>
+        <div class="normal-card">
+          <div class="normal-card-header" onclick="toggleCase('power-outage')">
+            <span class="normal-icon">💡</span> Power Outage
+            <span class="accordion-arrow">▼</span>
+          </div>
+          <div class="case-details" id="case-power-outage" style="display:none">
+            <p><strong>Solution:</strong></p>
+            <ol>
+              <li>Check if the outage is only in your home or the whole area.</li>
+              <li>Check your circuit breaker or fuse box.</li>
+              <li>Contact your electricity provider if needed.</li>
+            </ol>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Power Outage')">Request Help</button>
+          </div>
+        </div>
+        <div class="normal-card">
+          <div class="normal-card-header" onclick="toggleCase('water-leak')">
+            <span class="normal-icon">💧</span> Water Leak
+            <span class="accordion-arrow">▼</span>
+          </div>
+          <div class="case-details" id="case-water-leak" style="display:none">
+            <p><strong>Solution:</strong></p>
+            <ol>
+              <li>Turn off the main water supply.</li>
+              <li>Try to contain the leak with towels or buckets.</li>
+              <li>Call a plumber for assistance.</li>
+            </ol>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Water Leak')">Request Help</button>
+          </div>
+        </div>
+        <div class="normal-card">
+          <div class="normal-card-header" onclick="toggleCase('lost-child')">
+            <span class="normal-icon">🧒</span> Lost Child
+            <span class="accordion-arrow">▼</span>
+          </div>
+          <div class="case-details" id="case-lost-child" style="display:none">
+            <p><strong>Solution:</strong></p>
+            <ol>
+              <li>Alert nearby people and staff immediately.</li>
+              <li>Describe the child’s appearance and clothing.</li>
+              <li>Contact security or the police if not found quickly.</li>
+            </ol>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Lost Child')">Request Help</button>
+          </div>
+        </div>
+        <div class="normal-card">
+          <div class="normal-card-header" onclick="toggleCase('stuck-elevator')">
+            <span class="normal-icon">🛗</span> Stuck in Elevator
+            <span class="accordion-arrow">▼</span>
+          </div>
+          <div class="case-details" id="case-stuck-elevator" style="display:none">
+            <p><strong>Solution:</strong></p>
+            <ol>
+              <li>Stay calm and press the emergency button.</li>
+              <li>Call for help using your phone if possible.</li>
+              <li>Wait for professional assistance; do not attempt to exit by yourself.</li>
+            </ol>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Stuck in Elevator')">Request Help</button>
+          </div>
+        </div>
+        <div class="normal-card">
+          <div class="normal-card-header" onclick="toggleCase('pet-lost')">
+            <span class="normal-icon">🐾</span> Lost Pet
+            <span class="accordion-arrow">▼</span>
+          </div>
+          <div class="case-details" id="case-pet-lost" style="display:none">
+            <p><strong>Solution:</strong></p>
+            <ol>
+              <li>Search the immediate area and call your pet’s name.</li>
+              <li>Ask neighbors and check with local shelters.</li>
+              <li>Post on social media or community boards.</li>
+            </ol>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Lost Pet')">Request Help</button>
+          </div>
+        </div>
+      </div>
+      <div id="normal-confirm-message" class="message" style="display:none;"></div>
       <button onclick="showPage('home')">Back to Home</button>
     </section>
     <section id="profile" class="page" style="display:none">

@@ -231,21 +231,32 @@ if (normalBtn) {
   };
 }
 
-// Toggle case details
+// Accordion logic: أغلق الباقي ودوّر السهم
 window.toggleCase = function(caseId) {
+  document.querySelectorAll('.case-details').forEach(d => d.style.display = 'none');
+  document.querySelectorAll('.accordion-arrow').forEach(a => a.style.transform = 'rotate(0deg)');
   const details = document.getElementById('case-' + caseId);
-  if (details) {
-    details.style.display = details.style.display === 'none' ? 'block' : 'none';
+  const header = details?.previousElementSibling || document.querySelector(`[onclick*="${caseId}"] .accordion-arrow`);
+  if (details && details.style.display === 'none') {
+    details.style.display = 'block';
+    if (header && header.querySelector('.accordion-arrow')) header.querySelector('.accordion-arrow').style.transform = 'rotate(180deg)';
+  } else if (details) {
+    details.style.display = 'none';
+    if (header && header.querySelector('.accordion-arrow')) header.querySelector('.accordion-arrow').style.transform = 'rotate(0deg)';
   }
 };
 
-// Send normal alert for a specific case
+// رسالة تأكيد بعد إرسال طلب المساعدة
 window.sendNormalCaseAlert = function(caseName) {
   addAlert('normal');
-  alerts[0].message = `Normal Help Request: ${caseName}`;
+  alerts[0].message = `Help Request: ${caseName}`;
   renderAlerts();
   renderUserAlerts();
-  alert(`Normal alert for "${caseName}" sent!`);
+  document.getElementById('normal-confirm-message').textContent = `Help request for: ${caseName} has been sent.`;
+  document.getElementById('normal-confirm-message').style.display = 'block';
+  setTimeout(() => {
+    document.getElementById('normal-confirm-message').style.display = 'none';
+  }, 2500);
 };
 
 function renderAlerts() {
@@ -289,13 +300,22 @@ renderPosts();
 loadProfile();
 
 // Community map and volunteers
-let map, userMarker;
+let map, userMarker, volunteerMarkers = [];
 const volunteerList = document.getElementById('volunteer-list');
 const volunteerData = [
-  { name: 'Aisha', lat: 24.7136, lng: 46.6753, phone: '+966500000001' },
-  { name: 'Omar', lat: 24.7150, lng: 46.6800, phone: '+966500000002' },
-  { name: 'Sara', lat: 24.7100, lng: 46.6700, phone: '+966500000003' },
+  { name: 'Aisha', lat: 24.7136, lng: 46.6753, phone: '+966500000001', avatar: '', online: true },
+  { name: 'Omar', lat: 24.7150, lng: 46.6800, phone: '+966500000002', avatar: '', online: true },
+  { name: 'Sara', lat: 24.7100, lng: 46.6700, phone: '+966500000003', avatar: '', online: false },
 ];
+
+function getDistanceKm(lat1, lng1, lat2, lng2) {
+  const R = 6371;
+  const dLat = (lat2-lat1)*Math.PI/180;
+  const dLng = (lng2-lng1)*Math.PI/180;
+  const a = Math.sin(dLat/2)*Math.sin(dLat/2) + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)*Math.sin(dLng/2);
+  const c = 2*Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return (R*c).toFixed(2);
+}
 
 function showCommunityMap() {
   setTimeout(() => {
@@ -307,6 +327,8 @@ function showCommunityMap() {
     }
     // Remove old markers
     if (userMarker) { map.removeLayer(userMarker); }
+    volunteerMarkers.forEach(m => map.removeLayer(m));
+    volunteerMarkers = [];
     // Try to get user location
     const profile = getProfile();
     let userLatLng = [24.7136, 46.6753];
@@ -318,25 +340,123 @@ function showCommunityMap() {
     map.setView(userLatLng, 14);
     // Add volunteer markers
     volunteerData.forEach(v => {
-      L.marker([v.lat, v.lng], {icon: L.icon({iconUrl: 'https://cdn-icons-png.flaticon.com/512/190/190411.png', iconSize: [28,28]})})
+      const marker = L.marker([v.lat, v.lng], {icon: L.icon({iconUrl: v.avatar || 'https://cdn-icons-png.flaticon.com/512/190/190411.png', iconSize: [28,28]})})
         .addTo(map)
         .bindPopup(`<strong>${v.name}</strong><br>Phone: <a href='tel:${v.phone}'>${v.phone}</a>`);
+      volunteerMarkers.push(marker);
     });
     // Volunteer list
     if (volunteerList) {
       volunteerList.innerHTML = '';
       volunteerData.forEach(v => {
+        let distance = '';
+        if (userLatLng) distance = ` (${getDistanceKm(userLatLng[0], userLatLng[1], v.lat, v.lng)} km)`;
+        const initials = v.name.split(' ').map(x=>x[0]).join('').toUpperCase();
+        const avatar = `<span class="volunteer-avatar" style="background:${v.online?'#007bff':'#aaa'};">${initials}</span>`;
         const li = document.createElement('li');
-        li.innerHTML = `<span><strong>${v.name}</strong> (Phone: <a href='tel:${v.phone}'>${v.phone}</a>)</span> <button class='volunteer-contact-btn' onclick="window.location='tel:${v.phone}'">Call</button>`;
+        li.innerHTML = `${avatar}<span><strong>${v.name}</strong>${distance}<br>Phone: <a href='tel:${v.phone}'>${v.phone}</a></span> <span><button class='volunteer-contact-btn' onclick="window.location='tel:${v.phone}'">Call</button> <button class='volunteer-message-btn' onclick="alert('Messaging not implemented yet')">Message</button></span>`;
         volunteerList.appendChild(li);
       });
     }
   }, 200);
 }
 
-// Show map when Community page is shown
-const oldShowPage = showPage;
+const refreshBtn = document.getElementById('refresh-community-map');
+if (refreshBtn) refreshBtn.onclick = showCommunityMap;
+
+// Dashboard map and alert history
+let dashboardMap, dashboardUserMarker, dashboardAlertMarkers = [];
+function showDashboardMap() {
+  setTimeout(() => {
+    if (!dashboardMap) {
+      dashboardMap = L.map('dashboard-map').setView([24.7136, 46.6753], 13);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(dashboardMap);
+    }
+    // Remove old markers
+    if (dashboardUserMarker) { dashboardMap.removeLayer(dashboardUserMarker); }
+    dashboardAlertMarkers.forEach(m => dashboardMap.removeLayer(m));
+    dashboardAlertMarkers = [];
+    // User location
+    const profile = getProfile();
+    let userLatLng = [24.7136, 46.6753];
+    if (profile.location && profile.location.includes(',')) {
+      const [lat, lng] = profile.location.split(',').map(Number);
+      if (!isNaN(lat) && !isNaN(lng)) userLatLng = [lat, lng];
+    }
+    dashboardUserMarker = L.marker(userLatLng, {icon: L.icon({iconUrl: 'https://cdn-icons-png.flaticon.com/512/149/149071.png', iconSize: [32,32]})}).addTo(dashboardMap).bindPopup('You are here');
+    dashboardMap.setView(userLatLng, 13);
+    // Alert history markers
+    const author = profile.name || (currentUser ? currentUser.username : 'Anonymous');
+    const userOwnAlerts = alerts.filter(a => a.author === author);
+    userOwnAlerts.forEach((alert, idx) => {
+      if (alert.details && alert.details.includes('Location:')) {
+        const match = alert.details.match(/Location:\s*([\d.\-]+),\s*([\d.\-]+)/);
+        if (match) {
+          const lat = parseFloat(match[1]);
+          const lng = parseFloat(match[2]);
+          const marker = L.marker([lat, lng], {icon: L.icon({iconUrl: alert.type==='emergency'?'https://cdn-icons-png.flaticon.com/512/565/565547.png':'https://cdn-icons-png.flaticon.com/512/190/190411.png', iconSize: [28,28]})})
+            .addTo(dashboardMap)
+            .bindPopup(`<strong>${alert.type==='emergency'?'🚨 Emergency':'Normal'}</strong><br>${alert.message}<br><small>${alert.time}</small>`);
+          dashboardAlertMarkers.push(marker);
+        }
+      }
+    });
+  }, 200);
+}
+
+// Make alert list clickable to focus on map
+function renderUserAlerts() {
+  if (!userAlerts) return;
+  userAlerts.innerHTML = '';
+  const profile = getProfile();
+  const author = profile.name || (currentUser ? currentUser.username : 'Anonymous');
+  const userOwnAlerts = alerts.filter(a => a.author === author);
+  if (userOwnAlerts.length === 0) {
+    userAlerts.innerHTML = '<li>No alerts sent yet.</li>';
+    return;
+  }
+  userOwnAlerts.forEach((alert, idx) => {
+    const li = document.createElement('li');
+    li.innerHTML = `<span style="color:${alert.type==='emergency'?'#dc3545':'#ffc107'};cursor:pointer;">[${alert.type==='emergency'?'EMERGENCY':'Normal'}]</span> ${alert.message} <br><small>${alert.time}</small>`;
+    li.onclick = () => {
+      showPage('dashboard');
+      showDashboardMap();
+      // Focus on marker if possible
+      if (dashboardAlertMarkers[idx]) {
+        dashboardAlertMarkers[idx].openPopup();
+        dashboardMap.setView(dashboardAlertMarkers[idx].getLatLng(), 15);
+      }
+    };
+    userAlerts.appendChild(li);
+  });
+}
+
+// Show map when Community or Dashboard page is shown
+const oldShowPage2 = showPage;
 showPage = function(pageId) {
-  oldShowPage(pageId);
+  oldShowPage2(pageId);
   if (pageId === 'community') showCommunityMap();
-}; 
+  if (pageId === 'dashboard') showDashboardMap();
+};
+
+// Side nav menu logic
+const menuToggle = document.getElementById('menu-toggle');
+const mainNav = document.getElementById('main-nav');
+const menuClose = document.getElementById('menu-close');
+const menuBackdrop = document.getElementById('menu-backdrop');
+function openMenu() {
+  mainNav.style.display = 'flex';
+  menuBackdrop.style.display = 'block';
+  document.body.classList.add('menu-open');
+}
+function closeMenu() {
+  mainNav.style.display = 'none';
+  menuBackdrop.style.display = 'none';
+  document.body.classList.remove('menu-open');
+}
+if (menuToggle) menuToggle.onclick = openMenu;
+if (menuClose) menuClose.onclick = closeMenu;
+if (menuBackdrop) menuBackdrop.onclick = closeMenu;
+window.closeMenu = closeMenu; 
