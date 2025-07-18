@@ -7,7 +7,7 @@ function showPage(pageId) {
 
   // Highlight active nav button
   const navButtons = [
-    'home', 'login', 'signup', 'dashboard', 'community'
+    'home', 'login', 'signup', 'dashboard', 'community', 'profile', 'normal-cases'
   ];
   navButtons.forEach(id => {
     const btn = document.getElementById('nav-' + id);
@@ -260,7 +260,7 @@ window.sendNormalCaseAlert = function(caseName) {
 };
 
 function renderAlerts() {
-  // Community page
+  const postList = document.getElementById('post-list');
   if (!postList) return;
   postList.innerHTML = '';
   if (alerts.length === 0) {
@@ -277,7 +277,8 @@ function renderAlerts() {
 function renderUserAlerts() {
   if (!userAlerts) return;
   userAlerts.innerHTML = '';
-  const author = currentUser ? currentUser.username : 'Anonymous';
+  const profile = getProfile();
+  const author = profile.name || (currentUser ? currentUser.username : 'Anonymous');
   const userOwnAlerts = alerts.filter(a => a.author === author);
   if (userOwnAlerts.length === 0) {
     userAlerts.innerHTML = '<li>No alerts sent yet.</li>';
@@ -407,14 +408,15 @@ function showDashboardMap() {
 }
 
 // Make alert list clickable to focus on map
+const userAlertsContainer = document.getElementById('user-alerts');
 function renderUserAlerts() {
-  if (!userAlerts) return;
-  userAlerts.innerHTML = '';
+  if (!userAlertsContainer) return;
+  userAlertsContainer.innerHTML = '';
   const profile = getProfile();
   const author = profile.name || (currentUser ? currentUser.username : 'Anonymous');
   const userOwnAlerts = alerts.filter(a => a.author === author);
   if (userOwnAlerts.length === 0) {
-    userAlerts.innerHTML = '<li>No alerts sent yet.</li>';
+    userAlertsContainer.innerHTML = '<li>No alerts sent yet.</li>';
     return;
   }
   userOwnAlerts.forEach((alert, idx) => {
@@ -423,35 +425,51 @@ function renderUserAlerts() {
     li.onclick = () => {
       showPage('dashboard');
       showDashboardMap();
-      // Focus on marker if possible
       if (dashboardAlertMarkers[idx]) {
         dashboardAlertMarkers[idx].openPopup();
         dashboardMap.setView(dashboardAlertMarkers[idx].getLatLng(), 15);
       }
     };
-    userAlerts.appendChild(li);
+    userAlertsContainer.appendChild(li);
   });
 }
 
 // Show map when Community or Dashboard page is shown
-const oldShowPage2 = showPage;
+const oldShowPage = showPage;
 showPage = function(pageId) {
-  oldShowPage2(pageId);
+  oldShowPage(pageId);
   if (pageId === 'community') showCommunityMap();
   if (pageId === 'dashboard') showDashboardMap();
 };
 
 // Side nav menu logic
 const menuToggle = document.getElementById('menu-toggle');
-const mainNav = document.getElementById('main-nav');
 const menuClose = document.getElementById('menu-close');
 const menuBackdrop = document.getElementById('menu-backdrop');
-// Remove menu open/close logic and always show the menu
-if (mainNav) {
-  mainNav.style.display = 'flex';
-  mainNav.classList.remove('side-nav', 'open');
+const mainNav = document.getElementById('main-nav');
+
+function openMenu() {
+  if (mainNav) mainNav.style.display = 'block';
+  if (menuBackdrop) menuBackdrop.style.display = 'block';
 }
-if (menuToggle) menuToggle.style.display = 'none';
+
+function closeMenu() {
+  if (mainNav) mainNav.style.display = 'none';
+  if (menuBackdrop) menuBackdrop.style.display = 'none';
+}
+
+if (menuToggle) {
+  menuToggle.addEventListener('click', openMenu);
+}
+
+if (menuClose) {
+  menuClose.addEventListener('click', closeMenu);
+}
+
+if (menuBackdrop) {
+  menuBackdrop.addEventListener('click', closeMenu);
+}
+
+// في البداية نخفي القائمة
+if (mainNav) mainNav.style.display = 'none';
 if (menuBackdrop) menuBackdrop.style.display = 'none';
-if (menuClose) menuClose.style.display = 'none';
-window.closeMenu = closeMenu; 
