@@ -1,97 +1,4 @@
-/* Reset and base styles */
-* {
-  box-sizing: border-box;
-}
-
-body, html {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  max-width: 100vw;
-  overflow-x: hidden;
-  background-color: #f9f9f9;
-  color: #222;
-}
-
-/* Main container */
-main, section {
-  padding: 1em;
-  width: 100%;
-  max-width: 700px;
-  margin: 0 auto;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.05);
-  margin-bottom: 1.5em;
-}
-
-/* Buttons */
-button {
-  font-size: 1.1em;
-  padding: 0.6em 1em;
-  width: 100%;
-  max-width: 100%;
-  cursor: pointer;
-  border-radius: 6px;
-  border: none;
-  background-color: #dc3545;
-  color: white;
-  transition: background-color 0.3s ease;
-  margin-bottom: 1em;
-}
-
-button:hover {
-  background-color: #b02a37;
-}
-
-/* Special SOS buttons */
-.sos-btn.emergency {
-  background-color: #dc3545;
-  font-weight: bold;
-  font-size: 1.3em;
-}
-
-.sos-btn.normal {
-  background-color: #007bff;
-  font-weight: bold;
-  font-size: 1.3em;
-}
-
-/* Inputs and labels */
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="tel"],
-input[type="file"],
-input[readonly] {
-  font-size: 1.1em;
-  padding: 0.5em;
-  width: 100%;
-  max-width: 100%;
-  margin-bottom: 1em;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  outline: none;
-  transition: border-color 0.3s ease;
-}
-
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus,
-input[type="tel"]:focus,
-input[type="file"]:focus,
-input[readonly]:focus {
-  border-color: #dc3545;
-}
-
-/* Labels */
-label {
-  font-weight: 600;
-  display: block;
-  margin-bottom: 0.4em;
-}
-
-/* Navigation side menu */
+/* القائمة الجانبية */
 .side-nav {
   position: fixed;
   top: 0;
@@ -104,27 +11,17 @@ label {
   overflow-y: auto;
   z-index: 1001;
   padding: 1em 0;
+  display: none;
+  transition: transform 0.3s ease;
+  transform: translateX(-100%);
 }
 
-/* Nav links styling */
-.nav-links button {
+.side-nav.open {
   display: block;
-  width: 100%;
-  text-align: left;
-  padding: 1em 1.5em;
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-size: 1.2em;
-  color: #222;
-  transition: background-color 0.2s ease;
+  transform: translateX(0);
 }
 
-.nav-links button:hover {
-  background-color: #f8d7da;
-}
-
-/* Menu toggle button */
+/* زر القائمة */
 #menu-toggle {
   position: fixed;
   top: 1em;
@@ -138,7 +35,7 @@ label {
   user-select: none;
 }
 
-/* Menu close button */
+/* زر إغلاق القائمة */
 #menu-close {
   font-size: 2em;
   background: none;
@@ -150,208 +47,14 @@ label {
   user-select: none;
 }
 
-/* Messages */
-.message {
-  margin-top: 0.5em;
-  color: #dc3545;
-  font-weight: bold;
-}
-
-/* Maps containers */
-#dashboard-map, #community-map {
-  width: 100%;
-  height: 300px;
-  max-width: 100%;
-  border-radius: 12px;
-  overflow: hidden;
-  margin-bottom: 1em;
-}
-
-/* Profile photo preview */
-#profile-photo-preview {
-  max-width: 120px;
-  max-height: 120px;
-  display: block;
-  margin-top: 1em;
-  border-radius: 12px;
-  object-fit: cover;
-  box-shadow: 0 0 6px rgba(0,0,0,0.15);
-}
-
-/* Contact list layout */
-#contacts-list .contact-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5em;
-  margin-bottom: 0.5em;
-}
-
-#contacts-list .contact-row input {
-  flex: 1 1 45%;
-  min-width: 120px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  padding: 0.5em;
-  font-size: 1em;
-}
-
-/* Accordion arrows */
-.accordion-arrow {
-  float: right;
-  font-weight: bold;
-  user-select: none;
-}
-
-/* Normal case cards */
-.normal-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-}
-
-.normal-card {
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.05);
-  background: white;
-}
-
-.normal-card-header {
-  cursor: pointer;
-  padding: 1em;
-  font-weight: 600;
-  user-select: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.normal-icon {
-  margin-right: 0.5em;
-  font-size: 1.4em;
-}
-
-/* Smaller buttons for send alert inside cards */
-.send-alert-btn {
-  width: auto;
-  background-color: #007bff;
-  margin: 1em;
-  padding: 0.5em 1em;
-  font-size: 1em;
-}
-
-.send-alert-btn:hover {
-  background-color: #0056b3;
-}
-
-/* Forms hint */
-.form-hint {
-  font-size: 0.9em;
-  color: #666;
-  margin-top: 0.5em;
-}
-
-.form-hint a {
-  color: #dc3545;
-  text-decoration: none;
-}
-
-.form-hint a:hover {
-  text-decoration: underline;
-}
-
-/* Flex container for location input + button */
-#profile-location + button, #get-location-btn {
-  flex-shrink: 0;
-}
-
-#profile-location {
-  flex-grow: 1;
-}
-
-/* Location input container */
-#profile-location {
-  width: 70%;
-}
-
-/* Location container flexbox */
-#profile-location,
-#get-location-btn {
-  font-size: 1em;
-  padding: 0.5em;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-#get-location-btn {
-  margin-left: 0.5em;
-  cursor: pointer;
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  transition: background-color 0.3s ease;
-}
-
-#get-location-btn:hover {
-  background-color: #b02a37;
-}
-
-/* Responsive adjustments */
-@media (max-width: 480px) {
-  /* Main container padding */
-  main, section {
-    padding: 0.5em 1em;
-    margin-bottom: 1em;
-  }
-
-  /* Menu toggle smaller */
-  #menu-toggle {
-    font-size: 2em;
-  }
-
-  /* Side nav wider */
-  .side-nav {
-    width: 90vw;
-    max-width: none;
-  }
-
-  /* Reduce map height */
-  #dashboard-map, #community-map {
-    height: 250px;
-  }
-
-  /* Contact inputs stack vertically */
-  #contacts-list .contact-row input {
-    flex: 1 1 100%;
-  }
-
-  /* Buttons font size smaller */
-  button {
-    font-size: 1em;
-    padding: 0.5em 0.8em;
-  }
-
-  /* Reduce font size on normal cards */
-  .normal-card-header {
-    font-size: 1em;
-    padding: 0.8em;
-  }
-
-  /* Reduce icons size */
-  .normal-icon {
-    font-size: 1.2em;
-  }
-
-  /* Smaller send alert buttons */
-  .send-alert-btn {
-    font-size: 0.9em;
-    padding: 0.4em 0.8em;
-    margin: 0.8em;
-  }
-
-  /* Profile photo preview smaller */
-  #profile-photo-preview {
-    max-width: 100px;
-    max-height: 100px;
-  }
+/* خلفية التعتيم */
+#menu-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0,0,0,0.3);
+  z-index: 1000;
+  display: none;
 }
