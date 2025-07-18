@@ -289,7 +289,7 @@ main {
 }
 @media (max-width: 700px) {
   nav#main-nav {
-    position: fixed;
+    position: sticky;
     top: 0;
     left: 0;
     width: 100vw;
@@ -299,22 +299,36 @@ main {
     align-items: center;
     padding: 0.5em 0.2em;
     box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    z-index: 1002;
+    background: #222;
   }
   nav#main-nav .nav-links {
     flex-direction: row;
     gap: 0.5em;
     margin-top: 0;
     width: 100%;
-    justify-content: center;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  nav#main-nav .nav-links::-webkit-scrollbar {
+    display: none;
   }
   nav#main-nav button {
-    font-size: 1em;
-    padding: 0.5em 0.7em;
-    border-radius: 4px;
+    font-size: 1.1em;
+    padding: 0.7em 1.2em;
+    border-radius: 6px;
+    min-width: 90px;
+    margin-bottom: 0;
+    margin-top: 0;
+    margin-right: 0.2em;
+    margin-left: 0.2em;
   }
   main {
     margin-left: 0;
     margin-top: 60px;
+    padding-top: 0.5em;
   }
 }
 
