@@ -300,32 +300,31 @@ main {
     position: fixed;
     top: 0;
     left: 0;
-    width: 80vw;
-    max-width: 320px;
-    height: 100vh;
+    width: 100vw;
+    height: auto;
     min-height: 0;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 2em 1em 1em 1em;
-    box-shadow: 2px 0 18px rgba(0,0,0,0.25);
+    flex-direction: row;
+    align-items: center;
+    padding: 0.5em 0.2em;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
     z-index: 1002;
     background: #222;
-    transform: translateX(-100%);
-    transition: transform 0.3s cubic-bezier(.4,1.3,.5,1), box-shadow 0.2s;
-    opacity: 1;
+    transform: none;
+    transition: none;
     display: flex !important;
   }
-  nav#main-nav.open {
-    transform: translateX(0);
-    box-shadow: 2px 0 24px rgba(0,0,0,0.32);
-  }
   nav#main-nav .nav-links {
-    flex-direction: column;
-    gap: 1em;
-    margin-top: 2em;
+    flex-direction: row;
+    gap: 0.5em;
+    margin-top: 0;
     width: 100%;
     justify-content: flex-start;
-    overflow-x: visible;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  nav#main-nav .nav-links::-webkit-scrollbar {
+    display: none;
   }
   nav#main-nav button,
   .sos-btn,
@@ -349,76 +348,10 @@ main {
   .sos-buttons {
     gap: 1.5em;
   }
-  #menu-toggle {
-    display: block !important;
-    position: fixed;
-    top: 1em;
-    left: 1em;
-    z-index: 1100;
-    font-size: 2em;
-    background: #fff;
-    border: none;
-    color: #222;
-    cursor: pointer;
-    outline: none;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    border-radius: 50%;
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s;
-  }
-  #menu-toggle:hover {
-    background: #e2e6ea;
-  }
-  #menu-close {
-    display: block !important;
-    background: #dc3545;
-    color: #fff;
-    border: none;
-    font-size: 2em;
-    cursor: pointer;
-    margin-bottom: 1em;
-    align-self: flex-end;
-    border-radius: 50%;
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-    transition: background 0.2s;
-  }
-  #menu-close:hover {
-    background: #a71d2a;
-  }
-  #menu-backdrop {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0,0,0,0.25);
-    z-index: 1000;
-    transition: opacity 0.2s;
-  }
-  #menu-backdrop.active {
-    display: block;
-    opacity: 1;
-  }
   main {
     margin-left: 0;
-    margin-top: 0;
+    margin-top: 60px;
     padding-top: 0.5em;
-  }
-  html {
-    font-size: 13px;
-  }
-  .normal-card-header, .case-details, .send-alert-btn {
-    font-size: 0.98em;
   }
 }
 

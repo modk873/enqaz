@@ -449,47 +449,10 @@ const menuBackdrop = document.getElementById('menu-backdrop');
 function isMobile() {
   return window.innerWidth <= 700;
 }
-function setMenuMode() {
-  if (isMobile()) {
-    mainNav.classList.remove('side-nav');
-    mainNav.classList.remove('open');
-    mainNav.style.display = 'none';
-    if (menuToggle) menuToggle.style.display = 'block';
-    if (menuBackdrop) menuBackdrop.style.display = 'none';
-    if (menuClose) menuClose.style.display = 'block';
-  } else {
-    mainNav.classList.remove('open');
-    mainNav.style.display = 'flex';
-    if (menuToggle) menuToggle.style.display = 'none';
-    if (menuBackdrop) menuBackdrop.style.display = 'none';
-    if (menuClose) menuClose.style.display = 'none';
-  }
-}
-window.addEventListener('resize', setMenuMode);
-setMenuMode();
-if (menuToggle) menuToggle.onclick = function() {
-  mainNav.classList.add('open');
+if (mainNav) {
   mainNav.style.display = 'flex';
-  if (menuBackdrop) menuBackdrop.classList.add('active');
-  document.body.classList.add('menu-open');
-};
-if (menuClose) menuClose.onclick = function() {
-  mainNav.classList.remove('open');
-  setTimeout(() => { if (isMobile()) mainNav.style.display = 'none'; }, 300);
-  if (menuBackdrop) menuBackdrop.classList.remove('active');
-  document.body.classList.remove('menu-open');
-};
-if (menuBackdrop) menuBackdrop.onclick = function() {
-  mainNav.classList.remove('open');
-  setTimeout(() => { if (isMobile()) mainNav.style.display = 'none'; }, 300);
-  menuBackdrop.classList.remove('active');
-  document.body.classList.remove('menu-open');
-};
-window.closeMenu = function() {
-  if (isMobile()) {
-    mainNav.classList.remove('open');
-    setTimeout(() => { mainNav.style.display = 'none'; }, 300);
-    if (menuBackdrop) menuBackdrop.classList.remove('active');
-    document.body.classList.remove('menu-open');
-  }
-}; 
+  mainNav.classList.remove('side-nav', 'open');
+}
+if (menuToggle) menuToggle.style.display = 'none';
+if (menuBackdrop) menuBackdrop.style.display = 'none';
+if (menuClose) menuClose.style.display = 'none'; 
