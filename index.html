@@ -1181,5 +1181,20 @@
     </section>
   </main>
   <script src="main.js"></script>
+  <script>
+let isArabic = false;
+function toggleLanguage() {
+  isArabic = !isArabic;
+  document.body.dir = isArabic ? "rtl" : "ltr";
+  document.querySelectorAll('[data-en]').forEach(el => {
+    el.innerText = isArabic ? el.getAttribute('data-ar') : el.getAttribute('data-en');
+  });
+}
+</script>
+</body>
+</html>
+
+</script>
+
 </body>
 </html> 
