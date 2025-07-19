@@ -1213,3 +1213,39 @@ body.menu-open {
     flex-direction: column;
   }
 } 
+
+@media (max-width: 600px) {
+  body, .page, main {
+    font-size: 1.08em;
+  }
+  h1, h2, h3 {
+    font-size: 1.25em !important;
+    line-height: 1.2;
+  }
+  .sos-btn, .lang-btn, button, input[type="submit"] {
+    font-size: 1.15em !important;
+    padding: 1.1em 0.5em !important;
+    min-width: 120px !important;
+    min-height: 48px !important;
+    border-radius: 14px !important;
+  }
+  .sos-btn.sos-big {
+    font-size: 1.5em !important;
+    padding: 1.2em 0 !important;
+    min-width: 160px !important;
+    max-width: 98vw !important;
+  }
+  .lang-btn {
+    font-size: 1.1em !important;
+    padding: 1em 0.5em !important;
+    min-width: 100px !important;
+    min-height: 44px !important;
+  }
+  .form-hint, label, input, select, textarea {
+    font-size: 1.08em !important;
+  }
+  .case-title-clickable {
+    font-size: 1.1em !important;
+    padding: 1em 0.7em !important;
+  }
+} 
