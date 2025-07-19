@@ -1,6 +1,55 @@
 html {
   font-size: 15px;
 }
+
+/* Translation Toggle */
+.translation-toggle {
+  position: fixed;
+  top: 1em;
+  right: 1em;
+  z-index: 9999;
+  background: red;
+  padding: 5px;
+  border: 2px solid yellow;
+}
+
+.lang-btn {
+  background: #ff0000 !important;
+  color: white !important;
+  border: 3px solid yellow !important;
+  border-radius: 8px;
+  padding: 1em 1.5em;
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  transition: background 0.2s, transform 0.2s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  min-width: 80px;
+  min-height: 40px;
+}
+
+.lang-btn:hover {
+  background: #0056b3;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.lang-icon {
+  font-size: 1.1em;
+}
+
+/* Arabic text direction */
+[data-lang="ar"] {
+  direction: rtl;
+  text-align: right;
+}
+
+[data-lang="ar"] .lang-btn {
+  flex-direction: row-reverse;
+}
 body {
   font-family: Arial, sans-serif;
   margin: 0;

@@ -31,7 +31,204 @@ function showPage(pageId) {
   });
   const activeBtn = document.getElementById('nav-' + pageId);
   if (activeBtn) activeBtn.classList.add('active');
+  
+  // Update translations for the new page
+  if (currentLanguage === 'ar') {
+    updatePageContent(pageId, translations.ar);
+  }
 }
+
+// Translation system
+let currentLanguage = 'en';
+
+const translations = {
+  en: {
+    // Navigation
+    'nav-home': 'Home',
+    'nav-about': 'About',
+    'nav-map': 'Map',
+    'nav-community': 'Community',
+    'nav-login': 'Login',
+    'nav-signup': 'Sign Up',
+    'nav-profile': 'Profile',
+    
+    // Home page
+    'home-title': 'Welcome to Enqaz SOS App',
+    'sos-btn': 'SOS',
+    'normal-btn': 'Normal',
+    
+    // Login/Signup
+    'login-title': 'Login',
+    'signup-title': 'Sign Up',
+    'username': 'Username',
+    'password': 'Password',
+    'email': 'Email',
+    'login-placeholder': 'Enter your username',
+    'password-placeholder': 'Enter your password',
+    'signup-username-placeholder': 'Choose a username',
+    'signup-email-placeholder': 'Enter your email',
+    'signup-password-placeholder': 'Create a password',
+    'login-submit': 'Login',
+    'signup-submit': 'Sign Up',
+    'no-account': "Don't have an account?",
+    'have-account': 'Already have an account?',
+    'signup-link': 'Sign up',
+    'login-link': 'Login',
+    
+    // Community
+    'community-title': 'Community Hub',
+    'guest': 'Guest',
+    'offline': 'Offline',
+    'online': 'Online',
+    'go-online': 'Go Online',
+    'go-offline': 'Go Offline',
+    'users-online': 'Users Online',
+    'my-chats': 'My Chats',
+    'recent-alerts': 'Recent Alerts',
+    'refresh': '🔄 Refresh',
+    'chat': '💬 Chat',
+    'profile': '👤 Profile',
+    'my-conversations': 'My Conversations',
+    'recent-community-alerts': 'Recent Community Alerts',
+    'chat-with-user': 'Chat with User',
+    'type-message': 'Type your message...',
+    'send': 'Send',
+    
+    // Map
+    'map-title': 'Doha Emergency Map',
+    'map-subtitle': 'Interactive map of Doha, Qatar with emergency facilities and cultural landmarks',
+    'load-interactive': 'Load Interactive Map',
+    'test-interactive': 'Test Interactive',
+    'show-facilities': 'Show Facilities',
+    'show-photo': 'Show Photo',
+    'doha-facilities': 'Doha Emergency Facilities & Landmarks',
+    'hamad-medical': 'Hamad Medical Corporation',
+    'main-hospital': 'Main Hospital Complex',
+    'doha-police': 'Doha Police Station',
+    'central-police': 'Central Police Station',
+    'civil-defense': 'Civil Defense',
+    'fire-emergency': 'Fire & Emergency Services',
+    'hamad-airport': 'Hamad International Airport',
+    'emergency-services': 'Emergency Services Available',
+    'islamic-art': 'Museum of Islamic Art',
+    'cultural-landmark': 'Cultural Landmark',
+    'al-koot-fort': 'Al Koot Fort',
+    'historical-site': 'Historical Site',
+    'call-hospital': 'Call Hospital',
+    'call-police': 'Call Police',
+    'call-fire': 'Call Fire Services',
+    'contact-airport': 'Contact Airport',
+    'get-directions': 'Get Directions',
+    
+    // Normal cases
+    'normal-cases': 'Normal Help Cases',
+    'lost-item': 'Lost Item',
+    'minor-injury': 'Minor Injury',
+    'need-directions': 'Need Directions',
+    'flat-tire': 'Flat Tire',
+    'locked-out': 'Locked Out',
+    'power-outage': 'Power Outage',
+    'water-leak': 'Water Leak',
+    'lost-child': 'Lost Child',
+    'stuck-elevator': 'Stuck in Elevator',
+    'pet-lost': 'Lost Pet',
+    'car-accident': 'Car Accident',
+    'medical-emergency': 'Medical Emergency'
+  },
+  ar: {
+    // Navigation
+    'nav-home': 'الرئيسية',
+    'nav-about': 'حول',
+    'nav-map': 'الخريطة',
+    'nav-community': 'المجتمع',
+    'nav-login': 'تسجيل الدخول',
+    'nav-signup': 'إنشاء حساب',
+    'nav-profile': 'الملف الشخصي',
+    
+    // Home page
+    'home-title': 'مرحباً بك في تطبيق إنقاذ SOS',
+    'sos-btn': 'SOS',
+    'normal-btn': 'عادي',
+    
+    // Login/Signup
+    'login-title': 'تسجيل الدخول',
+    'signup-title': 'إنشاء حساب',
+    'username': 'اسم المستخدم',
+    'password': 'كلمة المرور',
+    'email': 'البريد الإلكتروني',
+    'login-placeholder': 'أدخل اسم المستخدم',
+    'password-placeholder': 'أدخل كلمة المرور',
+    'signup-username-placeholder': 'اختر اسم مستخدم',
+    'signup-email-placeholder': 'أدخل بريدك الإلكتروني',
+    'signup-password-placeholder': 'أنشئ كلمة مرور',
+    'login-submit': 'تسجيل الدخول',
+    'signup-submit': 'إنشاء حساب',
+    'no-account': 'ليس لديك حساب؟',
+    'have-account': 'لديك حساب بالفعل؟',
+    'signup-link': 'إنشاء حساب',
+    'login-link': 'تسجيل الدخول',
+    
+    // Community
+    'community-title': 'مركز المجتمع',
+    'guest': 'زائر',
+    'offline': 'غير متصل',
+    'online': 'متصل',
+    'go-online': 'اذهب متصلاً',
+    'go-offline': 'اذهب غير متصل',
+    'users-online': 'المستخدمون المتصلون',
+    'my-chats': 'محادثاتي',
+    'recent-alerts': 'التنبيهات الأخيرة',
+    'refresh': '🔄 تحديث',
+    'chat': '💬 محادثة',
+    'profile': '👤 الملف الشخصي',
+    'my-conversations': 'محادثاتي',
+    'recent-community-alerts': 'تنبيهات المجتمع الأخيرة',
+    'chat-with-user': 'محادثة مع المستخدم',
+    'type-message': 'اكتب رسالتك...',
+    'send': 'إرسال',
+    
+    // Map
+    'map-title': 'خريطة الدوحة للطوارئ',
+    'map-subtitle': 'خريطة تفاعلية للدوحة، قطر مع مرافق الطوارئ والمعالم الثقافية',
+    'load-interactive': 'تحميل الخريطة التفاعلية',
+    'test-interactive': 'اختبار التفاعلية',
+    'show-facilities': 'إظهار المرافق',
+    'show-photo': 'إظهار الصورة',
+    'doha-facilities': 'مرافق الدوحة للطوارئ والمعالم',
+    'hamad-medical': 'مؤسسة حمد الطبية',
+    'main-hospital': 'المجمع الطبي الرئيسي',
+    'doha-police': 'مركز شرطة الدوحة',
+    'central-police': 'مركز الشرطة المركزي',
+    'civil-defense': 'الدفاع المدني',
+    'fire-emergency': 'خدمات الإطفاء والطوارئ',
+    'hamad-airport': 'مطار حمد الدولي',
+    'emergency-services': 'خدمات الطوارئ متاحة',
+    'islamic-art': 'متحف الفن الإسلامي',
+    'cultural-landmark': 'معلم ثقافي',
+    'al-koot-fort': 'قلعة الكوت',
+    'historical-site': 'موقع تاريخي',
+    'call-hospital': 'اتصال بالمستشفى',
+    'call-police': 'اتصال بالشرطة',
+    'call-fire': 'اتصال بالإطفاء',
+    'contact-airport': 'اتصال بالمطار',
+    'get-directions': 'الحصول على الاتجاهات',
+    
+    // Normal cases
+    'normal-cases': 'حالات المساعدة العادية',
+    'lost-item': 'فقدان شيء',
+    'minor-injury': 'إصابة بسيطة',
+    'need-directions': 'الحاجة إلى الاتجاهات',
+    'flat-tire': 'إطار مسطح',
+    'locked-out': 'مغلق خارجاً',
+    'power-outage': 'انقطاع الكهرباء',
+    'water-leak': 'تسرب المياه',
+    'lost-child': 'طفل مفقود',
+    'stuck-elevator': 'عالق في المصعد',
+    'pet-lost': 'حيوان أليف مفقود',
+    'car-accident': 'حادث سيارة',
+    'medical-emergency': 'طوارئ طبية'
+  }
+};
 
 // Sample users for demonstration
 const sampleUsers = [
@@ -64,8 +261,126 @@ const sampleUsers = [
 
 console.log('sampleUsers defined with', sampleUsers.length, 'users');
 
+// Translation functions
+function toggleLanguage() {
+  alert('Language button clicked! Current language: ' + currentLanguage);
+  currentLanguage = currentLanguage === 'en' ? 'ar' : 'en';
+  document.documentElement.setAttribute('data-lang', currentLanguage);
+  document.getElementById('current-lang').textContent = currentLanguage.toUpperCase();
+  updatePageTranslations();
+}
+
+function updatePageTranslations() {
+  const lang = translations[currentLanguage];
+  
+  // Update navigation
+  document.getElementById('nav-home').textContent = lang['nav-home'];
+  document.getElementById('nav-about').textContent = lang['nav-about'];
+  document.getElementById('nav-map').textContent = lang['nav-map'];
+  document.getElementById('nav-community').textContent = lang['nav-community'];
+  document.getElementById('nav-login').textContent = lang['nav-login'];
+  document.getElementById('nav-signup').textContent = lang['nav-signup'];
+  document.getElementById('nav-profile').textContent = lang['nav-profile'];
+  
+  // Update current page content
+  const currentPage = document.querySelector('.page[style*="block"]') || document.getElementById('home');
+  if (currentPage) {
+    updatePageContent(currentPage.id, lang);
+  }
+}
+
+function updatePageContent(pageId, lang) {
+  switch(pageId) {
+    case 'home':
+      document.querySelector('#home h1').textContent = lang['home-title'];
+      document.getElementById('emergency-sos-btn').textContent = lang['sos-btn'];
+      document.getElementById('normal-sos-btn').textContent = lang['normal-btn'];
+      break;
+      
+    case 'login':
+      document.querySelector('#login h1').textContent = lang['login-title'];
+      document.querySelector('#login label[for="login-username"]').textContent = lang['username'];
+      document.querySelector('#login label[for="login-password"]').textContent = lang['password'];
+      document.getElementById('login-username').placeholder = lang['login-placeholder'];
+      document.getElementById('login-password').placeholder = lang['password-placeholder'];
+      document.querySelector('#login button[type="submit"]').textContent = lang['login-submit'];
+      document.querySelector('#login .form-hint').innerHTML = lang['no-account'] + ' <a href="#" onclick="showPage(\'signup\');return false;">' + lang['signup-link'] + '</a>';
+      break;
+      
+    case 'signup':
+      document.querySelector('#signup h1').textContent = lang['signup-title'];
+      document.querySelector('#signup label[for="signup-username"]').textContent = lang['username'];
+      document.querySelector('#signup label[for="signup-email"]').textContent = lang['email'];
+      document.querySelector('#signup label[for="signup-password"]').textContent = lang['password'];
+      document.getElementById('signup-username').placeholder = lang['signup-username-placeholder'];
+      document.getElementById('signup-email').placeholder = lang['signup-email-placeholder'];
+      document.getElementById('signup-password').placeholder = lang['signup-password-placeholder'];
+      document.querySelector('#signup button[type="submit"]').textContent = lang['signup-submit'];
+      document.querySelector('#signup .form-hint').innerHTML = lang['have-account'] + ' <a href="#" onclick="showPage(\'login\');return false;">' + lang['login-link'] + '</a>';
+      break;
+      
+    case 'community':
+      document.querySelector('#community h1').textContent = lang['community-title'];
+      document.getElementById('current-user-name').textContent = lang['guest'];
+      document.getElementById('user-status').textContent = lang['offline'];
+      document.getElementById('toggle-online-status').textContent = lang['go-online'];
+      
+      // Update tab buttons
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      tabButtons[0].textContent = '👥 ' + lang['users-online'];
+      tabButtons[1].textContent = '💬 ' + lang['my-chats'];
+      tabButtons[2].textContent = '🚨 ' + lang['recent-alerts'];
+      
+      // Update headers
+      document.querySelector('#users-tab h2').innerHTML = lang['users-online'] + ' (<span id="online-count">0</span>)';
+      document.querySelector('#chats-tab h2').textContent = lang['my-conversations'];
+      document.querySelector('#alerts-tab h2').textContent = lang['recent-community-alerts'];
+      
+      // Update buttons
+      document.querySelectorAll('.refresh-btn').forEach(btn => {
+        if (btn.textContent.includes('🔄')) {
+          btn.textContent = lang['refresh'];
+        }
+      });
+      
+      // Update chat modal
+      document.getElementById('chat-title').textContent = lang['chat-with-user'];
+      document.getElementById('chat-input').placeholder = lang['type-message'];
+      document.querySelector('.send-btn').textContent = lang['send'];
+      break;
+      
+    case 'map':
+      document.querySelector('#map h1').textContent = lang['map-title'];
+      document.querySelector('#map p').textContent = lang['map-subtitle'];
+      document.getElementById('refresh-map-btn').textContent = lang['load-interactive'];
+      document.getElementById('test-map-btn').textContent = lang['test-interactive'];
+      document.getElementById('fallback-btn').textContent = lang['show-facilities'];
+      document.getElementById('photo-btn').textContent = lang['show-photo'];
+      
+      // Update facilities
+      document.querySelector('.facilities-list h2').textContent = lang['doha-facilities'];
+      break;
+      
+    case 'normal-cases':
+      document.querySelector('#normal-cases h1').textContent = lang['normal-cases'];
+      break;
+  }
+}
+
 // Show home page by default
 showPage('home');
+
+// Test if language button exists
+setTimeout(() => {
+  const langBtn = document.getElementById('translation-toggle');
+  console.log('Language button found:', langBtn);
+  if (langBtn) {
+    console.log('Language button is visible:', langBtn.offsetParent !== null);
+    langBtn.style.border = '5px solid green';
+  } else {
+    console.error('Language button not found!');
+  }
+}, 1000);
 
 
 
@@ -499,9 +814,11 @@ function loadOnlineUsers() {
 function renderUsersGrid() {
   const usersGrid = document.getElementById('users-grid');
   if (!usersGrid) return;
-  
   usersGrid.innerHTML = '';
-  
+  if (!onlineUsers || onlineUsers.length === 0) {
+    usersGrid.innerHTML = '<div style="color:red; font-weight:bold; padding:1em;">No users found. (Debug: onlineUsers is empty)</div>';
+    return;
+  }
   onlineUsers.forEach(user => {
     const userCard = document.createElement('div');
     userCard.className = 'user-card';

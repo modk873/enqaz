@@ -11,60 +11,65 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </head>
 <body>
+  <!-- Translation Button -->
+  <div id="translation-toggle" class="translation-toggle" style="position: fixed; top: 20px; right: 20px; z-index: 9999; background: red; padding: 10px; border: 5px solid yellow;">
+    <button onclick="toggleLanguage()" class="lang-btn" style="background: red !important; color: white !important; border: 3px solid yellow !important; padding: 15px; font-size: 16px; font-weight: bold; cursor: pointer; min-width: 100px; min-height: 50px;"
+      data-en="EN" data-ar="عربي">EN ��</button>
+  </div>
+  
   <div id="menu-backdrop" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.25);z-index:1000;"></div>
   <button id="menu-toggle" aria-label="Open menu" style="position:fixed;top:1em;left:1em;z-index:1001;font-size:2em;background:none;border:none;cursor:pointer;">☰</button>
   <nav id="main-nav" class="side-nav" style="display:none;">
     <button id="menu-close" aria-label="Close menu" style="font-size:2em;background:none;border:none;cursor:pointer;float:right;">×</button>
+    <button onclick="toggleLanguage()" class="lang-btn" style="background: red; color: white; border: 3px solid yellow; padding: 10px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-bottom: 1em;" data-en="Arabic" data-ar="English">Arabic 🌐</button>
     <div class="nav-links">
-      <button id="nav-home" onclick="showPage('home');closeMenu();">Home</button>
-      <button id="nav-about" onclick="showPage('about');closeMenu();">About</button>
-      <button id="nav-map" onclick="showPage('map');closeMenu();">Map</button>
-      <button id="nav-community" onclick="showPage('community');closeMenu();">Community</button>
-      <button id="nav-login" onclick="showPage('login');closeMenu();">Login</button>
-      <button id="nav-signup" onclick="showPage('signup');closeMenu();">Sign Up</button>
-      <button id="nav-profile" onclick="showPage('profile');closeMenu();">Profile</button>
-        <button class="btn" onclick="toggleLanguage()">🌐 Switch Language</button>
-
+      <button id="nav-home" onclick="showPage('home');closeMenu();" data-en="Home" data-ar="الرئيسية">Home</button>
+      <button id="nav-about" onclick="showPage('about');closeMenu();" data-en="About" data-ar="حول">About</button>
+      <button id="nav-map" onclick="showPage('map');closeMenu();" data-en="Map" data-ar="الخريطة">Map</button>
+      <button id="nav-community" onclick="showPage('community');closeMenu();" data-en="Community" data-ar="المجتمع">Community</button>
+      <button id="nav-login" onclick="showPage('login');closeMenu();" data-en="Login" data-ar="تسجيل الدخول">Login</button>
+      <button id="nav-signup" onclick="showPage('signup');closeMenu();" data-en="Sign Up" data-ar="إنشاء حساب">Sign Up</button>
+      <button id="nav-profile" onclick="showPage('profile');closeMenu();" data-en="Profile" data-ar="الملف الشخصي">Profile</button>
     </div>
   </nav>
   <main>
     <section id="home" class="page"> 
-      <h1>Welcome to Enqaz SOS App</h1>
+      <h1 data-en="Welcome to Enqaz SOS App" data-ar="مرحباً بك في تطبيق إنقاذ SOS">Welcome to Enqaz SOS App</h1>
       <div class="sos-buttons column-layout">
-        <button id="emergency-sos-btn" class="sos-btn emergency sos-big">SOS</button>
-        <button id="normal-sos-btn" class="sos-btn normal">Normal</button>
+        <button id="emergency-sos-btn" class="sos-btn emergency sos-big" data-en="SOS" data-ar="نجدة">SOS</button>
+        <button id="normal-sos-btn" class="sos-btn normal" data-en="Normal" data-ar="عادي">Normal</button>
       </div>
       <div id="sos-message" class="message"></div>
     </section>
     <section id="login" class="page" style="display:none"> 
-      <h1>Login</h1> 
+      <h1 data-en="Login" data-ar="تسجيل الدخول">Login</h1> 
       <form id="login-form">
-        <label for="login-username">Username</label>
-        <input id="login-username" type="text" placeholder="Enter your username" required />
-        <label for="login-password">Password</label>
-        <input id="login-password" type="password" placeholder="Enter your password" required />
-        <button type="submit">Login</button>
-        <div class="form-hint">Don't have an account? <a href="#" onclick="showPage('signup');return false;">Sign up</a></div>
+        <label for="login-username" data-en="Username" data-ar="اسم المستخدم">Username</label>
+        <input id="login-username" type="text" placeholder="Enter your username" required data-en="Enter your username" data-ar="أدخل اسم المستخدم"/>
+        <label for="login-password" data-en="Password" data-ar="كلمة المرور">Password</label>
+        <input id="login-password" type="password" placeholder="Enter your password" required data-en="Enter your password" data-ar="أدخل كلمة المرور"/>
+        <button type="submit" data-en="Login" data-ar="تسجيل الدخول">Login</button>
+        <div class="form-hint" data-en="Don't have an account?" data-ar="ليس لديك حساب؟">Don't have an account? <a href="#" onclick="showPage('signup');return false;" data-en="Sign up" data-ar="إنشاء حساب">Sign up</a></div>
       </form>
       <div id="login-message" class="message"></div>
     </section>
     <section id="signup" class="page" style="display:none"> 
-      <h1>Sign Up</h1> 
+      <h1 data-en="Sign Up" data-ar="إنشاء حساب">Sign Up</h1> 
       <form id="signup-form">
-        <label for="signup-username">Username</label>
-        <input id="signup-username" type="text" placeholder="Choose a username" required />
-        <label for="signup-email">Email</label>
-        <input id="signup-email" type="email" placeholder="Enter your email" required />
-        <label for="signup-password">Password</label>
-        <input id="signup-password" type="password" placeholder="Create a password" required />
-        <button type="submit">Sign Up</button>
-        <div class="form-hint">Already have an account? <a href="#" onclick="showPage('login');return false;">Login</a></div>
+        <label for="signup-username" data-en="Username" data-ar="اسم المستخدم">Username</label>
+        <input id="signup-username" type="text" placeholder="Choose a username" required data-en="Choose a username" data-ar="اختر اسم مستخدم"/>
+        <label for="signup-email" data-en="Email" data-ar="البريد الإلكتروني">Email</label>
+        <input id="signup-email" type="email" placeholder="Enter your email" required data-en="Enter your email" data-ar="أدخل بريدك الإلكتروني"/>
+        <label for="signup-password" data-en="Password" data-ar="كلمة المرور">Password</label>
+        <input id="signup-password" type="password" placeholder="Create a password" required data-en="Create a password" data-ar="أنشئ كلمة مرور"/>
+        <button type="submit" data-en="Sign Up" data-ar="إنشاء حساب">Sign Up</button>
+        <div class="form-hint" data-en="Already have an account?" data-ar="لديك حساب بالفعل؟">Already have an account? <a href="#" onclick="showPage('login');return false;" data-en="Login" data-ar="تسجيل الدخول">Login</a></div>
       </form>
       <div id="signup-message" class="message"></div>
     </section>
 
     <section id="community" class="page" style="display:none"> 
-      <h1>Community Hub</h1>
+      <h1 data-en="Community Hub" data-ar="مركز المجتمع">Community Hub</h1>
       
       <!-- User Status Bar -->
       <div class="user-status-bar">
@@ -73,22 +78,34 @@
           <span id="current-user-name">Guest</span>
           <span class="user-status" id="user-status">Offline</span>
         </div>
-        <button id="toggle-online-status" onclick="toggleOnlineStatus()">Go Online</button>
+        <button id="toggle-online-status" onclick="toggleOnlineStatus()" data-en="Go Online" data-ar="اذهب متصلاً">Go Online</button>
       </div>
 
       <!-- Community Tabs -->
       <div class="community-tabs">
-        <button class="tab-btn active" onclick="switchTab('users')">👥 Users Online</button>
-        <button class="tab-btn" onclick="switchTab('chats')">💬 My Chats</button>
-        <button class="tab-btn" onclick="switchTab('alerts')">🚨 Recent Alerts</button>
+        <button class="tab-btn active" onclick="switchTab('users')" data-en="Users Online" data-ar="المستخدمون المتصلون">👥 Users Online</button>
+        <button class="tab-btn" onclick="switchTab('chats')" data-en="My Chats" data-ar="محادثاتي">💬 My Chats</button>
+        <button class="tab-btn" onclick="switchTab('alerts')" data-en="Recent Alerts" data-ar="التنبيهات الأخيرة">🚨 Recent Alerts</button>
       </div>
 
       <!-- Users Online Tab -->
       <div id="users-tab" class="tab-content active">
         <div class="users-header">
-          <h2>Users Online (<span id="online-count">0</span>)</h2>
-          <button onclick="refreshUsersList()" class="refresh-btn">🔄 Refresh</button>
+          <h2 data-en="Users Online" data-ar="المستخدمون المتصلون">Users Online (<span id="online-count">0</span>)</h2>
+          <button onclick="refreshUsersList()" class="refresh-btn" data-en="Refresh" data-ar="تحديث">🔄 Refresh</button>
         </div>
+        <ul id="static-users-list" style="margin:1em 0 0 0; padding:0 0 0 1.5em; font-size:1.1em; color:#333;">
+          <li>Ahmed Hassan</li>
+          <li>Sarah Johnson</li>
+          <li>Omar Khalil</li>
+          <li>Layla Ahmed</li>
+          <li>David Chen</li>
+          <li>Aisha Mohammed</li>
+          <li>Khalid Al-Rashid</li>
+          <li>Noora Al-Zahra</li>
+          <li>Mariam Al-Otaibi</li>
+          <li>Hassan Al-Ghamdi</li>
+        </ul>
         <div class="users-grid" id="users-grid">
           <!-- Users will be populated here -->
         </div>
@@ -97,8 +114,8 @@
       <!-- My Chats Tab -->
       <div id="chats-tab" class="tab-content">
         <div class="chats-header">
-          <h2>My Conversations</h2>
-          <button onclick="refreshChats()" class="refresh-btn">🔄 Refresh</button>
+          <h2 data-en="My Conversations" data-ar="محادثاتي">My Conversations</h2>
+          <button onclick="refreshChats()" class="refresh-btn" data-en="Refresh" data-ar="تحديث">🔄 Refresh</button>
         </div>
         <div class="chats-list" id="chats-list">
           <!-- Chat conversations will be populated here -->
@@ -108,7 +125,7 @@
       <!-- Recent Alerts Tab -->
       <div id="alerts-tab" class="tab-content">
         <div class="alerts-header">
-          <h2>Recent Community Alerts</h2>
+          <h2 data-en="Recent Community Alerts" data-ar="تنبيهات المجتمع الأخيرة">Recent Community Alerts</h2>
         </div>
         <div class="alerts-list" id="alerts-list">
           <!-- Alerts will be populated here -->
@@ -133,75 +150,59 @@
       </div>
     </section>
     <section id="normal-cases" class="page" style="display:none">
-      <h1>Normal Help Cases</h1>
+      <h1 data-en="Normal Help Cases" data-ar="حالات المساعدة العادية">Normal Help Cases</h1>
       <div class="normal-cards">
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('lost-item')">
-              <span class="normal-icon">🔎</span> Lost Item
-            </div>
+            <div class="case-title-clickable" onclick="showCaseDetail('lost-item')" data-en="Lost Item" data-ar="فقدان شيء"><span class="normal-icon">🔎</span> Lost Item</div>
           </div>
 
         </div>
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('minor-injury')">
-              <span class="normal-icon">🩹</span> Minor Injury
-            </div>
+            <div class="case-title-clickable" onclick="showCaseDetail('minor-injury')" data-en="Minor Injury" data-ar="إصابة بسيطة"><span class="normal-icon">🩹</span> Minor Injury</div>
           </div>
 
         </div>
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('need-directions')">
-              <span class="normal-icon">🗺️</span> Need Directions
-            </div>
+            <div class="case-title-clickable" onclick="showCaseDetail('need-directions')" data-en="Need Directions" data-ar="الحاجة إلى الاتجاهات"><span class="normal-icon">🗺️</span> Need Directions</div>
           </div>
 
         </div>
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('flat-tire')">
-              <span class="normal-icon">🚗</span> Flat Tire
-            </div>
+            <div class="case-title-clickable" onclick="showCaseDetail('flat-tire')" data-en="Flat Tire" data-ar="إطار مسطح"><span class="normal-icon">🚗</span> Flat Tire</div>
           </div>
 
         </div>
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('locked-out')">
-              <span class="normal-icon">🔑</span> Locked Out
-            </div>
+            <div class="case-title-clickable" onclick="showCaseDetail('locked-out')" data-en="Locked Out" data-ar="مغلق خارجاً"><span class="normal-icon">🔑</span> Locked Out</div>
           </div>
 
         </div>
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('power-outage')">
-              <span class="normal-icon">💡</span> Power Outage
-            </div>
+            <div class="case-title-clickable" onclick="showCaseDetail('power-outage')" data-en="Power Outage" data-ar="انقطاع الكهرباء"><span class="normal-icon">💡</span> Power Outage</div>
           </div>
 
         </div>
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('water-leak')">
-              <span class="normal-icon">💧</span> Water Leak
-            </div>
+            <div class="case-title-clickable" onclick="showCaseDetail('water-leak')" data-en="Water Leak" data-ar="تسرب المياه"><span class="normal-icon">💧</span> Water Leak</div>
           </div>
 
         </div>
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('lost-child')">
-              <span class="normal-icon">🧒</span> Lost Child
-            </div>
+            <div class="case-title-clickable" onclick="showCaseDetail('lost-child')" data-en="Lost Child" data-ar="طفل مفقود"><span class="normal-icon">🧒</span> Lost Child</div>
           </div>
 
             <p><strong>Solution:</strong></p>
             <ol>
               <li>Alert nearby people and staff immediately.</li>
-              <li>Describe the child’s appearance and clothing.</li>
+              <li>Describe the child's appearance and clothing.</li>
               <li>Contact security or the police if not found quickly.</li>
             </ol>
             <button class="send-alert-btn" onclick="sendNormalCaseAlert('Lost Child')">Request Help</button>
@@ -210,22 +211,18 @@
         </div>
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('stuck-elevator')">
-              <span class="normal-icon">🛗</span> Stuck in Elevator
-            </div>
+            <div class="case-title-clickable" onclick="showCaseDetail('stuck-elevator')" data-en="Stuck in Elevator" data-ar="مغلق في المصعد"><span class="normal-icon">🛗</span> Stuck in Elevator</div>
           </div>
 
         </div>
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('pet-lost')">
-              <span class="normal-icon">🐾</span> Lost Pet
-            </div>
+            <div class="case-title-clickable" onclick="showCaseDetail('pet-lost')" data-en="Lost Pet" data-ar="حيوان مفقود"><span class="normal-icon">🐾</span> Lost Pet</div>
           </div>
 
             <p><strong>Solution:</strong></p>
             <ol>
-              <li>Search the immediate area and call your pet’s name.</li>
+              <li>Search the immediate area and call your pet's name.</li>
               <li>Ask neighbors and check with local shelters.</li>
               <li>Post on social media or community boards.</li>
             </ol>
@@ -236,9 +233,7 @@
         
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('car-accident')">
-              <span class="normal-icon">🚗</span> Car Accident
-            </div>
+            <div class="case-title-clickable" onclick="showCaseDetail('car-accident')" data-en="Car Accident" data-ar="حادثة سيارة"><span class="normal-icon">🚗</span> Car Accident</div>
           </div>
           <div class="case-details" id="case-car-accident" style="display:none">
             <p><strong>Solution:</strong></p>
@@ -254,9 +249,7 @@
         
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('medical-emergency')">
-              <span class="normal-icon">🏥</span> Medical Emergency
-            </div>
+            <div class="case-title-clickable" onclick="showCaseDetail('medical-emergency')" data-en="Medical Emergency" data-ar="طوارئ طبية"><span class="normal-icon">🏥</span> Medical Emergency</div>
           </div>
           <div class="case-details" id="case-medical-emergency" style="display:none">
             <p><strong>Solution:</strong></p>
@@ -272,9 +265,7 @@
         
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('fire-emergency')">
-              <span class="normal-icon">🔥</span> Fire Emergency
-            </div>
+            <div class="case-title-clickable" onclick="showCaseDetail('fire-emergency')" data-en="Fire Emergency" data-ar="حريق طوارئ"><span class="normal-icon">🔥</span> Fire Emergency</div>
           </div>
           <div class="case-details" id="case-fire-emergency" style="display:none">
             <p><strong>Solution:</strong></p>
@@ -290,9 +281,7 @@
         
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('natural-disaster')">
-              <span class="normal-icon">🌪️</span> Natural Disaster
-            </div>
+            <div class="case-title-clickable" onclick="showCaseDetail('natural-disaster')" data-en="Natural Disaster" data-ar="كوارث طبيعية"><span class="normal-icon">🌪️</span> Natural Disaster</div>
           </div>
           <div class="case-details" id="case-natural-disaster" style="display:none">
             <p><strong>Solution:</strong></p>
@@ -308,9 +297,7 @@
         
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('cyber-security')">
-              <span class="normal-icon">💻</span> Cyber Security Issue
-            </div>
+            <div class="case-title-clickable" onclick="showCaseDetail('cyber-security')" data-en="Cyber Security Issue" data-ar="مشاكل أمن الكمبيوتر"><span class="normal-icon">💻</span> Cyber Security Issue</div>
           </div>
           <div class="case-details" id="case-cyber-security" style="display:none">
             <p><strong>Solution:</strong></p>
@@ -326,9 +313,7 @@
         
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('harassment')">
-              <span class="neutral-icon">🚨</span> Harassment
-            </div>
+            <div class="case-title-clickable" onclick="showCaseDetail('harassment')" data-en="Harassment" data-ar="التهديدات"><span class="neutral-icon">🚨</span> Harassment</div>
           </div>
           <div class="case-details" id="case-harassment" style="display:none">
             <p><strong>Solution:</strong></p>
@@ -344,9 +329,7 @@
         
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('food-poisoning')">
-              <span class="normal-icon">🤢</span> Food Poisoning
-            </div>
+            <div class="case-title-clickable" onclick="showCaseDetail('food-poisoning')" data-en="Food Poisoning" data-ar="سرطان الطعام"><span class="normal-icon">🤢</span> Food Poisoning</div>
           </div>
           <div class="case-details" id="case-food-poisoning" style="display:none">
             <p><strong>Solution:</strong></p>
@@ -366,14 +349,14 @@
     <section id="profile" class="page" style="display:none">
       <h1>User Profile & Registration</h1>
       <form id="profile-form">
-        <label for="profile-name">Full Name</label>
+        <label for="profile-name" data-en="Full Name" data-ar="الاسم الكامل">Full Name</label>
         <input id="profile-name" type="text" placeholder="Enter your full name" required />
 
-        <label for="profile-photo">Photo</label>
+        <label for="profile-photo" data-en="Photo" data-ar="الصورة">Photo</label>
         <input id="profile-photo" type="file" accept="image/*" />
         <img id="profile-photo-preview" src="" alt="Photo Preview" style="display:none;max-width:120px;margin:1em 0;" />
 
-        <label>Emergency Contacts (up to 3)</label>
+        <label data-en="Emergency Contacts (up to 3)" data-ar="جهات الاتصال (إلى 3)">Emergency Contacts (up to 3)</label>
         <div id="contacts-list">
           <div class="contact-row">
             <input type="text" class="contact-name" placeholder="Contact Name" />
@@ -382,7 +365,7 @@
         </div>
         <button type="button" id="add-contact-btn">Add Another Contact</button>
 
-        <label>Location</label>
+        <label data-en="Location" data-ar="الموقع">Location</label>
         <div style="display:flex;gap:1em;align-items:center;">
           <input id="profile-location" type="text" placeholder="Location (auto or manual)" readonly />
           <button type="button" id="get-location-btn">Get Current Location</button>
@@ -393,49 +376,51 @@
       <div id="profile-message" class="message"></div>
     </section>
     <section id="about" class="page" style="display:none">
-      <h1>About Enqaz SOS App</h1>
+      <h1 data-en="About Enqaz SOS App" data-ar="حول تطبيق إنقاذ إنقاذ">About Enqaz SOS App</h1>
       <div class="about-content">
         <div class="about-icon">🚨</div>
-        <h2>Our Mission</h2>
+        <h2 data-en="Our Mission" data-ar="مهمتنا">Our Mission</h2>
         <p>Enqaz SOS is a simple and smart safety tool designed to help people during emergencies. We connect users with the closest available help, whether it's volunteers, police, or medical services.</p>
         
         <div class="features-grid">
           <div class="feature-item">
             <span class="feature-icon">📱</span>
-            <h3>Quick SOS</h3>
-            <p>Send emergency alerts with your location and personal details instantly.</p>
+            <h3 data-en="Quick SOS" data-ar="SOS سريع">Quick SOS</h3>
+            <p data-en="Send emergency alerts with your location and personal details instantly." data-ar="إرسال تنبيهات الطوارئ مع موقعك والتفاصيل الشخصية بشكل آلي.">Send emergency alerts with your location and personal details instantly.</p>
           </div>
           <div class="feature-item">
             <span class="feature-icon">🗺️</span>
-            <h3>Smart Location</h3>
-            <p>Find nearby volunteers and emergency services on the map.</p>
+            <h3 data-en="Smart Location" data-ar="الموقع الذكي">Smart Location</h3>
+            <p data-en="Find nearby volunteers and emergency services on the map." data-ar="العثور على متطوعين وخدمات الطوارئ القريبة في الخريطة.">Find nearby volunteers and emergency services on the map.</p>
           </div>
           <div class="feature-item">
             <span class="feature-icon">👥</span>
-            <h3>Community Help</h3>
-            <p>Connect with local volunteers for immediate assistance.</p>
+            <h3 data-en="Community Help" data-ar="مساعدة المجتمع">Community Help</h3>
+            <p data-en="Connect with local volunteers for immediate assistance." data-ar="الاتصال بمتطوعين في المجتمع للمساعدة الفورية.">Connect with local volunteers for immediate assistance.</p>
           </div>
           <div class="feature-item">
             <span class="feature-icon">📞</span>
-            <h3>Direct Contact</h3>
-            <p>Call or message volunteers directly for quick help.</p>
+            <h3 data-en="Direct Contact" data-ar="الاتصال المباشر">Direct Contact</h3>
+            <p data-en="Call or message volunteers directly for quick help." data-ar="اتصل أو ارسل رسالة للمتطوعين للمساعدة السريعة.">Call or message volunteers directly for quick help.</p>
           </div>
         </div>
         
         <div class="about-footer">
-          <p><strong>Main Goal:</strong> Fast help, safety, and saving lives.</p>
+          <p><strong data-en="Main Goal:" data-ar="الهدف الرئيسي:">Main Goal:</strong> Fast help, safety, and saving lives.</p>
         </div>
       </div>
     </section>
     
     <section id="map" class="page" style="display:none">
-      <h1>Emergency Map</h1>
+      <h1 data-en="Doha Emergency Map" data-ar="خريطة الطوارئ في الدوحة">Doha Emergency Map</h1>
+      <p style="text-align: center; color: #666; margin-bottom: 20px;" data-en="Interactive map of Doha, Qatar with emergency facilities and cultural landmarks" data-ar="خريطة متقدمة لدوحة، قطر، تضم أماكن الطوارئ والمعالم الثقافية">Interactive map of Doha, Qatar with emergency facilities and cultural landmarks</p>
       <div class="static-map">
         <div id="map-loading" class="map-loading">Loading map...</div>
         <div id="emergency-map" class="map-container">
-          <img src="https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?w=600&h=400&fit=crop&crop=center" 
-               alt="Emergency Map" 
-               style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;" />
+          <img src="images/doha-map.jpg" 
+               alt="Doha Emergency Map - Hand-drawn map of Doha, Qatar showing landmarks, cultural sites, and emergency facilities" 
+               style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;" 
+               onerror="this.src='https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?w=600&h=400&fit=crop&crop=center'" />
         </div>
         <button id="refresh-map-btn" onclick="initEmergencyMap()" class="refresh-btn">Load Interactive Map</button>
         <button id="test-map-btn" onclick="testMap()" class="refresh-btn" style="background: #28a745; margin-left: 10px;">Test Interactive</button>
@@ -444,31 +429,58 @@
       </div>
       
       <div class="facilities-list">
-        <h2>Nearby Emergency Facilities</h2>
-        <div class="facility-item">
-          <span class="facility-icon">🚔</span>
-          <div class="facility-info">
-            <h3>Nearest Police Station</h3>
-            <p>Central Police Station - 2.3 km away</p>
-            <button class="facility-btn" onclick="alert('Calling Police Station...')">Call Police</button>
-          </div>
-        </div>
-        
+        <h2 data-en="Doha Emergency Facilities & Landmarks" data-ar="مراكز الطوارئ والمعالم الثقافية في الدوحة">Doha Emergency Facilities & Landmarks</h2>
         <div class="facility-item">
           <span class="facility-icon">🏥</span>
           <div class="facility-info">
-            <h3>Nearest Hospital</h3>
-            <p>City General Hospital - 1.8 km away</p>
-            <button class="facility-btn" onclick="alert('Calling Hospital...')">Call Hospital</button>
+            <h3>Hamad Medical Corporation</h3>
+            <p>Main Hospital Complex - 3.2 km away</p>
+            <button class="facility-btn" onclick="alert('Calling Hamad Medical Corporation...')">Call Hospital</button>
           </div>
         </div>
         
         <div class="facility-item">
-          <span class="facility-icon">🏠</span>
+          <span class="facility-icon">🚔</span>
           <div class="facility-info">
-            <h3>Your Home</h3>
-            <p>Saved Location - 0.5 km away</p>
-            <button class="facility-btn" onclick="alert('Getting directions to home...')">Get Directions</button>
+            <h3>Doha Police Station</h3>
+            <p>Central Police Station - 2.1 km away</p>
+            <button class="facility-btn" onclick="alert('Calling Doha Police Station...')">Call Police</button>
+          </div>
+        </div>
+        
+        <div class="facility-item">
+          <span class="facility-icon">🔥</span>
+          <div class="facility-info">
+            <h3>Civil Defense</h3>
+            <p>Fire & Emergency Services - 1.8 km away</p>
+            <button class="facility-btn" onclick="alert('Calling Civil Defense...')">Call Fire Services</button>
+          </div>
+        </div>
+        
+        <div class="facility-item">
+          <span class="facility-icon">✈️</span>
+          <div class="facility-info">
+            <h3>Hamad International Airport</h3>
+            <p>Emergency Services Available - 8.5 km away</p>
+            <button class="facility-btn" onclick="alert('Contacting Airport Security...')">Contact Airport</button>
+          </div>
+        </div>
+        
+        <div class="facility-item">
+          <span class="facility-icon">🏛️</span>
+          <div class="facility-info">
+            <h3>Museum of Islamic Art</h3>
+            <p>Cultural Landmark - 1.2 km away</p>
+            <button class="facility-btn" onclick="alert('Getting directions to Museum of Islamic Art...')">Get Directions</button>
+          </div>
+        </div>
+        
+        <div class="facility-item">
+          <span class="facility-icon">🏰</span>
+          <div class="facility-info">
+            <h3>Al Koot Fort</h3>
+            <p>Historical Site - 0.8 km away</p>
+            <button class="facility-btn" onclick="alert('Getting directions to Al Koot Fort...')">Get Directions</button>
           </div>
         </div>
       </div>
@@ -478,26 +490,26 @@
     <section id="case-detail-lost-item" class="page case-detail-page" style="display:none">
       <div class="case-detail-header">
         <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
-        <h1>🔎 Lost Item Guide</h1>
+        <h1 data-en="🔎 Lost Item Guide" data-ar="دليل فقدان الأشياء">🔎 Lost Item Guide</h1>
       </div>
       <div class="case-detail-content">
         <div class="case-image">
           <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Lost Item" />
         </div>
         <div class="case-instructions">
-          <h2>Step-by-Step Instructions</h2>
+          <h2 data-en="Step-by-Step Instructions" data-ar="التعليمات خطوة بخطوة">Step-by-Step Instructions</h2>
           <ol>
-            <li><strong>Stay Calm:</strong> Panicking won't help you find your item faster.</li>
-            <li><strong>Retrace Your Steps:</strong> Go back to where you last remember having the item.</li>
-            <li><strong>Check Common Places:</strong> Look in pockets, bags, car, and common areas.</li>
-            <li><strong>Ask Around:</strong> Check with people nearby or staff members.</li>
-            <li><strong>Contact Lost & Found:</strong> Check with the establishment's lost and found.</li>
-            <li><strong>Use Technology:</strong> If it's a phone, try calling it or using Find My Phone.</li>
-            <li><strong>Report to Authorities:</strong> For valuable items, report to local police.</li>
+            <li><strong data-en="Stay Calm:" data-ar="البقاء على سكون:">Stay Calm:</strong> Panicking won't help you find your item faster.</li>
+            <li><strong data-en="Retrace Your Steps:" data-ar="إعادة المشي للخلف:">Retrace Your Steps:</strong> Go back to where you last remember having the item.</li>
+            <li><strong data-en="Check Common Places:" data-ar="التحقق من الأماكن الشائعة:">Check Common Places:</strong> Look in pockets, bags, car, and common areas.</li>
+            <li><strong data-en="Ask Around:" data-ar="السؤال حول الأماكن:">Ask Around:</strong> Check with people nearby or staff members.</li>
+            <li><strong data-en="Contact Lost & Found:" data-ar="اتصال بالمفقودين والمستلمين:">Contact Lost & Found:</strong> Check with the establishment's lost and found.</li>
+            <li><strong data-en="Use Technology:" data-ar="استخدام التكنولوجيا:">Use Technology:</strong> If it's a phone, try calling it or using Find My Phone.</li>
+            <li><strong data-en="Report to Authorities:" data-ar="الإبلاغ عن السلطات:">Report to Authorities:</strong> For valuable items, report to local police.</li>
           </ol>
         </div>
         <div class="case-resources">
-          <h2>Helpful Resources</h2>
+          <h2 data-en="Helpful Resources" data-ar="الموارد المفيدة">Helpful Resources</h2>
           <div class="resource-links">
             <a href="https://www.findmyphone.com" target="_blank" class="resource-link">📱 Find My Phone Services</a>
             <a href="https://www.localpolice.gov" target="_blank" class="resource-link">🚔 Local Police Department</a>
@@ -505,7 +517,7 @@
           </div>
         </div>
         <div class="case-tips">
-          <h2>Prevention Tips</h2>
+          <h2 data-en="Prevention Tips" data-ar="نصائح لمنع الحوادث">Prevention Tips</h2>
           <ul>
             <li>Always check your belongings before leaving a place</li>
             <li>Use tracking devices for valuable items</li>
@@ -519,26 +531,26 @@
     <section id="case-detail-minor-injury" class="page case-detail-page" style="display:none">
       <div class="case-detail-header">
         <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
-        <h1>🩹 Minor Injury Guide</h1>
+        <h1 data-en="🩹 Minor Injury Guide" data-ar="دليل إصابة خفيفة">🩹 Minor Injury Guide</h1>
       </div>
       <div class="case-detail-content">
         <div class="case-image">
           <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&h=300&fit=crop" alt="First Aid" />
         </div>
         <div class="case-instructions">
-          <h2>First Aid Instructions</h2>
+          <h2 data-en="First Aid Instructions" data-ar="تعليمات إطفاء الإصابات">First Aid Instructions</h2>
           <ol>
-            <li><strong>Assess the Injury:</strong> Determine the type and severity of the injury.</li>
-            <li><strong>Clean the Wound:</strong> Wash with clean water and mild soap.</li>
-            <li><strong>Stop Bleeding:</strong> Apply gentle pressure with a clean cloth.</li>
-            <li><strong>Apply Antiseptic:</strong> Use antiseptic solution to prevent infection.</li>
-            <li><strong>Cover the Wound:</strong> Apply a sterile bandage or dressing.</li>
-            <li><strong>Monitor for Signs:</strong> Watch for infection or worsening symptoms.</li>
-            <li><strong>Seek Medical Help:</strong> If pain persists or symptoms worsen.</li>
+            <li><strong data-en="Assess the Injury:" data-ar="تقييم الإصابة:">Assess the Injury:</strong> Determine the type and severity of the injury.</li>
+            <li><strong data-en="Clean the Wound:" data-ar="تنظيف الجرح:">Clean the Wound:</strong> Wash with clean water and mild soap.</li>
+            <li><strong data-en="Stop Bleeding:" data-ar="التوقف عن النزيف:">Stop Bleeding:</strong> Apply gentle pressure with a clean cloth.</li>
+            <li><strong data-en="Apply Antiseptic:" data-ar="تطبيق المضاد الحيوي:">Apply Antiseptic:</strong> Use antiseptic solution to prevent infection.</li>
+            <li><strong data-en="Cover the Wound:" data-ar="تغطية الجرح:">Cover the Wound:</strong> Apply a sterile bandage or dressing.</li>
+            <li><strong data-en="Monitor for Signs:" data-ar="مراقبة الإشارات:">Monitor for Signs:</strong> Watch for infection or worsening symptoms.</li>
+            <li><strong data-en="Seek Medical Help:" data-ar="البحث عن المساعدة الطبية:">Seek Medical Help:</strong> If pain persists or symptoms worsen.</li>
           </ol>
         </div>
         <div class="case-resources">
-          <h2>Medical Resources</h2>
+          <h2 data-en="Medical Resources" data-ar="الموارد الطبية">Medical Resources</h2>
           <div class="resource-links">
             <a href="https://www.redcross.org/first-aid" target="_blank" class="resource-link">🏥 Red Cross First Aid Guide</a>
             <a href="https://www.who.int/emergencies" target="_blank" class="resource-link">🌍 WHO Emergency Guidelines</a>
@@ -546,7 +558,7 @@
           </div>
         </div>
         <div class="case-tips">
-          <h2>Safety Tips</h2>
+          <h2 data-en="Safety Tips" data-ar="نصائح للأمان">Safety Tips</h2>
           <ul>
             <li>Always have a first aid kit available</li>
             <li>Learn basic first aid techniques</li>
@@ -560,26 +572,26 @@
     <section id="case-detail-car-accident" class="page case-detail-page" style="display:none">
       <div class="case-detail-header">
         <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
-        <h1>🚗 Car Accident Guide</h1>
+        <h1 data-en="🚗 Car Accident Guide" data-ar="دليل حادثة سيارة">🚗 Car Accident Guide</h1>
       </div>
       <div class="case-detail-content">
         <div class="case-image">
           <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Car Accident" />
         </div>
         <div class="case-instructions">
-          <h2>What to Do After an Accident</h2>
+          <h2 data-en="What to Do After an Accident" data-ar="ما يجب فعله بعد حادثة سيارة">What to Do After an Accident</h2>
           <ol>
-            <li><strong>Check for Injuries:</strong> Assess yourself and others for injuries.</li>
-            <li><strong>Call Emergency Services:</strong> Dial 911 if there are injuries or significant damage.</li>
-            <li><strong>Move to Safety:</strong> If possible, move vehicles to the side of the road.</li>
-            <li><strong>Exchange Information:</strong> Get contact and insurance details from other drivers.</li>
-            <li><strong>Document the Scene:</strong> Take photos of damage and the accident scene.</li>
-            <li><strong>Contact Your Insurance:</strong> Report the accident to your insurance company.</li>
-            <li><strong>Seek Medical Attention:</strong> Even minor injuries should be checked.</li>
+            <li><strong data-en="Check for Injuries:" data-ar="التحقق من الإصابات:">Check for Injuries:</strong> Assess yourself and others for injuries.</li>
+            <li><strong data-en="Call Emergency Services:" data-ar="اتصال خدمات الطوارئ:">Call Emergency Services:</strong> Dial 911 if there are injuries or significant damage.</li>
+            <li><strong data-en="Move to Safety:" data-ar="الانتقال إلى أمان:">Move to Safety:</strong> If possible, move vehicles to the side of the road.</li>
+            <li><strong data-en="Exchange Information:" data-ar="تبادل المعلومات:">Exchange Information:</strong> Get contact and insurance details from other drivers.</li>
+            <li><strong data-en="Document the Scene:" data-ar="تسجيل الموقع:">Document the Scene:</strong> Take photos of damage and the accident scene.</li>
+            <li><strong data-en="Contact Your Insurance:" data-ar="اتصال شركة التأمين:">Contact Your Insurance:</strong> Report the accident to your insurance company.</li>
+            <li><strong data-en="Seek Medical Attention:" data-ar="البحث عن المساعدة الطبية:">Seek Medical Attention:</strong> Even minor injuries should be checked.</li>
           </ol>
         </div>
         <div class="case-resources">
-          <h2>Accident Resources</h2>
+          <h2 data-en="Accident Resources" data-ar="موارد الحوادث">Accident Resources</h2>
           <div class="resource-links">
             <a href="https://www.nhtsa.gov/accident-reporting" target="_blank" class="resource-link">🚗 NHTSA Accident Reporting</a>
             <a href="https://www.insurance.com" target="_blank" class="resource-link">📋 Insurance Information</a>
@@ -587,7 +599,7 @@
           </div>
         </div>
         <div class="case-tips">
-          <h2>Prevention Tips</h2>
+          <h2 data-en="Prevention Tips" data-ar="نصائح لمنع الحوادث">Prevention Tips</h2>
           <ul>
             <li>Always wear your seatbelt</li>
             <li>Follow traffic laws and speed limits</li>
@@ -601,26 +613,26 @@
     <section id="case-detail-fire-emergency" class="page case-detail-page" style="display:none">
       <div class="case-detail-header">
         <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
-        <h1>🔥 Fire Emergency Guide</h1>
+        <h1 data-en="🔥 Fire Emergency Guide" data-ar="دليل حريق طوارئ">🔥 Fire Emergency Guide</h1>
       </div>
       <div class="case-detail-content">
         <div class="case-image">
           <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Fire Safety" />
         </div>
         <div class="case-instructions">
-          <h2>Fire Safety Instructions</h2>
+          <h2 data-en="Fire Safety Instructions" data-ar="تعليمات أمان الحريق">Fire Safety Instructions</h2>
           <ol>
-            <li><strong>Get Out Immediately:</strong> Don't try to save belongings, just get out.</li>
-            <li><strong>Call Fire Department:</strong> Dial 911 from a safe location.</li>
-            <li><strong>Use Stairs, Not Elevators:</strong> Elevators may stop working during a fire.</li>
-            <li><strong>Stay Low:</strong> Crawl if necessary to avoid smoke inhalation.</li>
-            <li><strong>Check Doors:</strong> Feel doors before opening - if hot, don't open.</li>
-            <li><strong>Meet at Designated Spot:</strong> Go to your family's meeting point.</li>
-            <li><strong>Don't Go Back:</strong> Never re-enter a burning building.</li>
+            <li><strong data-en="Get Out Immediately:" data-ar="الخروج على الفور:">Get Out Immediately:</strong> Don't try to save belongings, just get out.</li>
+            <li><strong data-en="Call Fire Department:" data-ar="اتصال خدمات الحريق:">Call Fire Department:</strong> Dial 911 from a safe location.</li>
+            <li><strong data-en="Use Stairs, Not Elevators:" data-ar="استخدام الدرج وليس المصاعد:">Use Stairs, Not Elevators:</strong> Elevators may stop working during a fire.</li>
+            <li><strong data-en="Stay Low:" data-ar="البقاء في المستوى المنخفض:">Stay Low:</strong> Crawl if necessary to avoid smoke inhalation.</li>
+            <li><strong data-en="Check Doors:" data-ar="التحقق من الأبواب:">Check Doors:</strong> Feel doors before opening - if hot, don't open.</li>
+            <li><strong data-en="Meet at Designated Spot:" data-ar="التقاء في المكان المحدد:">Meet at Designated Spot:</strong> Go to your family's meeting point.</li>
+            <li><strong data-en="Don't Go Back:" data-ar="لا تعود إلى الخلف:">Don't Go Back:</strong> Never re-enter a burning building.</li>
           </ol>
         </div>
         <div class="case-resources">
-          <h2>Fire Safety Resources</h2>
+          <h2 data-en="Fire Safety Resources" data-ar="موارد أمان الحريق">Fire Safety Resources</h2>
           <div class="resource-links">
             <a href="https://www.nfpa.org/safety-information" target="_blank" class="resource-link">🔥 NFPA Fire Safety</a>
             <a href="https://www.redcross.org/fire-safety" target="_blank" class="resource-link">🚨 Red Cross Fire Safety</a>
@@ -628,7 +640,7 @@
           </div>
         </div>
         <div class="case-tips">
-          <h2>Prevention Tips</h2>
+          <h2 data-en="Prevention Tips" data-ar="نصائح لمنع الحوادث">Prevention Tips</h2>
           <ul>
             <li>Install and maintain smoke detectors</li>
             <li>Have a fire escape plan</li>
@@ -642,26 +654,26 @@
     <section id="case-detail-need-directions" class="page case-detail-page" style="display:none">
       <div class="case-detail-header">
         <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
-        <h1>🗺️ Need Directions Guide</h1>
+        <h1 data-en="🗺️ Need Directions Guide" data-ar="دليل الحاجة إلى الاتجاهات">🗺️ Need Directions Guide</h1>
       </div>
       <div class="case-detail-content">
         <div class="case-image">
           <img src="https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?w=600&h=300&fit=crop" alt="Navigation" />
         </div>
         <div class="case-instructions">
-          <h2>How to Get Directions</h2>
+          <h2 data-en="How to Get Directions" data-ar="كيفية الحصول على الاتجاهات">How to Get Directions</h2>
           <ol>
-            <li><strong>Use GPS Apps:</strong> Open Google Maps, Apple Maps, or Waze.</li>
-            <li><strong>Ask Locals:</strong> Approach people who look familiar with the area.</li>
-            <li><strong>Look for Landmarks:</strong> Use prominent buildings or signs as reference points.</li>
-            <li><strong>Check Public Transport:</strong> Use bus/train apps for public transportation.</li>
-            <li><strong>Use Street Signs:</strong> Read street names and building numbers.</li>
-            <li><strong>Ask at Businesses:</strong> Staff at shops and restaurants can help.</li>
-            <li><strong>Use Emergency Services:</strong> Call 911 if you're lost in an emergency.</li>
+            <li><strong data-en="Use GPS Apps:" data-ar="استخدام تطبيقات GPS:">Use GPS Apps:</strong> Open Google Maps, Apple Maps, or Waze.</li>
+            <li><strong data-en="Ask Locals:" data-ar="السؤال عن الأشخاص المحليين:">Ask Locals:</strong> Approach people who look familiar with the area.</li>
+            <li><strong data-en="Look for Landmarks:" data-ar="البحث عن المعالم المميزة:">Look for Landmarks:</strong> Use prominent buildings or signs as reference points.</li>
+            <li><strong data-en="Check Public Transport:" data-ar="التحقق من النقل العام:">Check Public Transport:</strong> Use bus/train apps for public transportation.</li>
+            <li><strong data-en="Use Street Signs:" data-ar="استخدام علامات الشارة:">Use Street Signs:</strong> Read street names and building numbers.</li>
+            <li><strong data-en="Ask at Businesses:" data-ar="السؤال في المؤسسات:">Ask at Businesses:</strong> Staff at shops and restaurants can help.</li>
+            <li><strong data-en="Use Emergency Services:" data-ar="استخدام خدمات الطوارئ:">Use Emergency Services:</strong> Call 911 if you're lost in an emergency.</li>
           </ol>
         </div>
         <div class="case-resources">
-          <h2>Navigation Resources</h2>
+          <h2 data-en="Navigation Resources" data-ar="موارد التنقل">Navigation Resources</h2>
           <div class="resource-links">
             <a href="https://maps.google.com" target="_blank" class="resource-link">🗺️ Google Maps</a>
             <a href="https://www.apple.com/maps" target="_blank" class="resource-link">🍎 Apple Maps</a>
@@ -669,7 +681,7 @@
           </div>
         </div>
         <div class="case-tips">
-          <h2>Navigation Tips</h2>
+          <h2 data-en="Navigation Tips" data-ar="نصائح في التنقل">Navigation Tips</h2>
           <ul>
             <li>Always have a backup navigation method</li>
             <li>Download offline maps for areas with poor signal</li>
@@ -683,27 +695,27 @@
     <section id="case-detail-flat-tire" class="page case-detail-page" style="display:none">
       <div class="case-detail-header">
         <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
-        <h1>🚗 Flat Tire Guide</h1>
+        <h1 data-en="🚗 Flat Tire Guide" data-ar="دليل إطار مسطح">🚗 Flat Tire Guide</h1>
       </div>
       <div class="case-detail-content">
         <div class="case-image">
           <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Flat Tire" />
         </div>
         <div class="case-instructions">
-          <h2>How to Handle a Flat Tire</h2>
+          <h2 data-en="How to Handle a Flat Tire" data-ar="كيفية التعامل مع إطار مسطح">How to Handle a Flat Tire</h2>
           <ol>
-            <li><strong>Pull Over Safely:</strong> Move to a safe location off the road.</li>
-            <li><strong>Turn on Hazard Lights:</strong> Make your vehicle visible to other drivers.</li>
-            <li><strong>Check for Spare Tire:</strong> Locate your spare tire and tools.</li>
-            <li><strong>Loosen Lug Nuts:</strong> Use the lug wrench to loosen nuts before jacking.</li>
-            <li><strong>Jack Up the Car:</strong> Place jack under the designated point and raise.</li>
-            <li><strong>Remove Flat Tire:</strong> Take off the flat tire and replace with spare.</li>
-            <li><strong>Tighten Lug Nuts:</strong> Secure the spare tire properly.</li>
-            <li><strong>Lower the Car:</strong> Carefully lower the vehicle and remove jack.</li>
+            <li><strong data-en="Pull Over Safely:" data-ar="السحب إلى موقع آمن:">Pull Over Safely:</strong> Move to a safe location off the road.</li>
+            <li><strong data-en="Turn on Hazard Lights:" data-ar="تشغيل الضواغط الخطرة:">Turn on Hazard Lights:</strong> Make your vehicle visible to other drivers.</li>
+            <li><strong data-en="Check for Spare Tire:" data-ar="التحقق من إطار الطوارئ:">Check for Spare Tire:</strong> Locate your spare tire and tools.</li>
+            <li><strong data-en="Loosen Lug Nuts:" data-ar="تخفيف الأسنان الخارجية:">Loosen Lug Nuts:</strong> Use the lug wrench to loosen nuts before jacking.</li>
+            <li><strong data-en="Jack Up the Car:" data-ar="رفع السيارة باستخدام السلطة:">Jack Up the Car:</strong> Place jack under the designated point and raise.</li>
+            <li><strong data-en="Remove Flat Tire:" data-ar="إزالة إطار الطوارئ:">Remove Flat Tire:</strong> Take off the flat tire and replace with spare.</li>
+            <li><strong data-en="Tighten Lug Nuts:" data-ar="تثبيت الأسنان الخارجية:">Tighten Lug Nuts:</strong> Secure the spare tire properly.</li>
+            <li><strong data-en="Lower the Car:" data-ar="خفض السيارة:">Lower the Car:</strong> Carefully lower the vehicle and remove jack.</li>
           </ol>
         </div>
         <div class="case-resources">
-          <h2>Roadside Assistance</h2>
+          <h2 data-en="Roadside Assistance" data-ar="المساعدة الجانبية">Roadside Assistance</h2>
           <div class="resource-links">
             <a href="https://www.aaa.com" target="_blank" class="resource-link">🚗 AAA Roadside Assistance</a>
             <a href="tel:911" class="resource-link">📞 Emergency Services (911)</a>
@@ -711,7 +723,7 @@
           </div>
         </div>
         <div class="case-tips">
-          <h2>Prevention Tips</h2>
+          <h2 data-en="Prevention Tips" data-ar="نصائح لمنع الحوادث">Prevention Tips</h2>
           <ul>
             <li>Regularly check tire pressure and condition</li>
             <li>Keep a spare tire and tools in your vehicle</li>
@@ -725,26 +737,26 @@
     <section id="case-detail-locked-out" class="page case-detail-page" style="display:none">
       <div class="case-detail-header">
         <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
-        <h1>🔑 Locked Out Guide</h1>
+        <h1 data-en="🔑 Locked Out Guide" data-ar="دليل المغلق خارجاً">🔑 Locked Out Guide</h1>
       </div>
       <div class="case-detail-content">
         <div class="case-image">
           <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Locked Out" />
         </div>
         <div class="case-instructions">
-          <h2>What to Do When Locked Out</h2>
+          <h2 data-en="What to Do When Locked Out" data-ar="ما يجب فعله عند المغلق خارجاً">What to Do When Locked Out</h2>
           <ol>
-            <li><strong>Stay Calm:</strong> Panicking won't help you get back in.</li>
-            <li><strong>Check All Doors:</strong> Try all doors and windows.</li>
-            <li><strong>Look for Spare Key:</strong> Check under doormats, flower pots, or with neighbors.</li>
-            <li><strong>Contact Family/Friends:</strong> Call someone who might have a spare key.</li>
-            <li><strong>Call a Locksmith:</strong> Professional locksmiths can help safely.</li>
-            <li><strong>Check for Open Windows:</strong> Look for any unlocked windows.</li>
-            <li><strong>Contact Landlord:</strong> If renting, call your landlord or property manager.</li>
+            <li><strong data-en="Stay Calm:" data-ar="البقاء على سكون:">Stay Calm:</strong> Panicking won't help you get back in.</li>
+            <li><strong data-en="Check All Doors:" data-ar="التحقق من جميع الأبواب:">Check All Doors:</strong> Try all doors and windows.</li>
+            <li><strong data-en="Look for Spare Key:" data-ar="البحث عن مفتاح طوارئ:">Look for Spare Key:</strong> Check under doormats, flower pots, or with neighbors.</li>
+            <li><strong data-en="Contact Family/Friends:" data-ar="اتصال أقارب/الأصدقاء:">Contact Family/Friends:</strong> Call someone who might have a spare key.</li>
+            <li><strong data-en="Call a Locksmith:" data-ar="اتصال المفتاح الخارجي:">Call a Locksmith:</strong> Professional locksmiths can help safely.</li>
+            <li><strong data-en="Check for Open Windows:" data-ar="البحث عن أبواب مفتوحة:">Check for Open Windows:</strong> Look for any unlocked windows.</li>
+            <li><strong data-en="Contact Landlord:" data-ar="اتصال المالك:">Contact Landlord:</strong> If renting, call your landlord or property manager.</li>
           </ol>
         </div>
         <div class="case-resources">
-          <h2>Lockout Resources</h2>
+          <h2 data-en="Lockout Resources" data-ar="موارد المغلق خارجاً">Lockout Resources</h2>
           <div class="resource-links">
             <a href="https://www.findalocksmith.com" target="_blank" class="resource-link">🔑 Find a Locksmith</a>
             <a href="tel:911" class="resource-link">📞 Emergency Services (911)</a>
@@ -752,7 +764,7 @@
           </div>
         </div>
         <div class="case-tips">
-          <h2>Prevention Tips</h2>
+          <h2 data-en="Prevention Tips" data-ar="نصائح لمنع الحوادث">Prevention Tips</h2>
           <ul>
             <li>Always carry a spare key</li>
             <li>Give a spare key to a trusted friend or family member</li>
@@ -766,26 +778,26 @@
     <section id="case-detail-power-outage" class="page case-detail-page" style="display:none">
       <div class="case-detail-header">
         <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
-        <h1>💡 Power Outage Guide</h1>
+        <h1 data-en="💡 Power Outage Guide" data-ar="دليل انقطاع الكهرباء">💡 Power Outage Guide</h1>
       </div>
       <div class="case-detail-content">
         <div class="case-image">
           <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Power Outage" />
         </div>
         <div class="case-instructions">
-          <h2>How to Handle a Power Outage</h2>
+          <h2 data-en="How to Handle a Power Outage" data-ar="كيفية التعامل مع انقطاع الكهرباء">How to Handle a Power Outage</h2>
           <ol>
-            <li><strong>Check Your Circuit Breaker:</strong> Look for tripped breakers in your electrical panel.</li>
-            <li><strong>Check Neighbors:</strong> See if the outage affects your whole area.</li>
-            <li><strong>Report the Outage:</strong> Contact your electricity provider.</li>
-            <li><strong>Use Flashlights:</strong> Avoid candles to prevent fire hazards.</li>
-            <li><strong>Keep Refrigerator Closed:</strong> Food will stay cold longer.</li>
-            <li><strong>Unplug Electronics:</strong> Protect devices from power surges.</li>
-            <li><strong>Stay Informed:</strong> Listen to battery-powered radio for updates.</li>
+            <li><strong data-en="Check Your Circuit Breaker:" data-ar="التحقق من مفتاح الدائرة:">Check Your Circuit Breaker:</strong> Look for tripped breakers in your electrical panel.</li>
+            <li><strong data-en="Check Neighbors:" data-ar="التحقق من الجيران:">Check Neighbors:</strong> See if the outage affects your whole area.</li>
+            <li><strong data-en="Report the Outage:" data-ar="الإبلاغ عن الانقطاع:">Report the Outage:</strong> Contact your electricity provider.</li>
+            <li><strong data-en="Use Flashlights:" data-ar="استخدام الأضواء:">Use Flashlights:</strong> Avoid candles to prevent fire hazards.</li>
+            <li><strong data-en="Keep Refrigerator Closed:" data-ar="إغلاق الثلاجة:">Keep Refrigerator Closed:</strong> Food will stay cold longer.</li>
+            <li><strong data-en="Unplug Electronics:" data-ar="تفريغ الأجهزة الكهربائية:">Unplug Electronics:</strong> Protect devices from power surges.</li>
+            <li><strong data-en="Stay Informed:" data-ar="البقاء على إطلاع:">Stay Informed:</strong> Listen to battery-powered radio for updates.</li>
           </ol>
         </div>
         <div class="case-resources">
-          <h2>Power Company Resources</h2>
+          <h2 data-en="Power Company Resources" data-ar="موارد شركة الكهرباء">Power Company Resources</h2>
           <div class="resource-links">
             <a href="https://www.ready.gov/power-outages" target="_blank" class="resource-link">💡 FEMA Power Outage Guide</a>
             <a href="tel:911" class="resource-link">📞 Emergency Services (911)</a>
@@ -793,7 +805,7 @@
           </div>
         </div>
         <div class="case-tips">
-          <h2>Preparedness Tips</h2>
+          <h2 data-en="Preparedness Tips" data-ar="نصائح للتجهيز الطوارئ">Preparedness Tips</h2>
           <ul>
             <li>Keep emergency supplies including flashlights and batteries</li>
             <li>Have a battery-powered radio for updates</li>
@@ -807,26 +819,26 @@
     <section id="case-detail-water-leak" class="page case-detail-page" style="display:none">
       <div class="case-detail-header">
         <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
-        <h1>💧 Water Leak Guide</h1>
+        <h1 data-en="💧 Water Leak Guide" data-ar="دليل تسرب المياه">💧 Water Leak Guide</h1>
       </div>
       <div class="case-detail-content">
         <div class="case-image">
           <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Water Leak" />
         </div>
         <div class="case-instructions">
-          <h2>How to Handle a Water Leak</h2>
+          <h2 data-en="How to Handle a Water Leak" data-ar="كيفية التعامل مع تسرب المياه">How to Handle a Water Leak</h2>
           <ol>
-            <li><strong>Turn Off Main Water Supply:</strong> Locate and turn off the main water valve.</li>
-            <li><strong>Stop the Leak:</strong> Use towels, buckets, or containers to catch water.</li>
-            <li><strong>Turn Off Electricity:</strong> If water is near electrical outlets, turn off power.</li>
-            <li><strong>Document the Damage:</strong> Take photos for insurance purposes.</li>
-            <li><strong>Call a Plumber:</strong> Contact a professional for repairs.</li>
-            <li><strong>Contact Insurance:</strong> Report the incident to your insurance company.</li>
-            <li><strong>Prevent Mold:</strong> Dry affected areas thoroughly.</li>
+            <li><strong data-en="Turn Off Main Water Supply:" data-ar="إيقاف المياه الرئيسية:">Turn Off Main Water Supply:</strong> Locate and turn off the main water valve.</li>
+            <li><strong data-en="Stop the Leak:" data-ar="إيقاف التسرب:">Stop the Leak:</strong> Use towels, buckets, or containers to catch water.</li>
+            <li><strong data-en="Turn Off Electricity:" data-ar="إيقاف الكهرباء:">Turn Off Electricity:</strong> If water is near electrical outlets, turn off power.</li>
+            <li><strong data-en="Document the Damage:" data-ar="تسجيل الضرر:">Document the Damage:</strong> Take photos for insurance purposes.</li>
+            <li><strong data-en="Call a Plumber:" data-ar="اتصال المهندس:">Call a Plumber:</strong> Contact a professional for repairs.</li>
+            <li><strong data-en="Contact Insurance:" data-ar="اتصال التأمين:">Contact Insurance:</strong> Report the incident to your insurance company.</li>
+            <li><strong data-en="Prevent Mold:" data-ar="منع المود:">Prevent Mold:</strong> Dry affected areas thoroughly.</li>
           </ol>
         </div>
         <div class="case-resources">
-          <h2>Plumbing Resources</h2>
+          <h2 data-en="Plumbing Resources" data-ar="موارد الصرف الصحي">Plumbing Resources</h2>
           <div class="resource-links">
             <a href="https://www.angieslist.com" target="_blank" class="resource-link">🔧 Find a Plumber</a>
             <a href="tel:911" class="resource-link">📞 Emergency Services (911)</a>
@@ -834,7 +846,7 @@
           </div>
         </div>
         <div class="case-tips">
-          <h2>Prevention Tips</h2>
+          <h2 data-en="Prevention Tips" data-ar="نصائح لمنع الحوادث">Prevention Tips</h2>
           <ul>
             <li>Regularly inspect pipes and fixtures</li>
             <li>Know the location of your main water valve</li>
@@ -848,27 +860,27 @@
     <section id="case-detail-lost-child" class="page case-detail-page" style="display:none">
       <div class="case-detail-header">
         <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
-        <h1>🧒 Lost Child Guide</h1>
+        <h1 data-en="🧒 Lost Child Guide" data-ar="دليل طفل مفقود">🧒 Lost Child Guide</h1>
       </div>
       <div class="case-detail-content">
         <div class="case-image">
           <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Lost Child" />
         </div>
         <div class="case-instructions">
-          <h2>What to Do When a Child is Lost</h2>
+          <h2 data-en="What to Do When a Child is Lost" data-ar="ما يجب فعله عند طفل مفقود">What to Do When a Child is Lost</h2>
           <ol>
-            <li><strong>Stay Calm:</strong> Panicking will make the situation worse.</li>
-            <li><strong>Alert Authorities Immediately:</strong> Call 911 or contact security.</li>
-            <li><strong>Provide Description:</strong> Give detailed description of the child.</li>
-            <li><strong>Search the Area:</strong> Check nearby areas with other people.</li>
-            <li><strong>Use Public Address:</strong> Ask for announcements if in a public place.</li>
-            <li><strong>Contact Family:</strong> Notify other family members.</li>
-            <li><strong>Stay in Place:</strong> Remain where you last saw the child.</li>
-            <li><strong>Use Social Media:</strong> Share information on community groups.</li>
+            <li><strong data-en="Stay Calm:" data-ar="البقاء على سكون:">Stay Calm:</strong> Panicking will make the situation worse.</li>
+            <li><strong data-en="Alert Authorities Immediately:" data-ar="إخطار السلطات على الفور:">Alert Authorities Immediately:</strong> Call 911 or contact security.</li>
+            <li><strong data-en="Provide Description:" data-ar="تقديم الوصف:">Provide Description:</strong> Give detailed description of the child.</li>
+            <li><strong data-en="Search the Area:" data-ar="البحث في المنطقة:">Search the Area:</strong> Check nearby areas with other people.</li>
+            <li><strong data-en="Use Public Address:" data-ar="استخدام العنوان العام:">Use Public Address:</strong> Ask for announcements if in a public place.</li>
+            <li><strong data-en="Contact Family:" data-ar="اتصال الأسرة:">Contact Family:</strong> Notify other family members.</li>
+            <li><strong data-en="Stay in Place:" data-ar="البقاء في المكان الذي رأيت فيه الطفل:">Stay in Place:</strong> Remain where you last saw the child.</li>
+            <li><strong data-en="Use Social Media:" data-ar="استخدام وسائل التواصل الاجتماعي:">Use Social Media:</strong> Share information on community groups.</li>
           </ol>
         </div>
         <div class="case-resources">
-          <h2>Child Safety Resources</h2>
+          <h2 data-en="Child Safety Resources" data-ar="موارد أمان الأطفال">Child Safety Resources</h2>
           <div class="resource-links">
             <a href="https://www.missingkids.org" target="_blank" class="resource-link">🧒 National Center for Missing & Exploited Children</a>
             <a href="tel:911" class="resource-link">📞 Emergency Services (911)</a>
@@ -876,7 +888,7 @@
           </div>
         </div>
         <div class="case-tips">
-          <h2>Prevention Tips</h2>
+          <h2 data-en="Prevention Tips" data-ar="نصائح لمنع الحوادث">Prevention Tips</h2>
           <ul>
             <li>Teach children to stay in one place if lost</li>
             <li>Have recent photos of your children</li>
@@ -890,26 +902,26 @@
     <section id="case-detail-stuck-elevator" class="page case-detail-page" style="display:none">
       <div class="case-detail-header">
         <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
-        <h1>🛗 Stuck in Elevator Guide</h1>
+        <h1 data-en="🛗 Stuck in Elevator Guide" data-ar="دليل المغلق في المصعد">🛗 Stuck in Elevator Guide</h1>
       </div>
       <div class="case-detail-content">
         <div class="case-image">
           <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Elevator Emergency" />
         </div>
         <div class="case-instructions">
-          <h2>What to Do When Stuck in an Elevator</h2>
+          <h2 data-en="What to Do When Stuck in an Elevator" data-ar="ما يجب فعله عند المغلق في المصعد">What to Do When Stuck in an Elevator</h2>
           <ol>
-            <li><strong>Stay Calm:</strong> Panicking won't help and can make the situation worse.</li>
-            <li><strong>Press Emergency Button:</strong> Use the emergency call button or phone.</li>
-            <li><strong>Call for Help:</strong> Use your phone to call building management or 911.</li>
-            <li><strong>Don't Try to Exit:</strong> Never attempt to force open doors or climb out.</li>
-            <li><strong>Stay Near the Door:</strong> Position yourself near the door for easy access.</li>
-            <li><strong>Wait for Professionals:</strong> Let trained personnel handle the rescue.</li>
-            <li><strong>Keep Others Calm:</strong> If others are present, help them stay calm.</li>
+            <li><strong data-en="Stay Calm:" data-ar="البقاء على سكون:">Stay Calm:</strong> Panicking won't help and can make the situation worse.</li>
+            <li><strong data-en="Press Emergency Button:" data-ar="الضغط على زر الطوارئ:">Press Emergency Button:</strong> Use the emergency call button or phone.</li>
+            <li><strong data-en="Call for Help:" data-ar="اتصال للمساعدة:">Call for Help:</strong> Use your phone to call building management or 911.</li>
+            <li><strong data-en="Don't Try to Exit:" data-ar="لا تحاول الخروج:">Don't Try to Exit:</strong> Never attempt to force open doors or climb out.</li>
+            <li><strong data-en="Stay Near the Door:" data-ar="البقاء بالقرب من الباب:">Stay Near the Door:</strong> Position yourself near the door for easy access.</li>
+            <li><strong data-en="Wait for Professionals:" data-ar="انتظر المهندسين:">Wait for Professionals:</strong> Let trained personnel handle the rescue.</li>
+            <li><strong data-en="Keep Others Calm:" data-ar="مساعدة الآخرين على البقاء على سكون:">Keep Others Calm:</strong> If others are present, help them stay calm.</li>
           </ol>
         </div>
         <div class="case-resources">
-          <h2>Elevator Safety Resources</h2>
+          <h2 data-en="Elevator Safety Resources" data-ar="موارد أمان المصاعد">Elevator Safety Resources</h2>
           <div class="resource-links">
             <a href="https://www.osha.gov/elevators" target="_blank" class="resource-link">🛗 OSHA Elevator Safety</a>
             <a href="tel:911" class="resource-link">📞 Emergency Services (911)</a>
@@ -917,7 +929,7 @@
           </div>
         </div>
         <div class="case-tips">
-          <h2>Safety Tips</h2>
+          <h2 data-en="Safety Tips" data-ar="نصائح للأمان">Safety Tips</h2>
           <ul>
             <li>Always check elevator inspection certificates</li>
             <li>Use stairs during fire alarms</li>
@@ -931,27 +943,27 @@
     <section id="case-detail-pet-lost" class="page case-detail-page" style="display:none">
       <div class="case-detail-header">
         <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
-        <h1>🐾 Lost Pet Guide</h1>
+        <h1 data-en="🐾 Lost Pet Guide" data-ar="دليل حيوان مفقود">🐾 Lost Pet Guide</h1>
       </div>
       <div class="case-detail-content">
         <div class="case-image">
           <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Lost Pet" />
         </div>
         <div class="case-instructions">
-          <h2>How to Find Your Lost Pet</h2>
+          <h2 data-en="How to Find Your Lost Pet" data-ar="كيفية العثور على حيوانك المفقود">How to Find Your Lost Pet</h2>
           <ol>
-            <li><strong>Search Immediately:</strong> Start searching your neighborhood right away.</li>
-            <li><strong>Call Your Pet's Name:</strong> Use familiar commands and sounds.</li>
-            <li><strong>Check Common Hiding Spots:</strong> Look under porches, in bushes, garages.</li>
-            <li><strong>Ask Neighbors:</strong> Knock on doors and ask people to check their yards.</li>
-            <li><strong>Contact Local Shelters:</strong> Call all nearby animal shelters and vet offices.</li>
-            <li><strong>Post on Social Media:</strong> Use community groups and lost pet pages.</li>
-            <li><strong>Create Flyers:</strong> Make and distribute lost pet posters.</li>
-            <li><strong>Use Pet Tracking Apps:</strong> If your pet has a microchip or GPS collar.</li>
+            <li><strong data-en="Search Immediately:" data-ar="البحث على الفور:">Search Immediately:</strong> Start searching your neighborhood right away.</li>
+            <li><strong data-en="Call Your Pet's Name:" data-ar="اتصال اسم حيوانك:">Call Your Pet's Name:</strong> Use familiar commands and sounds.</li>
+            <li><strong data-en="Check Common Hiding Spots:" data-ar="البحث في الأماكن المخفية:">Check Common Hiding Spots:</strong> Look under porches, in bushes, garages.</li>
+            <li><strong data-en="Ask Neighbors:" data-ar="السؤال عن الجيران:">Ask Neighbors:</strong> Knock on doors and ask people to check their yards.</li>
+            <li><strong data-en="Contact Local Shelters:" data-ar="اتصال المخازن المحلية:">Contact Local Shelters:</strong> Call all nearby animal shelters and vet offices.</li>
+            <li><strong data-en="Post on Social Media:" data-ar="نشر على وسائل التواصل الاجتماعي:">Post on Social Media:</strong> Use community groups and lost pet pages.</li>
+            <li><strong data-en="Create Flyers:" data-ar="إنشاء إعلانات:">Create Flyers:</strong> Make and distribute lost pet posters.</li>
+            <li><strong data-en="Use Pet Tracking Apps:" data-ar="استخدام تطبيقات تتبع الحيوانات:">Use Pet Tracking Apps:</strong> If your pet has a microchip or GPS collar.</li>
           </ol>
         </div>
         <div class="case-resources">
-          <h2>Pet Recovery Resources</h2>
+          <h2 data-en="Pet Recovery Resources" data-ar="موارد استعادة الحيوانات">Pet Recovery Resources</h2>
           <div class="resource-links">
             <a href="https://www.petfinder.com" target="_blank" class="resource-link">🐾 Petfinder Lost Pets</a>
             <a href="https://www.aspca.org" target="_blank" class="resource-link">🏠 ASPCA Pet Recovery</a>
@@ -959,7 +971,7 @@
           </div>
         </div>
         <div class="case-tips">
-          <h2>Prevention Tips</h2>
+          <h2 data-en="Prevention Tips" data-ar="نصائح لمنع الحوادث">Prevention Tips</h2>
           <ul>
             <li>Keep your pet's ID tags updated</li>
             <li>Microchip your pets</li>
@@ -973,27 +985,27 @@
     <section id="case-detail-medical-emergency" class="page case-detail-page" style="display:none">
       <div class="case-detail-header">
         <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
-        <h1>🏥 Medical Emergency Guide</h1>
+        <h1 data-en="🏥 Medical Emergency Guide" data-ar="دليل طوارئ طبية">🏥 Medical Emergency Guide</h1>
       </div>
       <div class="case-detail-content">
         <div class="case-image">
           <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&h=300&fit=crop" alt="Medical Emergency" />
         </div>
         <div class="case-instructions">
-          <h2>How to Handle a Medical Emergency</h2>
+          <h2 data-en="How to Handle a Medical Emergency" data-ar="كيفية التعامل مع طوارئ طبية">How to Handle a Medical Emergency</h2>
           <ol>
-            <li><strong>Assess the Situation:</strong> Determine if it's life-threatening.</li>
-            <li><strong>Call Emergency Services:</strong> Dial 911 immediately for serious emergencies.</li>
-            <li><strong>Check for Consciousness:</strong> Determine if the person is responsive.</li>
-            <li><strong>Check Breathing:</strong> Look, listen, and feel for breathing.</li>
-            <li><strong>Provide First Aid:</strong> Apply appropriate first aid if trained.</li>
-            <li><strong>Keep Person Calm:</strong> Reassure and comfort the person.</li>
-            <li><strong>Gather Information:</strong> Note symptoms and any relevant medical history.</li>
-            <li><strong>Stay with the Person:</strong> Don't leave until help arrives.</li>
+            <li><strong data-en="Assess the Situation:" data-ar="تقييم الوضع:">Assess the Situation:</strong> Determine if it's life-threatening.</li>
+            <li><strong data-en="Call Emergency Services:" data-ar="اتصال خدمات الطوارئ:">Call Emergency Services:</strong> Dial 911 immediately for serious emergencies.</li>
+            <li><strong data-en="Check for Consciousness:" data-ar="التحقق من وعي الشخص:">Check for Consciousness:</strong> Determine if the person is responsive.</li>
+            <li><strong data-en="Check Breathing:" data-ar="التحقق من التنفس:">Check Breathing:</strong> Look, listen, and feel for breathing.</li>
+            <li><strong data-en="Provide First Aid:" data-ar="تقديم إطفاء أولي:">Provide First Aid:</strong> Apply appropriate first aid if trained.</li>
+            <li><strong data-en="Keep Person Calm:" data-ar="الحفاظ على سكون الشخص:">Keep Person Calm:</strong> Reassure and comfort the person.</li>
+            <li><strong data-en="Gather Information:" data-ar="جمع المعلومات:">Gather Information:</strong> Note symptoms and any relevant medical history.</li>
+            <li><strong data-en="Stay with the Person:" data-ar="البقاء مع الشخص:">Stay with the Person:</strong> Don't leave until help arrives.</li>
           </ol>
         </div>
         <div class="case-resources">
-          <h2>Medical Emergency Resources</h2>
+          <h2 data-en="Medical Emergency Resources" data-ar="موارد طوارئ طبية">Medical Emergency Resources</h2>
           <div class="resource-links">
             <a href="https://www.redcross.org/first-aid" target="_blank" class="resource-link">🏥 Red Cross First Aid</a>
             <a href="tel:911" class="resource-link">📞 Emergency Services (911)</a>
@@ -1001,7 +1013,7 @@
           </div>
         </div>
         <div class="case-tips">
-          <h2>Emergency Preparedness</h2>
+          <h2 data-en="Emergency Preparedness" data-ar="تجهيز الطوارئ">Emergency Preparedness</h2>
           <ul>
             <li>Learn basic first aid and CPR</li>
             <li>Keep a well-stocked first aid kit</li>
@@ -1015,27 +1027,27 @@
     <section id="case-detail-natural-disaster" class="page case-detail-page" style="display:none">
       <div class="case-detail-header">
         <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
-        <h1>🌪️ Natural Disaster Guide</h1>
+        <h1 data-en="🌪️ Natural Disaster Guide" data-ar="دليل كوارث طبيعية">🌪️ Natural Disaster Guide</h1>
       </div>
       <div class="case-detail-content">
         <div class="case-image">
           <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Natural Disaster" />
         </div>
         <div class="case-instructions">
-          <h2>How to Handle Natural Disasters</h2>
+          <h2 data-en="How to Handle Natural Disasters" data-ar="كيفية التعامل مع كوارث طبيعية">How to Handle Natural Disasters</h2>
           <ol>
-            <li><strong>Stay Informed:</strong> Listen to official weather and emergency broadcasts.</li>
-            <li><strong>Follow Evacuation Orders:</strong> Leave immediately if ordered to evacuate.</li>
-            <li><strong>Move to Safe Location:</strong> Go to designated shelters or safe areas.</li>
-            <li><strong>Stay Indoors:</strong> If sheltering in place, stay away from windows.</li>
-            <li><strong>Have Emergency Kit:</strong> Keep supplies ready including food, water, and medicine.</li>
-            <li><strong>Contact Family:</strong> Let loved ones know you're safe.</li>
-            <li><strong>Follow Official Instructions:</strong> Listen to local authorities.</li>
-            <li><strong>Document Damage:</strong> Take photos for insurance purposes.</li>
+            <li><strong data-en="Stay Informed:" data-ar="البقاء على إطلاع:">Stay Informed:</strong> Listen to official weather and emergency broadcasts.</li>
+            <li><strong data-en="Follow Evacuation Orders:" data-ar="التبعية لأوامر الهرب:">Follow Evacuation Orders:</strong> Leave immediately if ordered to evacuate.</li>
+            <li><strong data-en="Move to Safe Location:" data-ar="الانتقال إلى موقع آمن:">Move to Safe Location:</strong> Go to designated shelters or safe areas.</li>
+            <li><strong data-en="Stay Indoors:" data-ar="البقاء داخل المنزل:">Stay Indoors:</strong> If sheltering in place, stay away from windows.</li>
+            <li><strong data-en="Have Emergency Kit:" data-ar="تجهيز حقيبة الطوارئ:">Have Emergency Kit:</strong> Keep supplies ready including food, water, and medicine.</li>
+            <li><strong data-en="Contact Family:" data-ar="اتصال الأسرة:">Contact Family:</strong> Let loved ones know you're safe.</li>
+            <li><strong data-en="Follow Official Instructions:" data-ar="التبعية للتعليمات الرسمية:">Follow Official Instructions:</strong> Listen to local authorities.</li>
+            <li><strong data-en="Document Damage:" data-ar="تسجيل الضرر:">Document Damage:</strong> Take photos for insurance purposes.</li>
           </ol>
         </div>
         <div class="case-resources">
-          <h2>Disaster Resources</h2>
+          <h2 data-en="Disaster Resources" data-ar="موارد الكوارث">Disaster Resources</h2>
           <div class="resource-links">
             <a href="https://www.ready.gov" target="_blank" class="resource-link">🌪️ Ready.gov Disaster Preparedness</a>
             <a href="https://www.fema.gov" target="_blank" class="resource-link">🏛️ FEMA Emergency Information</a>
@@ -1043,7 +1055,7 @@
           </div>
         </div>
         <div class="case-tips">
-          <h2>Preparedness Tips</h2>
+          <h2 data-en="Preparedness Tips" data-ar="نصائح للتجهيز الطوارئ">Preparedness Tips</h2>
           <ul>
             <li>Create an emergency plan for your family</li>
             <li>Build an emergency kit with essential supplies</li>
@@ -1057,27 +1069,27 @@
     <section id="case-detail-cyber-security" class="page case-detail-page" style="display:none">
       <div class="case-detail-header">
         <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
-        <h1>💻 Cyber Security Issue Guide</h1>
+        <h1 data-en="💻 Cyber Security Issue Guide" data-ar="دليل مشاكل أمن الكمبيوتر">💻 Cyber Security Issue Guide</h1>
       </div>
       <div class="case-detail-content">
         <div class="case-image">
           <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Cyber Security" />
         </div>
         <div class="case-instructions">
-          <h2>How to Handle Cyber Security Issues</h2>
+          <h2 data-en="How to Handle Cyber Security Issues" data-ar="كيفية التعامل مع مشاكل أمن الكمبيوتر">How to Handle Cyber Security Issues</h2>
           <ol>
-            <li><strong>Disconnect from Internet:</strong> Unplug your device immediately.</li>
-            <li><strong>Change Passwords:</strong> Update passwords for all important accounts.</li>
-            <li><strong>Contact Your Bank:</strong> If financial information was compromised.</li>
-            <li><strong>Run Security Scans:</strong> Use antivirus software to scan for malware.</li>
-            <li><strong>Report the Incident:</strong> Contact relevant authorities or companies.</li>
-            <li><strong>Monitor Accounts:</strong> Watch for suspicious activity.</li>
-            <li><strong>Enable Two-Factor Authentication:</strong> Add extra security to accounts.</li>
-            <li><strong>Backup Important Data:</strong> Ensure your data is safely backed up.</li>
+            <li><strong data-en="Disconnect from Internet:" data-ar="فصل الإنترنت:">Disconnect from Internet:</strong> Unplug your device immediately.</li>
+            <li><strong data-en="Change Passwords:" data-ar="تغيير كلمات المرور:">Change Passwords:</strong> Update passwords for all important accounts.</li>
+            <li><strong data-en="Contact Your Bank:" data-ar="اتصال البنك:">Contact Your Bank:</strong> If financial information was compromised.</li>
+            <li><strong data-en="Run Security Scans:" data-ar="تشغيل تحليلات الأمان:">Run Security Scans:</strong> Use antivirus software to scan for malware.</li>
+            <li><strong data-en="Report the Incident:" data-ar="الإبلاغ عن الحادثة:">Report the Incident:</strong> Contact relevant authorities or companies.</li>
+            <li><strong data-en="Monitor Accounts:" data-ar="مراقبة الحسابات:">Monitor Accounts:</strong> Watch for suspicious activity.</li>
+            <li><strong data-en="Enable Two-Factor Authentication:" data-ar="تفعيل التحقق الثنائي للوصول:">Enable Two-Factor Authentication:</strong> Add extra security to accounts.</li>
+            <li><strong data-en="Backup Important Data:" data-ar="النسخ الاحتياطي للبيانات الأهمية:">Backup Important Data:</strong> Ensure your data is safely backed up.</li>
           </ol>
         </div>
         <div class="case-resources">
-          <h2>Cyber Security Resources</h2>
+          <h2 data-en="Cyber Security Resources" data-ar="موارد أمان الكمبيوتر">Cyber Security Resources</h2>
           <div class="resource-links">
             <a href="https://www.identitytheft.gov" target="_blank" class="resource-link">🛡️ Identity Theft.gov</a>
             <a href="https://www.ic3.gov" target="_blank" class="resource-link">🚔 FBI Internet Crime Complaint Center</a>
@@ -1085,7 +1097,7 @@
           </div>
         </div>
         <div class="case-tips">
-          <h2>Prevention Tips</h2>
+          <h2 data-en="Prevention Tips" data-ar="نصائح لمنع الحوادث">Prevention Tips</h2>
           <ul>
             <li>Use strong, unique passwords for each account</li>
             <li>Enable two-factor authentication wherever possible</li>
@@ -1099,27 +1111,27 @@
     <section id="case-detail-harassment" class="page case-detail-page" style="display:none">
       <div class="case-detail-header">
         <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
-        <h1>🚨 Harassment Guide</h1>
+        <h1 data-en="🚨 Harassment Guide" data-ar="دليل التهديدات">🚨 Harassment Guide</h1>
       </div>
       <div class="case-detail-content">
         <div class="case-image">
           <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Harassment" />
         </div>
         <div class="case-instructions">
-          <h2>How to Handle Harassment</h2>
+          <h2 data-en="How to Handle Harassment" data-ar="كيفية التعامل مع التهديدات">How to Handle Harassment</h2>
           <ol>
-            <li><strong>Stay Calm:</strong> Try to remain composed and think clearly.</li>
-            <li><strong>Move to Safety:</strong> Get to a safe location with other people.</li>
-            <li><strong>Document Everything:</strong> Write down details of the incident.</li>
-            <li><strong>Tell Someone:</strong> Report to authorities, employer, or trusted person.</li>
-            <li><strong>Contact Police:</strong> Call 911 if you feel threatened or in danger.</li>
-            <li><strong>Save Evidence:</strong> Keep any messages, photos, or recordings.</li>
-            <li><strong>Seek Support:</strong> Talk to friends, family, or professional counselors.</li>
-            <li><strong>Know Your Rights:</strong> Understand your legal protections.</li>
+            <li><strong data-en="Stay Calm:" data-ar="البقاء على سكون:">Stay Calm:</strong> Try to remain composed and think clearly.</li>
+            <li><strong data-en="Move to Safety:" data-ar="الانتقال إلى أمان:">Move to Safety:</strong> Get to a safe location with other people.</li>
+            <li><strong data-en="Document Everything:" data-ar="تسجيل كل شيء:">Document Everything:</strong> Write down details of the incident.</li>
+            <li><strong data-en="Tell Someone:" data-ar="إخبار شخص:">Tell Someone:</strong> Report to authorities, employer, or trusted person.</li>
+            <li><strong data-en="Contact Police:" data-ar="اتصال الشرطة:">Contact Police:</strong> Call 911 if you feel threatened or in danger.</li>
+            <li><strong data-en="Save Evidence:" data-ar="حفظ الأدلة:">Save Evidence:</strong> Keep any messages, photos, or recordings.</li>
+            <li><strong data-en="Seek Support:" data-ar="البحث عن الدعم:">Seek Support:</strong> Talk to friends, family, or professional counselors.</li>
+            <li><strong data-en="Know Your Rights:" data-ar="معرفة الحقوق القانونية:">Know Your Rights:</strong> Understand your legal protections.</li>
           </ol>
         </div>
         <div class="case-resources">
-          <h2>Harassment Support Resources</h2>
+          <h2 data-en="Harassment Support Resources" data-ar="موارد دعم التهديدات">Harassment Support Resources</h2>
           <div class="resource-links">
             <a href="https://www.rainn.org" target="_blank" class="resource-link">🛡️ RAINN National Sexual Assault Hotline</a>
             <a href="tel:911" class="resource-link">📞 Emergency Services (911)</a>
@@ -1127,7 +1139,7 @@
           </div>
         </div>
         <div class="case-tips">
-          <h2>Safety Tips</h2>
+          <h2 data-en="Safety Tips" data-ar="نصائح للأمان">Safety Tips</h2>
           <ul>
             <li>Trust your instincts - if something feels wrong, it probably is</li>
             <li>Keep emergency contacts easily accessible</li>
@@ -1141,27 +1153,27 @@
     <section id="case-detail-food-poisoning" class="page case-detail-page" style="display:none">
       <div class="case-detail-header">
         <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
-        <h1>🤢 Food Poisoning Guide</h1>
+        <h1 data-en="🤢 Food Poisoning Guide" data-ar="دليل سرطان الطعام">🤢 Food Poisoning Guide</h1>
       </div>
       <div class="case-detail-content">
         <div class="case-image">
           <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Food Poisoning" />
         </div>
         <div class="case-instructions">
-          <h2>How to Handle Food Poisoning</h2>
+          <h2 data-en="How to Handle Food Poisoning" data-ar="كيفية التعامل مع سرطان الطعام">How to Handle Food Poisoning</h2>
           <ol>
-            <li><strong>Stay Hydrated:</strong> Drink plenty of water and clear fluids.</li>
-            <li><strong>Rest:</strong> Get adequate rest to help your body recover.</li>
-            <li><strong>Monitor Symptoms:</strong> Watch for severe symptoms like high fever.</li>
-            <li><strong>Eat Bland Foods:</strong> Start with crackers, rice, or toast when ready.</li>
-            <li><strong>Avoid Certain Foods:</strong> Stay away from dairy, caffeine, and alcohol.</li>
-            <li><strong>Seek Medical Attention:</strong> If symptoms are severe or persistent.</li>
-            <li><strong>Report the Incident:</strong> Contact health department if from a restaurant.</li>
-            <li><strong>Prevent Dehydration:</strong> Use oral rehydration solutions if needed.</li>
+            <li><strong data-en="Stay Hydrated:" data-ar="البقاء على الترطيب:">Stay Hydrated:</strong> Drink plenty of water and clear fluids.</li>
+            <li><strong data-en="Rest:" data-ar="الراحة:">Rest:</strong> Get adequate rest to help your body recover.</li>
+            <li><strong data-en="Monitor Symptoms:" data-ar="مراقبة أعراض الإصابة:">Monitor Symptoms:</strong> Watch for severe symptoms like high fever.</li>
+            <li><strong data-en="Eat Bland Foods:" data-ar="تناول طعام خفيف:">Eat Bland Foods:</strong> Start with crackers, rice, or toast when ready.</li>
+            <li><strong data-en="Avoid Certain Foods:" data-ar="التجنب من الطعام المحظور:">Avoid Certain Foods:</strong> Stay away from dairy, caffeine, and alcohol.</li>
+            <li><strong data-en="Seek Medical Attention:" data-ar="البحث عن المساعدة الطبية:">Seek Medical Attention:</strong> If symptoms are severe or persistent.</li>
+            <li><strong data-en="Report the Incident:" data-ar="الإبلاغ عن الحادثة:">Report the Incident:</strong> Contact health department if from a restaurant.</li>
+            <li><strong data-en="Prevent Dehydration:" data-ar="منع التعرض للتخمر:">Prevent Dehydration:</strong> Use oral rehydration solutions if needed.</li>
           </ol>
         </div>
         <div class="case-resources">
-          <h2>Food Safety Resources</h2>
+          <h2 data-en="Food Safety Resources" data-ar="موارد أمان الطعام">Food Safety Resources</h2>
           <div class="resource-links">
             <a href="https://www.foodsafety.gov" target="_blank" class="resource-link">🍽️ FoodSafety.gov</a>
             <a href="https://www.cdc.gov/foodsafety" target="_blank" class="resource-link">🏥 CDC Food Safety</a>
@@ -1169,7 +1181,7 @@
           </div>
         </div>
         <div class="case-tips">
-          <h2>Prevention Tips</h2>
+          <h2 data-en="Prevention Tips" data-ar="نصائح لمنع الحوادث">Prevention Tips</h2>
           <ul>
             <li>Wash hands thoroughly before handling food</li>
             <li>Cook food to proper temperatures</li>
@@ -1187,25 +1199,25 @@ function toggleLanguage() {
   isArabic = !isArabic;
   document.body.dir = isArabic ? "rtl" : "ltr";
   document.querySelectorAll('[data-en]').forEach(el => {
-    el.innerText = isArabic ? el.getAttribute('data-ar') : el.getAttribute('data-en');
+    const ar = el.getAttribute('data-ar');
+    const en = el.getAttribute('data-en');
+    // For input/textarea placeholder
+    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+      if (el.hasAttribute('placeholder')) {
+        el.placeholder = isArabic ? (el.getAttribute('data-ar') || el.placeholder) : (el.getAttribute('data-en') || el.placeholder);
+      }
+      if (el.type === 'submit' || el.type === 'button') {
+        el.value = isArabic ? ar : en;
+      }
+    } else if (el.tagName === 'BUTTON' || el.tagName === 'A') {
+      // For buttons and links
+      el.textContent = isArabic ? ar : en;
+    } else {
+      // For headings, divs, spans, etc.
+      el.textContent = isArabic ? ar : en;
+    }
   });
 }
 </script>
-<script>
-let isArabic = false;
-function toggleLanguage() {
-  isArabic = !isArabic;
-  document.body.dir = isArabic ? "rtl" : "ltr";
-  document.querySelectorAll('[data-en]').forEach(el => {
-    el.innerText = isArabic ? el.getAttribute('data-ar') : el.getAttribute('data-en');
-  });
-}
-    </script>
-
-</body>
-</html>
-
-</script>
-
 </body>
 </html> 
