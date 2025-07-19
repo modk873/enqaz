@@ -40,7 +40,7 @@ function showPage(pageId) {
 
 // Translation system
 let currentLanguage = 'en';
-
+   const postList = document.getElementById('alerts-list');
 const translations = {
   en: {
     // Navigation
@@ -615,7 +615,7 @@ window.sendNormalCaseAlert = function(caseName) {
 };
 
 function renderAlerts() {
-  // Community page
+  const postList = document.getElementById('alerts-list');
   if (!postList) return;
   postList.innerHTML = '';
   if (alerts.length === 0) {

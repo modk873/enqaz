@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Emergency Call</title>
+  <style>
+    body {
+      background: #111;
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .back-btn {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      background: #fff;
+      color: #007bff;
+      border: none;
+      border-radius: 26px;
+      padding: 1em 2.6em;
+      font-size: 1.8em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,123,255,0.10);
+      z-index: 10;
+    }
+    .emergency-img {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      border-radius: 0;
+      box-shadow: none;
+      margin: 0;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <button class="back-btn" onclick="window.history.back()">← Back</button>
+  <img src="images/emergency-call.png" alt="Emergency Call" class="emergency-img">
+</body>
+</html> 

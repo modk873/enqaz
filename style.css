@@ -1345,7 +1345,7 @@ body.menu-open {
 }
 @media (max-width: 600px) {
   .sos-btn.sos-big {
-    width: 65vw;
+    width: 66vw;
     height: 30vw;
     min-width: 80px;
     min-height: 40px;

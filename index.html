@@ -9,16 +9,31 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <!-- Leaflet JavaScript (for interactive map option) -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <style>
+      @media (max-width: 600px) {
+        #emergency-sos-btn-link {
+          width: 100% !important;
+          display: block !important;
+        }
+        #emergency-sos-btn {
+          width: 100% !important;
+          min-width: 0 !important;
+          font-size: 1.2em !important;
+          padding: 1.3em 0.5em !important;
+          border-radius: 14px !important;
+        }
+      }
+    </style>
 </head>
 <body>
   <nav id="main-nav" class="top-nav">
     <div class="nav-links">
-      <button onclick="toggleLanguage()" class="lang-btn" style="background: #fff; color: #007bff; border: 2px solid #007bff; border-radius: 12px; padding: 8px 18px; font-size: 1em; font-weight: bold; cursor: pointer; min-width: 80px; min-height: 36px; box-shadow: 0 2px 8px rgba(0,123,255,0.10); transition: background 0.2s, box-shadow 0.2s; margin-left:1em;" data-en="Arabic" data-ar="English">Arabic 🌐</button>
       <button id="nav-home" onclick="showPage('home');" data-en="Home" data-ar="الرئيسية">Home</button>
       <button id="nav-about" onclick="showPage('about');" data-en="About" data-ar="حول">About</button>
       <button id="nav-map" onclick="showPage('map');" data-en="Map" data-ar="الخريطة">Map</button>
       <button id="nav-community" onclick="showPage('community');" data-en="Community" data-ar="المجتمع">Community</button>
       <button id="nav-profile" onclick="showPage('profile');" data-en="Profile" data-ar="الملف الشخصي">Profile</button>
+      <button onclick="toggleLanguage()" class="lang-btn" style="background: #fff; color: #007bff; border: 2px solid #007bff; border-radius: 12px; padding: 8px 18px; font-size: 1em; font-weight: bold; cursor: pointer; min-width: 80px; min-height: 36px; box-shadow: 0 2px 8px rgba(0,123,255,0.10); transition: background 0.2s, box-shadow 0.2s; margin-left:1em;" data-en="Arabic" data-ar="English">Arabic 🌐</button>
     </div>
   </nav>
   <main>
@@ -29,9 +44,12 @@
           <span data-en="Your safety, our priority. Instantly request help or support in any situation." data-ar="سلامتك أولويتنا. اطلب المساعدة أو الدعم فوراً في أي موقف.">Your safety, our priority. Instantly request help or support in any situation.</span>
         </div>
         <div class="sos-buttons column-layout" style="width:100%;gap:1.5em;">
-          <button id="emergency-sos-btn" class="sos-btn emergency sos-big" data-en="SOS" data-ar="نجدة" style="font-size:2.1em;display:flex;align-items:center;justify-content:center;gap:0.3em;box-shadow:0 4px 18px rgba(220,53,69,0.13);transition:transform 0.12s;">
-            <span style="font-size:1.3em;">🚨</span> <span>SOS</span>
-          </button>
+          <a href="emergency-photo.html" id="emergency-sos-btn-link" style="text-decoration:none;display:flex;justify-content:center;max-width:420px;width:100%;margin:auto;">
+            <button id="emergency-sos-btn" class="sos-btn emergency sos-big" data-en="SOS" data-ar="نجدة"
+              style="font-size:1.3em;display:flex;align-items:center;justify-content:center;gap:0.6em;box-shadow:0 2px 8px rgba(220,53,69,0.13);transition:transform 0.12s;min-width:320px;max-width:100%;padding:1.6em 2em;border-radius:16px;width:100%;">
+              <span style="font-size:1.1em;">🚨</span> <span>SOS</span>
+            </button>
+          </a>
           <button id="normal-sos-btn" class="sos-btn normal" data-en="Assistance" data-ar="مساعدة" style="font-size:1.3em;display:flex;align-items:center;justify-content:center;gap:0.6em;box-shadow:0 2px 8px rgba(255,193,7,0.13);transition:transform 0.12s;">
             <span style="font-size:1.1em;">🆗</span> <span>Assistance</span>
           </button>
@@ -1393,6 +1411,18 @@ function skipProfileAuth() {
   document.getElementById('auth-section').style.display = 'none';
   document.getElementById('profile-section').style.display = 'block';
 }
+
+function showEmergencyModal() {
+  document.getElementById('emergency-modal').style.display = 'flex';
+}
+function closeEmergencyModal() {
+  document.getElementById('emergency-modal').style.display = 'none';
+}
 </script>
+<!-- Emergency Call Modal -->
+<div id="emergency-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.85); z-index:9999; justify-content:center; align-items:center; flex-direction:column;">
+  <button onclick="closeEmergencyModal()" style="position:absolute; top:30px; left:30px; background:#fff; color:#007bff; border:none; border-radius:12px; padding:0.5em 1.5em; font-size:1.1em; font-weight:bold; cursor:pointer; box-shadow:0 2px 8px rgba(0,123,255,0.10);">← Back</button>
+  <img src="images/emergency-call.png" alt="Emergency Call" style="max-width:90vw; max-height:80vh; border-radius:18px; box-shadow:0 4px 32px rgba(0,0,0,0.4); margin-top:3em;">
+</div>
 </body>
 </html> 
