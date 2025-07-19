@@ -895,6 +895,16 @@ function loadUserChats() {
       { sender: 'Omar Khalil', message: 'Fire emergency response team ready!', time: '11:45 AM', type: 'received' },
       { sender: 'You', message: 'Great to have you on the team Omar!', time: '11:47 AM', type: 'sent' }
     ],
+    // --- Added more fake conversations ---
+    'Layla Ahmed': [
+      { sender: 'Layla Ahmed', message: 'Lost my bag in the park, can anyone help?', time: '08:10 AM', type: 'received' },
+      { sender: 'You', message: 'I saw a bag near the playground, is it black?', time: '08:12 AM', type: 'sent' },
+      { sender: 'Layla Ahmed', message: 'Yes! Thank you so much!', time: '08:13 AM', type: 'received' }
+    ],
+    'David Chen': [
+      { sender: 'David Chen', message: 'Anyone knows a good mechanic for a flat tire?', time: '07:50 AM', type: 'received' },
+      { sender: 'You', message: 'Try the shop near the main road, they are open now.', time: '07:52 AM', type: 'sent' }
+    ],
     'Aisha Mohammed': [
       { sender: 'Aisha Mohammed', message: 'Medical volunteer available in Al Daayen area.', time: '08:20 AM', type: 'received' },
       { sender: 'You', message: 'Welcome Aisha! Your help is much appreciated.', time: '08:25 AM', type: 'sent' },
@@ -911,50 +921,8 @@ function loadUserChats() {
       { sender: 'Mariam Al-Otaibi', message: 'Research volunteer in Al Hilal area.', time: '10:00 AM', type: 'received' },
       { sender: 'You', message: 'Welcome Mariam! What type of research do you do?', time: '10:05 AM', type: 'sent' },
       { sender: 'Mariam Al-Otaibi', message: 'Emergency response optimization and community safety.', time: '10:06 AM', type: 'received' }
-    ],
-    'Hassan Al-Ghamdi': [
-      { sender: 'Hassan Al-Ghamdi', message: 'Fire department volunteer in Al Sadd.', time: '11:00 AM', type: 'received' }
-    ],
-    'Zahra Al-Shehri': [
-      { sender: 'Zahra Al-Shehri', message: 'Medical volunteer in Al Waab. Ready to assist!', time: '08:45 AM', type: 'received' },
-      { sender: 'You', message: 'Thank you Zahra! Your dedication is inspiring.', time: '08:50 AM', type: 'sent' }
-    ],
-    'Reem Al-Harbi': [
-      { sender: 'Reem Al-Harbi', message: 'Research specialist in Al Kharaitiyat. Available for technical support.', time: '09:15 AM', type: 'received' }
-    ],
-    'Faisal Al-Dossary': [
-      { sender: 'Faisal Al-Dossary', message: 'Emergency response coordinator in Al Shamal.', time: '10:30 AM', type: 'received' },
-      { sender: 'You', message: 'Great to have a coordinator on board!', time: '10:35 AM', type: 'sent' }
-    ],
-    'Dana Al-Mutairi': [
-      { sender: 'Dana Al-Mutairi', message: 'Fire safety volunteer in Al Wakra region.', time: '11:20 AM', type: 'received' }
-    ],
-    'Huda Al-Shamrani': [
-      { sender: 'Huda Al-Shamrani', message: 'Medical volunteer in Al Gharafa. Ready for emergencies!', time: '09:00 AM', type: 'received' },
-      { sender: 'You', message: 'Welcome Huda! Your help is much needed.', time: '09:05 AM', type: 'sent' }
-    ],
-    'Rashid Al-Zahrani': [
-      { sender: 'Rashid Al-Zahrani', message: 'Emergency response team in Al Rayyan.', time: '12:00 PM', type: 'received' }
-    ],
-    'Lina Al-Amri': [
-      { sender: 'Lina Al-Amri', message: 'Fire department volunteer in Al Wakrah area.', time: '10:15 AM', type: 'received' }
-    ],
-    'Tariq Al-Sulaiman': [
-      { sender: 'Tariq Al-Sulaiman', message: 'Medical volunteer in Doha. Available 24/7.', time: '08:30 AM', type: 'received' },
-      { sender: 'You', message: 'Thank you Tariq! Your availability is crucial.', time: '08:35 AM', type: 'sent' }
-    ],
-    'Adel Al-Mansouri': [
-      { sender: 'Adel Al-Mansouri', message: 'Fire emergency response in Al Khor.', time: '11:30 AM', type: 'received' }
-    ],
-    'Samira Al-Hamdan': [
-      { sender: 'Samira Al-Hamdan', message: 'Medical volunteer in Al Rayyan. Ready to help!', time: '09:45 AM', type: 'received' },
-      { sender: 'You', message: 'Welcome Samira! Your dedication is appreciated.', time: '09:50 AM', type: 'sent' }
-    ],
-    'Waleed Al-Saadi': [
-      { sender: 'Waleed Al-Saadi', message: 'Emergency response volunteer in Al Wakrah.', time: '10:45 AM', type: 'received' }
     ]
   };
-  
   renderChatsList();
 }
 

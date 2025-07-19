@@ -12,50 +12,56 @@
 </head>
 <body>
   <!-- Translation Button -->
-  <div id="translation-toggle" class="translation-toggle" style="position: fixed; top: 20px; right: 20px; z-index: 9999; background: red; padding: 10px; border: 5px solid yellow;">
-    <button onclick="toggleLanguage()" class="lang-btn" style="background: red !important; color: white !important; border: 3px solid yellow !important; padding: 15px; font-size: 16px; font-weight: bold; cursor: pointer; min-width: 100px; min-height: 50px;"
-      data-en="EN" data-ar="عربي">EN ��</button>
+  <div id="translation-toggle" class="translation-toggle" style="position: fixed; top: 20px; right: 20px; z-index: 9999; background: transparent; padding: 10px; border: none;">
+    <button onclick="toggleLanguage()" class="lang-btn" style="background: #6a9dd3; color: rgb(120, 61, 61); border: 2px solid #007bff; border-radius: 12px; padding: 15px; font-size: 16px; font-weight: bold; cursor: pointer; min-width: 100px; min-height: 50px; box-shadow: 0 2px 8px rgba(0,123,255,0.15); transition: background 0.2s, box-shadow 0.2s;" data-en="EN" data-ar="عربي">EN ��</button>
   </div>
   
   <div id="menu-backdrop" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.25);z-index:1000;"></div>
   <button id="menu-toggle" aria-label="Open menu" style="position:fixed;top:1em;left:1em;z-index:1001;font-size:2em;background:none;border:none;cursor:pointer;">☰</button>
   <nav id="main-nav" class="side-nav" style="display:none;">
     <button id="menu-close" aria-label="Close menu" style="font-size:2em;background:none;border:none;cursor:pointer;float:right;">×</button>
-    <button onclick="toggleLanguage()" class="lang-btn" style="background: red; color: white; border: 3px solid yellow; padding: 10px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-bottom: 1em;" data-en="Arabic" data-ar="English">Arabic 🌐</button>
+    <button onclick="toggleLanguage()" class="lang-btn" style="background: #ffffff; color: rgb(45, 12, 233); border: 2px solid #007bff; border-radius: 12px; padding: 10px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-bottom: 1em; box-shadow: 0 2px 8px rgba(0,123,255,0.15); transition: background 0.2s, box-shadow 0.2s;" data-en="Arabic" data-ar="English">Arabic 🌐</button>
     <div class="nav-links">
       <button id="nav-home" onclick="showPage('home');closeMenu();" data-en="Home" data-ar="الرئيسية">Home</button>
       <button id="nav-about" onclick="showPage('about');closeMenu();" data-en="About" data-ar="حول">About</button>
       <button id="nav-map" onclick="showPage('map');closeMenu();" data-en="Map" data-ar="الخريطة">Map</button>
       <button id="nav-community" onclick="showPage('community');closeMenu();" data-en="Community" data-ar="المجتمع">Community</button>
-      <button id="nav-login" onclick="showPage('login');closeMenu();" data-en="Login" data-ar="تسجيل الدخول">Login</button>
-      <button id="nav-signup" onclick="showPage('signup');closeMenu();" data-en="Sign Up" data-ar="إنشاء حساب">Sign Up</button>
       <button id="nav-profile" onclick="showPage('profile');closeMenu();" data-en="Profile" data-ar="الملف الشخصي">Profile</button>
     </div>
   </nav>
   <main>
-    <section id="home" class="page"> 
-      <h1 data-en="Welcome to Enqaz SOS App" data-ar="مرحباً بك في تطبيق إنقاذ SOS">Welcome to Enqaz SOS App</h1>
-      <div class="sos-buttons column-layout">
-        <button id="emergency-sos-btn" class="sos-btn emergency sos-big" data-en="SOS" data-ar="نجدة">SOS</button>
-        <button id="normal-sos-btn" class="sos-btn normal" data-en="Normal" data-ar="عادي">Normal</button>
+    <section id="home" class="page" style="background:linear-gradient(135deg,#e3f0ff 0%,#f9f9fb 100%);min-height:70vh;display:flex;align-items:center;justify-content:center;">
+      <div style="max-width:480px;margin:auto;background:white;padding:2.5em 2em 2em 2em;border-radius:22px;box-shadow:0 4px 32px rgba(0,123,255,0.10);display:flex;flex-direction:column;align-items:center;gap:2em;">
+        <h1 data-en="Welcome to Enqaz SOS App" data-ar="مرحباً بك في تطبيق إنقاذ SOS" style="font-size:2.2em;font-weight:800;text-align:center;margin-bottom:0.2em;letter-spacing:0.01em;">Welcome to Enqaz SOS App</h1>
+        <div style="font-size:1.15em;color:#555;text-align:center;margin-bottom:1em;max-width:350px;">
+          <span data-en="Your safety, our priority. Instantly request help or support in any situation." data-ar="سلامتك أولويتنا. اطلب المساعدة أو الدعم فوراً في أي موقف.">Your safety, our priority. Instantly request help or support in any situation.</span>
+        </div>
+        <div class="sos-buttons column-layout" style="width:100%;gap:1.5em;">
+          <button id="emergency-sos-btn" class="sos-btn emergency sos-big" data-en="SOS" data-ar="نجدة" style="font-size:2.1em;display:flex;align-items:center;justify-content:center;gap:0.7em;box-shadow:0 4px 18px rgba(220,53,69,0.13);transition:transform 0.12s;">
+            <span style="font-size:1.3em;">🚨</span> <span>SOS</span>
+          </button>
+          <button id="normal-sos-btn" class="sos-btn normal" data-en="Normal" data-ar="عادي" style="font-size:1.3em;display:flex;align-items:center;justify-content:center;gap:0.6em;box-shadow:0 2px 8px rgba(255,193,7,0.13);transition:transform 0.12s;">
+            <span style="font-size:1.1em;">🆗</span> <span>Normal</span>
+          </button>
+        </div>
+        <div id="sos-message" class="message"></div>
       </div>
-      <div id="sos-message" class="message"></div>
     </section>
-    <section id="login" class="page" style="display:none"> 
-      <h1 data-en="Login" data-ar="تسجيل الدخول">Login</h1> 
-      <form id="login-form">
+    <section id="login-signup" class="page" style="display:none"> 
+      <h1 data-en="Account" data-ar="الحساب">Account</h1> 
+      <div style="display:flex;justify-content:center;gap:2em;margin-bottom:1em;">
+        <button id="toggle-login" onclick="showLoginForm()" style="padding:0.5em 2em;border-radius:8px;border:1px solid #007bff;background:#007bff;color:white;font-weight:bold;">Login</button>
+        <button id="toggle-signup" onclick="showSignupForm()" style="padding:0.5em 2em;border-radius:8px;border:1px solid #007bff;background:transparent;color:#007bff;font-weight:bold;">Sign Up</button>
+      </div>
+      <form id="login-form" style="display:block;max-width:350px;margin:auto;">
         <label for="login-username" data-en="Username" data-ar="اسم المستخدم">Username</label>
         <input id="login-username" type="text" placeholder="Enter your username" required data-en="Enter your username" data-ar="أدخل اسم المستخدم"/>
         <label for="login-password" data-en="Password" data-ar="كلمة المرور">Password</label>
         <input id="login-password" type="password" placeholder="Enter your password" required data-en="Enter your password" data-ar="أدخل كلمة المرور"/>
         <button type="submit" data-en="Login" data-ar="تسجيل الدخول">Login</button>
-        <div class="form-hint" data-en="Don't have an account?" data-ar="ليس لديك حساب؟">Don't have an account? <a href="#" onclick="showPage('signup');return false;" data-en="Sign up" data-ar="إنشاء حساب">Sign up</a></div>
+        <div class="form-hint" data-en="Don't have an account?" data-ar="ليس لديك حساب؟"><a href="#" onclick="showSignupForm();return false;" data-en="Sign up" data-ar="إنشاء حساب">Sign up</a></div>
       </form>
-      <div id="login-message" class="message"></div>
-    </section>
-    <section id="signup" class="page" style="display:none"> 
-      <h1 data-en="Sign Up" data-ar="إنشاء حساب">Sign Up</h1> 
-      <form id="signup-form">
+      <form id="signup-form" style="display:none;max-width:350px;margin:auto;">
         <label for="signup-username" data-en="Username" data-ar="اسم المستخدم">Username</label>
         <input id="signup-username" type="text" placeholder="Choose a username" required data-en="Choose a username" data-ar="اختر اسم مستخدم"/>
         <label for="signup-email" data-en="Email" data-ar="البريد الإلكتروني">Email</label>
@@ -63,11 +69,10 @@
         <label for="signup-password" data-en="Password" data-ar="كلمة المرور">Password</label>
         <input id="signup-password" type="password" placeholder="Create a password" required data-en="Create a password" data-ar="أنشئ كلمة مرور"/>
         <button type="submit" data-en="Sign Up" data-ar="إنشاء حساب">Sign Up</button>
-        <div class="form-hint" data-en="Already have an account?" data-ar="لديك حساب بالفعل؟">Already have an account? <a href="#" onclick="showPage('login');return false;" data-en="Login" data-ar="تسجيل الدخول">Login</a></div>
+        <div class="form-hint" data-en="Already have an account?" data-ar="لديك حساب بالفعل؟"><a href="#" onclick="showLoginForm();return false;" data-en="Login" data-ar="تسجيل الدخول">Login</a></div>
       </form>
-      <div id="signup-message" class="message"></div>
+      <div id="login-signup-message" class="message"></div>
     </section>
-
     <section id="community" class="page" style="display:none"> 
       <h1 data-en="Community Hub" data-ar="مركز المجتمع">Community Hub</h1>
       
@@ -154,56 +159,157 @@
       <div class="normal-cards">
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('lost-item')" data-en="Lost Item" data-ar="فقدان شيء"><span class="normal-icon">🔎</span> Lost Item</div>
+            <div class="case-title-clickable" onclick="showCaseDetail('lost-item')"><span class="normal-icon">🔎</span> <span data-en="Lost Item" data-ar="فقدان شيء">Lost Item</span></div>
           </div>
-
-        </div>
-        <div class="normal-card">
-          <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('minor-injury')" data-en="Minor Injury" data-ar="إصابة بسيطة"><span class="normal-icon">🩹</span> Minor Injury</div>
-          </div>
-
-        </div>
-        <div class="normal-card">
-          <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('need-directions')" data-en="Need Directions" data-ar="الحاجة إلى الاتجاهات"><span class="normal-icon">🗺️</span> Need Directions</div>
-          </div>
-
-        </div>
-        <div class="normal-card">
-          <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('flat-tire')" data-en="Flat Tire" data-ar="إطار مسطح"><span class="normal-icon">🚗</span> Flat Tire</div>
-          </div>
-
-        </div>
-        <div class="normal-card">
-          <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('locked-out')" data-en="Locked Out" data-ar="مغلق خارجاً"><span class="normal-icon">🔑</span> Locked Out</div>
-          </div>
-
-        </div>
-        <div class="normal-card">
-          <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('power-outage')" data-en="Power Outage" data-ar="انقطاع الكهرباء"><span class="normal-icon">💡</span> Power Outage</div>
-          </div>
-
-        </div>
-        <div class="normal-card">
-          <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('water-leak')" data-en="Water Leak" data-ar="تسرب المياه"><span class="normal-icon">💧</span> Water Leak</div>
-          </div>
-
-        </div>
-        <div class="normal-card">
-          <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('lost-child')" data-en="Lost Child" data-ar="طفل مفقود"><span class="normal-icon">🧒</span> Lost Child</div>
-          </div>
-
+          <div class="case-details" id="case-lost-item" style="display:none">
+            <div class="case-image">
+              <img src="images/lost-item.jpg" alt="Lost Item" style="width:100%;max-width:400px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1em;"/>
+            </div>
             <p><strong>Solution:</strong></p>
             <ol>
               <li>Alert nearby people and staff immediately.</li>
-              <li>Describe the child's appearance and clothing.</li>
+              <li>Describe the item's appearance and any identifying marks.</li>
               <li>Contact security or the police if not found quickly.</li>
+            </ol>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Lost Item')">Request Help</button>
+            <button class="case-detail-btn" onclick="showCaseDetail('lost-item')">View Full Guide</button>
+          </div>
+        </div>
+        <div class="normal-card">
+          <div class="normal-card-header">
+            <div class="case-title-clickable" onclick="showCaseDetail('minor-injury')"><span class="normal-icon">🩹</span> <span data-en="Minor Injury" data-ar="إصابة خفيفة">Minor Injury</span></div>
+          </div>
+          <div class="case-details" id="case-minor-injury" style="display:none">
+            <div class="case-image">
+              <img src="images/minor-injury.jpg" alt="Minor Injury" style="width:100%;max-width:400px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1em;"/>
+            </div>
+            <p><strong>Solution:</strong></p>
+            <ol>
+              <li><strong data-en="Assess the Injury:" data-ar="تقييم الإصابة:">Assess the Injury:</strong> Determine the type and severity of the injury.</li>
+              <li><strong data-en="Clean the Wound:" data-ar="تنظيف الجرح:">Clean the Wound:</strong> Wash with clean water and mild soap.</li>
+              <li><strong data-en="Stop Bleeding:" data-ar="التوقف عن النزيف:">Stop Bleeding:</strong> Apply gentle pressure with a clean cloth.</li>
+              <li><strong data-en="Apply Antiseptic:" data-ar="تطبيق المضاد الحيوي:">Apply Antiseptic:</strong> Use antiseptic solution to prevent infection.</li>
+              <li><strong data-en="Cover the Wound:" data-ar="تغطية الجرح:">Cover the Wound:</strong> Apply a sterile bandage or dressing.</li>
+              <li><strong data-en="Monitor for Signs:" data-ar="مراقبة الإشارات:">Monitor for Signs:</strong> Watch for infection or worsening symptoms.</li>
+              <li><strong data-en="Seek Medical Help:" data-ar="البحث عن المساعدة الطبية:">Seek Medical Help:</strong> If pain persists or symptoms worsen.</li>
+            </ol>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Minor Injury')">Request Help</button>
+            <button class="case-detail-btn" onclick="showCaseDetail('minor-injury')">View Full Guide</button>
+          </div>
+        </div>
+        <div class="normal-card">
+          <div class="normal-card-header">
+            <div class="case-title-clickable" onclick="showCaseDetail('need-directions')"><span class="normal-icon">🗺️</span> <span data-en="Need Directions" data-ar="الحاجة إلى الاتجاهات">Need Directions</span></div>
+          </div>
+
+        </div>
+        <div class="normal-card">
+          <div class="normal-card-header">
+            <div class="case-title-clickable" onclick="showCaseDetail('flat-tire')"><span class="normal-icon">🚗</span> <span data-en="Flat Tire" data-ar="إطار مسطح">Flat Tire</span></div>
+          </div>
+          <div class="case-details" id="case-flat-tire" style="display:none">
+            <div class="case-image">
+              <img src="images/flat-tire.jpg" alt="Flat Tire" style="width:100%;max-width:400px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1em;"/>
+            </div>
+            <p><strong>Solution:</strong></p>
+            <ol>
+              <li><strong data-en="Pull Over Safely:" data-ar="السحب إلى موقع آمن:">Pull Over Safely:</strong> Move to a safe location off the road.</li>
+              <li><strong data-en="Turn on Hazard Lights:" data-ar="تشغيل الضواغط الخطرة:">Turn on Hazard Lights:</strong> Make your vehicle visible to other drivers.</li>
+              <li><strong data-en="Check for Spare Tire:" data-ar="التحقق من إطار الطوارئ:">Check for Spare Tire:</strong> Locate your spare tire and tools.</li>
+              <li><strong data-en="Loosen Lug Nuts:" data-ar="تخفيف الأسنان الخارجية:">Loosen Lug Nuts:</strong> Use the lug wrench to loosen nuts before jacking.</li>
+              <li><strong data-en="Jack Up the Car:" data-ar="رفع السيارة باستخدام السلطة:">Jack Up the Car:</strong> Place jack under the designated point and raise.</li>
+              <li><strong data-en="Remove Flat Tire:" data-ar="إزالة إطار الطوارئ:">Remove Flat Tire:</strong> Take off the flat tire and replace with spare.</li>
+              <li><strong data-en="Tighten Lug Nuts:" data-ar="تثبيت الأسنان الخارجية:">Tighten Lug Nuts:</strong> Secure the spare tire properly.</li>
+              <li><strong data-en="Lower the Car:" data-ar="خفض السيارة:">Lower the Car:</strong> Carefully lower the vehicle and remove jack.</li>
+            </ol>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Flat Tire')">Request Help</button>
+            <button class="case-detail-btn" onclick="showCaseDetail('flat-tire')">View Full Guide</button>
+          </div>
+        </div>
+        <div class="normal-card">
+          <div class="normal-card-header">
+            <div class="case-title-clickable" onclick="showCaseDetail('locked-out')"><span class="normal-icon">🔑</span> <span data-en="Locked Out" data-ar="مغلق خارجاً">Locked Out</span></div>
+          </div>
+          <div class="case-details" id="case-locked-out" style="display:none">
+            <div class="case-image">
+              <img src="images/locked-out.jpg" alt="Locked Out" style="width:100%;max-width:400px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1em;"/>
+            </div>
+            <p><strong>Solution:</strong></p>
+            <ol>
+              <li><strong data-en="Stay Calm:" data-ar="البقاء على سكون:">Stay Calm:</strong> Panicking won't help you get back in.</li>
+              <li><strong data-en="Check All Doors:" data-ar="التحقق من جميع الأبواب:">Check All Doors:</strong> Try all doors and windows.</li>
+              <li><strong data-en="Look for Spare Key:" data-ar="البحث عن مفتاح طوارئ:">Look for Spare Key:</strong> Check under doormats, flower pots, or with neighbors.</li>
+              <li><strong data-en="Contact Family/Friends:" data-ar="اتصال أقارب/الأصدقاء:">Contact Family/Friends:</strong> Call someone who might have a spare key.</li>
+              <li><strong data-en="Call a Locksmith:" data-ar="اتصال المفتاح الخارجي:">Call a Locksmith:</strong> Professional locksmiths can help safely.</li>
+              <li><strong data-en="Check for Open Windows:" data-ar="البحث عن أبواب مفتوحة:">Check for Open Windows:</strong> Look for any unlocked windows.</li>
+              <li><strong data-en="Contact Landlord:" data-ar="اتصال المالك:">Contact Landlord:</strong> If renting, call your landlord or property manager.</li>
+            </ol>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Locked Out')">Request Help</button>
+            <button class="case-detail-btn" onclick="showCaseDetail('locked-out')">View Full Guide</button>
+          </div>
+        </div>
+        <div class="normal-card">
+          <div class="normal-card-header">
+            <div class="case-title-clickable" onclick="showCaseDetail('power-outage')"><span class="normal-icon">💡</span> <span data-en="Power Outage" data-ar="انقطاع الكهرباء">Power Outage</span></div>
+          </div>
+          <div class="case-details" id="case-power-outage" style="display:none">
+            <div class="case-image">
+              <img src="images/power-outage.jpg" alt="Power Outage" style="width:100%;max-width:400px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1em;"/>
+            </div>
+            <p><strong>Solution:</strong></p>
+            <ol>
+              <li><strong data-en="Check Your Circuit Breaker:" data-ar="التحقق من مفتاح الدائرة:">Check Your Circuit Breaker:</strong> Look for tripped breakers in your electrical panel.</li>
+              <li><strong data-en="Check Neighbors:" data-ar="التحقق من الجيران:">Check Neighbors:</strong> See if the outage affects your whole area.</li>
+              <li><strong data-en="Report the Outage:" data-ar="الإبلاغ عن الانقطاع:">Report the Outage:</strong> Contact your electricity provider.</li>
+              <li><strong data-en="Use Flashlights:" data-ar="استخدام الأضواء:">Use Flashlights:</strong> Avoid candles to prevent fire hazards.</li>
+              <li><strong data-en="Keep Refrigerator Closed:" data-ar="إغلاق الثلاجة:">Keep Refrigerator Closed:</strong> Food will stay cold longer.</li>
+              <li><strong data-en="Unplug Electronics:" data-ar="تفريغ الأجهزة الكهربائية:">Unplug Electronics:</strong> Protect devices from power surges.</li>
+              <li><strong data-en="Stay Informed:" data-ar="البقاء على إطلاع:">Stay Informed:</strong> Listen to battery-powered radio for updates.</li>
+            </ol>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Power Outage')">Request Help</button>
+            <button class="case-detail-btn" onclick="showCaseDetail('power-outage')">View Full Guide</button>
+          </div>
+        </div>
+        <div class="normal-card">
+          <div class="normal-card-header">
+            <div class="case-title-clickable" onclick="showCaseDetail('water-leak')"><span class="normal-icon">💧</span> <span data-en="Water Leak" data-ar="تسرب المياه">Water Leak</span></div>
+          </div>
+          <div class="case-details" id="case-water-leak" style="display:none">
+            <div class="case-image">
+              <img src="images/water-leak.jpg" alt="Water Leak" style="width:100%;max-width:400px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1em;"/>
+            </div>
+            <p><strong>Solution:</strong></p>
+            <ol>
+              <li><strong data-en="Turn Off Main Water Supply:" data-ar="إيقاف المياه الرئيسية:">Turn Off Main Water Supply:</strong> Locate and turn off the main water valve.</li>
+              <li><strong data-en="Stop the Leak:" data-ar="إيقاف التسرب:">Stop the Leak:</strong> Use towels, buckets, or containers to catch water.</li>
+              <li><strong data-en="Turn Off Electricity:" data-ar="إيقاف الكهرباء:">Turn Off Electricity:</strong> If water is near electrical outlets, turn off power.</li>
+              <li><strong data-en="Document the Damage:" data-ar="تسجيل الضرر:">Document the Damage:</strong> Take photos for insurance purposes.</li>
+              <li><strong data-en="Call a Plumber:" data-ar="اتصال المهندس:">Call a Plumber:</strong> Contact a professional for repairs.</li>
+              <li><strong data-en="Contact Insurance:" data-ar="اتصال التأمين:">Contact Insurance:</strong> Report the incident to your insurance company.</li>
+              <li><strong data-en="Prevent Mold:" data-ar="منع المود:">Prevent Mold:</strong> Dry affected areas thoroughly.</li>
+            </ol>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Water Leak')">Request Help</button>
+            <button class="case-detail-btn" onclick="showCaseDetail('water-leak')">View Full Guide</button>
+          </div>
+        </div>
+        <div class="normal-card">
+          <div class="normal-card-header">
+            <div class="case-title-clickable" onclick="showCaseDetail('lost-child')"><span class="normal-icon">🧒</span> <span data-en="Lost Child" data-ar="طفل مفقود">Lost Child</span></div>
+          </div>
+          <div class="case-details" id="case-lost-child" style="display:none">
+            <div class="case-image">
+              <img src="images/lost-child.jpg" alt="Lost Child" style="width:100%;max-width:400px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1em;"/>
+            </div>
+            <p><strong>Solution:</strong></p>
+            <ol>
+              <li><strong data-en="Stay Calm:" data-ar="البقاء على سكون:">Stay Calm:</strong> Panicking will make the situation worse.</li>
+              <li><strong data-en="Alert Authorities Immediately:" data-ar="إخطار السلطات على الفور:">Alert Authorities Immediately:</strong> Call 911 or contact security.</li>
+              <li><strong data-en="Provide Description:" data-ar="تقديم الوصف:">Provide Description:</strong> Give detailed description of the child.</li>
+              <li><strong data-en="Search the Area:" data-ar="البحث في المنطقة:">Search the Area:</strong> Check nearby areas with other people.</li>
+              <li><strong data-en="Use Public Address:" data-ar="استخدام العنوان العام:">Use Public Address:</strong> Ask for announcements if in a public place.</li>
+              <li><strong data-en="Contact Family:" data-ar="اتصال الأسرة:">Contact Family:</strong> Notify other family members.</li>
+              <li><strong data-en="Stay in Place:" data-ar="البقاء في المكان الذي رأيت فيه الطفل:">Stay in Place:</strong> Remain where you last saw the child.</li>
+              <li><strong data-en="Use Social Media:" data-ar="استخدام وسائل التواصل الاجتماعي:">Use Social Media:</strong> Share information on community groups.</li>
             </ol>
             <button class="send-alert-btn" onclick="sendNormalCaseAlert('Lost Child')">Request Help</button>
             <button class="case-detail-btn" onclick="showCaseDetail('lost-child')">View Full Guide</button>
@@ -211,20 +317,28 @@
         </div>
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('stuck-elevator')" data-en="Stuck in Elevator" data-ar="مغلق في المصعد"><span class="normal-icon">🛗</span> Stuck in Elevator</div>
+            <div class="case-title-clickable" onclick="showCaseDetail('stuck-elevator')"><span class="normal-icon">🛗</span> <span data-en="Stuck in Elevator" data-ar="مغلق في المصعد">Stuck in Elevator</span></div>
           </div>
 
         </div>
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('pet-lost')" data-en="Lost Pet" data-ar="حيوان مفقود"><span class="normal-icon">🐾</span> Lost Pet</div>
+            <div class="case-title-clickable" onclick="showCaseDetail('pet-lost')"><span class="normal-icon">🐾</span> <span data-en="Lost Pet" data-ar="حيوان مفقود">Lost Pet</span></div>
           </div>
-
+          <div class="case-details" id="case-pet-lost" style="display:none">
+            <div class="case-image">
+              <img src="images/pet-lost.jpg" alt="Lost Pet" style="width:100%;max-width:400px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1em;"/>
+            </div>
             <p><strong>Solution:</strong></p>
             <ol>
-              <li>Search the immediate area and call your pet's name.</li>
-              <li>Ask neighbors and check with local shelters.</li>
-              <li>Post on social media or community boards.</li>
+              <li><strong data-en="Search Immediately:" data-ar="البحث على الفور:">Search Immediately:</strong> Start searching your neighborhood right away.</li>
+              <li><strong data-en="Call Your Pet's Name:" data-ar="اتصال اسم حيوانك:">Call Your Pet's Name:</strong> Use familiar commands and sounds.</li>
+              <li><strong data-en="Check Common Hiding Spots:" data-ar="البحث في الأماكن المخفية:">Check Common Hiding Spots:</strong> Look under porches, in bushes, garages.</li>
+              <li><strong data-en="Ask Neighbors:" data-ar="السؤال عن الجيران:">Ask Neighbors:</strong> Knock on doors and ask people to check their yards.</li>
+              <li><strong data-en="Contact Local Shelters:" data-ar="اتصال المخازن المحلية:">Contact Local Shelters:</strong> Call all nearby animal shelters and vet offices.</li>
+              <li><strong data-en="Post on Social Media:" data-ar="نشر على وسائل التواصل الاجتماعي:">Post on Social Media:</strong> Use community groups and lost pet pages.</li>
+              <li><strong data-en="Create Flyers:" data-ar="إنشاء إعلانات:">Create Flyers:</strong> Make and distribute lost pet posters.</li>
+              <li><strong data-en="Use Pet Tracking Apps:" data-ar="استخدام تطبيقات تتبع الحيوانات:">Use Pet Tracking Apps:</strong> If your pet has a microchip or GPS collar.</li>
             </ol>
             <button class="send-alert-btn" onclick="sendNormalCaseAlert('Lost Pet')">Request Help</button>
             <button class="case-detail-btn" onclick="showCaseDetail('pet-lost')">View Full Guide</button>
@@ -233,7 +347,7 @@
         
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('car-accident')" data-en="Car Accident" data-ar="حادثة سيارة"><span class="normal-icon">🚗</span> Car Accident</div>
+            <div class="case-title-clickable" onclick="showCaseDetail('car-accident')"><span class="normal-icon">🚗</span> <span data-en="Car Accident" data-ar="حادثة سيارة">Car Accident</span></div>
           </div>
           <div class="case-details" id="case-car-accident" style="display:none">
             <p><strong>Solution:</strong></p>
@@ -249,7 +363,7 @@
         
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('medical-emergency')" data-en="Medical Emergency" data-ar="طوارئ طبية"><span class="normal-icon">🏥</span> Medical Emergency</div>
+            <div class="case-title-clickable" onclick="showCaseDetail('medical-emergency')"><span class="normal-icon">🏥</span> <span data-en="Medical Emergency" data-ar="طوارئ طبية">Medical Emergency</span></div>
           </div>
           <div class="case-details" id="case-medical-emergency" style="display:none">
             <p><strong>Solution:</strong></p>
@@ -265,9 +379,12 @@
         
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('fire-emergency')" data-en="Fire Emergency" data-ar="حريق طوارئ"><span class="normal-icon">🔥</span> Fire Emergency</div>
+            <div class="case-title-clickable" onclick="showCaseDetail('fire-emergency')"><span class="normal-icon">🔥</span> <span data-en="Fire Emergency" data-ar="حريق طوارئ">Fire Emergency</span></div>
           </div>
           <div class="case-details" id="case-fire-emergency" style="display:none">
+            <div class="case-image">
+              <img src="images/fire-emergency.jpg" alt="Fire Emergency" style="width:100%;max-width:400px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1em;"/>
+            </div>
             <p><strong>Solution:</strong></p>
             <ol>
               <li>Get out immediately and call fire department.</li>
@@ -281,7 +398,7 @@
         
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('natural-disaster')" data-en="Natural Disaster" data-ar="كوارث طبيعية"><span class="normal-icon">🌪️</span> Natural Disaster</div>
+            <div class="case-title-clickable" onclick="showCaseDetail('natural-disaster')"><span class="normal-icon">🌪️</span> <span data-en="Natural Disaster" data-ar="كوارث طبيعية">Natural Disaster</span></div>
           </div>
           <div class="case-details" id="case-natural-disaster" style="display:none">
             <p><strong>Solution:</strong></p>
@@ -297,7 +414,7 @@
         
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('cyber-security')" data-en="Cyber Security Issue" data-ar="مشاكل أمن الكمبيوتر"><span class="normal-icon">💻</span> Cyber Security Issue</div>
+            <div class="case-title-clickable" onclick="showCaseDetail('cyber-security')"><span class="normal-icon">💻</span> <span data-en="Cyber Security Issue" data-ar="مشاكل أمن الكمبيوتر">Cyber Security Issue</span></div>
           </div>
           <div class="case-details" id="case-cyber-security" style="display:none">
             <p><strong>Solution:</strong></p>
@@ -313,7 +430,7 @@
         
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('harassment')" data-en="Harassment" data-ar="التهديدات"><span class="neutral-icon">🚨</span> Harassment</div>
+            <div class="case-title-clickable" onclick="showCaseDetail('harassment')"><span class="neutral-icon">🚨</span> <span data-en="Harassment" data-ar="التهديدات">Harassment</span></div>
           </div>
           <div class="case-details" id="case-harassment" style="display:none">
             <p><strong>Solution:</strong></p>
@@ -329,7 +446,7 @@
         
         <div class="normal-card">
           <div class="normal-card-header">
-            <div class="case-title-clickable" onclick="showCaseDetail('food-poisoning')" data-en="Food Poisoning" data-ar="سرطان الطعام"><span class="normal-icon">🤢</span> Food Poisoning</div>
+            <div class="case-title-clickable" onclick="showCaseDetail('food-poisoning')"><span class="normal-icon">🤢</span> <span data-en="Food Poisoning" data-ar="سرطان الطعام">Food Poisoning</span></div>
           </div>
           <div class="case-details" id="case-food-poisoning" style="display:none">
             <p><strong>Solution:</strong></p>
@@ -347,33 +464,62 @@
       <button onclick="showPage('home')">Back to Home</button>
     </section>
     <section id="profile" class="page" style="display:none">
-      <h1>User Profile & Registration</h1>
-      <form id="profile-form">
-        <label for="profile-name" data-en="Full Name" data-ar="الاسم الكامل">Full Name</label>
-        <input id="profile-name" type="text" placeholder="Enter your full name" required />
-
-        <label for="profile-photo" data-en="Photo" data-ar="الصورة">Photo</label>
-        <input id="profile-photo" type="file" accept="image/*" />
-        <img id="profile-photo-preview" src="" alt="Photo Preview" style="display:none;max-width:120px;margin:1em 0;" />
-
-        <label data-en="Emergency Contacts (up to 3)" data-ar="جهات الاتصال (إلى 3)">Emergency Contacts (up to 3)</label>
-        <div id="contacts-list">
-          <div class="contact-row">
-            <input type="text" class="contact-name" placeholder="Contact Name" />
-            <input type="tel" class="contact-phone" placeholder="Phone Number" />
+      <div style="max-width:420px;margin:auto;background:#f9f9fb;padding:2em 2.5em 2em 2.5em;border-radius:18px;box-shadow:0 2px 16px rgba(0,123,255,0.08);">
+        <div id="auth-section">
+          <h1 data-en="Account" data-ar="الحساب" style="text-align:center;margin-bottom:1.5em;">Account</h1>
+          <div style="display:flex;justify-content:center;gap:2em;margin-bottom:1em;">
+            <button id="toggle-login" onclick="showLoginForm()" style="padding:0.5em 2em;border-radius:8px;border:1px solid #007bff;background:#007bff;color:white;font-weight:bold;">Login</button>
+            <button id="toggle-signup" onclick="showSignupForm()" style="padding:0.5em 2em;border-radius:8px;border:1px solid #007bff;background:transparent;color:#007bff;font-weight:bold;">Sign Up</button>
           </div>
+          <form id="login-form" style="display:block;max-width:350px;margin:auto;">
+            <label for="login-username" data-en="Username" data-ar="اسم المستخدم">Username</label>
+            <input id="login-username" type="text" placeholder="Enter your username" required data-en="Enter your username" data-ar="أدخل اسم المستخدم"/>
+            <label for="login-password" data-en="Password" data-ar="كلمة المرور">Password</label>
+            <input id="login-password" type="password" placeholder="Enter your password" required data-en="Enter your password" data-ar="أدخل كلمة المرور"/>
+            <button type="submit" data-en="Login" data-ar="تسجيل الدخول">Login</button>
+            <div class="form-hint" data-en="Don't have an account?" data-ar="ليس لديك حساب؟"><a href="#" onclick="showSignupForm();return false;" data-en="Sign up" data-ar="إنشاء حساب">Sign up</a></div>
+          </form>
+          <form id="signup-form" style="display:none;max-width:350px;margin:auto;">
+            <label for="signup-username" data-en="Username" data-ar="اسم المستخدم">Username</label>
+            <input id="signup-username" type="text" placeholder="Choose a username" required data-en="Choose a username" data-ar="اختر اسم مستخدم"/>
+            <label for="signup-email" data-en="Email" data-ar="البريد الإلكتروني">Email</label>
+            <input id="signup-email" type="email" placeholder="Enter your email" required data-en="Enter your email" data-ar="أدخل بريدك الإلكتروني"/>
+            <label for="signup-password" data-en="Password" data-ar="كلمة المرور">Password</label>
+            <input id="signup-password" type="password" placeholder="Create a password" required data-en="Create a password" data-ar="أنشئ كلمة مرور"/>
+            <button type="submit" data-en="Sign Up" data-ar="إنشاء حساب">Sign Up</button>
+            <div class="form-hint" data-en="Already have an account?" data-ar="لديك حساب بالفعل؟"><a href="#" onclick="showLoginForm();return false;" data-en="Login" data-ar="تسجيل الدخول">Login</a></div>
+          </form>
+          <div id="login-signup-message" class="message"></div>
+          <button id="skip-profile-auth" onclick="skipProfileAuth()" style="margin:1.5em auto 0 auto;display:block;background:#e9ecef;color:#007bff;border:none;padding:0.7em 2em;border-radius:8px;font-weight:bold;font-size:1em;cursor:pointer;">Skip for Guest</button>
         </div>
-        <button type="button" id="add-contact-btn">Add Another Contact</button>
-
-        <label data-en="Location" data-ar="الموقع">Location</label>
-        <div style="display:flex;gap:1em;align-items:center;">
-          <input id="profile-location" type="text" placeholder="Location (auto or manual)" readonly />
-          <button type="button" id="get-location-btn">Get Current Location</button>
+        <div id="profile-section" style="display:none;">
+          <h1 data-en="Profile" data-ar="الملف الشخصي" style="text-align:center;margin-bottom:1.5em;">Profile</h1>
+          <form id="profile-form" style="display:flex;flex-direction:column;gap:1.2em;">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:0.5em;">
+              <label for="profile-photo" data-en="Photo" data-ar="الصورة" style="font-weight:bold;">Photo</label>
+              <input id="profile-photo" type="file" accept="image/*" style="display:none;" onchange="previewProfilePhoto(event)"/>
+              <div style="position:relative;">
+                <img id="profile-photo-preview" src="" alt="Photo Preview" style="display:block;width:96px;height:96px;border-radius:50%;object-fit:cover;border:3px solid #007bff;background:#e9ecef;cursor:pointer;" onclick="document.getElementById('profile-photo').click()" />
+                <span style="position:absolute;bottom:0;right:0;background:#007bff;color:white;border-radius:50%;padding:0.3em 0.4em;font-size:1.1em;cursor:pointer;" onclick="document.getElementById('profile-photo').click()">✎</span>
+              </div>
+              <button type="button" onclick="document.getElementById('profile-photo').click()" style="background:transparent;color:#007bff;border:none;font-size:0.95em;cursor:pointer;">Change Photo</button>
+            </div>
+            <label for="profile-name" data-en="Full Name" data-ar="الاسم الكامل">Full Name</label>
+            <input id="profile-name" type="text" placeholder="Enter your full name" required style="padding:0.7em;border-radius:8px;border:1px solid #007bff;"/>
+            <label data-en="Emergency Contacts (up to 3)" data-ar="جهات الاتصال (إلى 3)" style="font-weight:bold;">Emergency Contacts (up to 3)</label>
+            <div id="contacts-list" style="display:flex;flex-direction:column;gap:0.5em;"></div>
+            <button type="button" id="add-contact-btn" style="background:#007bff;color:white;padding:0.5em 1.5em;border-radius:8px;border:none;font-weight:bold;">Add Contact</button>
+            <label data-en="Location" data-ar="الموقع" style="font-weight:bold;">Location</label>
+            <div style="display:flex;gap:1em;align-items:center;">
+              <input id="profile-location" type="text" placeholder="Location (auto or manual)" readonly style="flex:1;padding:0.7em;border-radius:8px;border:1px solid #007bff;"/>
+              <button type="button" id="get-location-btn" style="background:#007bff;color:white;padding:0.5em 1.5em;border-radius:8px;border:none;font-weight:bold;display:flex;align-items:center;gap:0.4em;"><span>📍</span><span>Get</span></button>
+              <span id="location-loading" style="display:none;margin-left:0.5em;color:#007bff;font-size:1.2em;">⏳</span>
+            </div>
+            <div id="profile-message" class="message" style="display:none;"></div>
+            <button type="submit" style="background:#007bff;color:white;padding:0.7em 0;border-radius:8px;border:none;font-weight:bold;font-size:1.1em;">Save Profile</button>
+          </form>
         </div>
-
-        <button type="submit">Save Profile</button>
-      </form>
-      <div id="profile-message" class="message"></div>
+      </div>
     </section>
     <section id="about" class="page" style="display:none">
       <h1 data-en="About Enqaz SOS App" data-ar="حول تطبيق إنقاذ إنقاذ">About Enqaz SOS App</h1>
@@ -494,7 +640,7 @@
       </div>
       <div class="case-detail-content">
         <div class="case-image">
-          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Lost Item" />
+          <img src="images/lost-item.jpg" alt="Lost Item" style="width:100%;max-width:400px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1em;"/>
         </div>
         <div class="case-instructions">
           <h2 data-en="Step-by-Step Instructions" data-ar="التعليمات خطوة بخطوة">Step-by-Step Instructions</h2>
@@ -535,7 +681,7 @@
       </div>
       <div class="case-detail-content">
         <div class="case-image">
-          <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&h=300&fit=crop" alt="First Aid" />
+          <img src="images/minor-injury.jpg" alt="First Aid" style="width:100%;max-width:400px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1em;"/>
         </div>
         <div class="case-instructions">
           <h2 data-en="First Aid Instructions" data-ar="تعليمات إطفاء الإصابات">First Aid Instructions</h2>
@@ -576,7 +722,7 @@
       </div>
       <div class="case-detail-content">
         <div class="case-image">
-          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Car Accident" />
+          <img src="images/car-accident.jpg" alt="Car Accident" style="width:100%;max-width:400px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1em;"/>
         </div>
         <div class="case-instructions">
           <h2 data-en="What to Do After an Accident" data-ar="ما يجب فعله بعد حادثة سيارة">What to Do After an Accident</h2>
@@ -617,7 +763,7 @@
       </div>
       <div class="case-detail-content">
         <div class="case-image">
-          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Fire Safety" />
+          <img src="images/fire-emergency.jpg" alt="Fire Safety" style="width:100%;max-width:400px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1em;"/>
         </div>
         <div class="case-instructions">
           <h2 data-en="Fire Safety Instructions" data-ar="تعليمات أمان الحريق">Fire Safety Instructions</h2>
@@ -658,7 +804,7 @@
       </div>
       <div class="case-detail-content">
         <div class="case-image">
-          <img src="https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?w=600&h=300&fit=crop" alt="Navigation" />
+          <img src="images/navigation.jpg" alt="Navigation" style="width:100%;max-width:400px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1em;"/>
         </div>
         <div class="case-instructions">
           <h2 data-en="How to Get Directions" data-ar="كيفية الحصول على الاتجاهات">How to Get Directions</h2>
@@ -699,7 +845,7 @@
       </div>
       <div class="case-detail-content">
         <div class="case-image">
-          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Flat Tire" />
+          <img src="images/flat-tire.jpg" alt="Flat Tire" style="width:100%;max-width:400px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1em;"/>
         </div>
         <div class="case-instructions">
           <h2 data-en="How to Handle a Flat Tire" data-ar="كيفية التعامل مع إطار مسطح">How to Handle a Flat Tire</h2>
@@ -741,7 +887,7 @@
       </div>
       <div class="case-detail-content">
         <div class="case-image">
-          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Locked Out" />
+          <img src="images/locked-out.jpg" alt="Locked Out" style="width:100%;max-width:400px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1em;"/>
         </div>
         <div class="case-instructions">
           <h2 data-en="What to Do When Locked Out" data-ar="ما يجب فعله عند المغلق خارجاً">What to Do When Locked Out</h2>
@@ -782,7 +928,7 @@
       </div>
       <div class="case-detail-content">
         <div class="case-image">
-          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Power Outage" />
+          <img src="images/power-outage.jpg" alt="Power Outage" style="width:100%;max-width:400px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1em;"/>
         </div>
         <div class="case-instructions">
           <h2 data-en="How to Handle a Power Outage" data-ar="كيفية التعامل مع انقطاع الكهرباء">How to Handle a Power Outage</h2>
@@ -823,7 +969,7 @@
       </div>
       <div class="case-detail-content">
         <div class="case-image">
-          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Water Leak" />
+          <img src="images/water-leak.jpg" alt="Water Leak" style="width:100%;max-width:400px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1em;"/>
         </div>
         <div class="case-instructions">
           <h2 data-en="How to Handle a Water Leak" data-ar="كيفية التعامل مع تسرب المياه">How to Handle a Water Leak</h2>
@@ -864,7 +1010,7 @@
       </div>
       <div class="case-detail-content">
         <div class="case-image">
-          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Lost Child" />
+          <img src="images/lost-child.jpg" alt="Lost Child" style="width:100%;max-width:400px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1em;"/>
         </div>
         <div class="case-instructions">
           <h2 data-en="What to Do When a Child is Lost" data-ar="ما يجب فعله عند طفل مفقود">What to Do When a Child is Lost</h2>
@@ -906,7 +1052,7 @@
       </div>
       <div class="case-detail-content">
         <div class="case-image">
-          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Elevator Emergency" />
+          <img src="images/elevator-emergency.jpg" alt="Elevator Emergency" style="width:100%;max-width:400px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1em;"/>
         </div>
         <div class="case-instructions">
           <h2 data-en="What to Do When Stuck in an Elevator" data-ar="ما يجب فعله عند المغلق في المصعد">What to Do When Stuck in an Elevator</h2>
@@ -947,7 +1093,7 @@
       </div>
       <div class="case-detail-content">
         <div class="case-image">
-          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Lost Pet" />
+          <img src="images/pet-lost.jpg" alt="Lost Pet" style="width:100%;max-width:400px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1em;"/>
         </div>
         <div class="case-instructions">
           <h2 data-en="How to Find Your Lost Pet" data-ar="كيفية العثور على حيوانك المفقود">How to Find Your Lost Pet</h2>
@@ -989,7 +1135,7 @@
       </div>
       <div class="case-detail-content">
         <div class="case-image">
-          <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&h=300&fit=crop" alt="Medical Emergency" />
+          <img src="images/medical-emergency.jpg" alt="Medical Emergency" style="width:100%;max-width:400px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1em;"/>
         </div>
         <div class="case-instructions">
           <h2 data-en="How to Handle a Medical Emergency" data-ar="كيفية التعامل مع طوارئ طبية">How to Handle a Medical Emergency</h2>
@@ -1031,7 +1177,7 @@
       </div>
       <div class="case-detail-content">
         <div class="case-image">
-          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Natural Disaster" />
+          <img src="images/natural-disaster.jpg" alt="Natural Disaster" style="width:100%;max-width:400px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1em;"/>
         </div>
         <div class="case-instructions">
           <h2 data-en="How to Handle Natural Disasters" data-ar="كيفية التعامل مع كوارث طبيعية">How to Handle Natural Disasters</h2>
@@ -1073,7 +1219,7 @@
       </div>
       <div class="case-detail-content">
         <div class="case-image">
-          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Cyber Security" />
+          <img src="images/cyber-security.jpg" alt="Cyber Security" style="width:100%;max-width:400px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1em;"/>
         </div>
         <div class="case-instructions">
           <h2 data-en="How to Handle Cyber Security Issues" data-ar="كيفية التعامل مع مشاكل أمن الكمبيوتر">How to Handle Cyber Security Issues</h2>
@@ -1115,7 +1261,7 @@
       </div>
       <div class="case-detail-content">
         <div class="case-image">
-          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Harassment" />
+          <img src="images/harassment.jpg" alt="Harassment" style="width:100%;max-width:400px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1em;"/>
         </div>
         <div class="case-instructions">
           <h2 data-en="How to Handle Harassment" data-ar="كيفية التعامل مع التهديدات">How to Handle Harassment</h2>
@@ -1157,7 +1303,7 @@
       </div>
       <div class="case-detail-content">
         <div class="case-image">
-          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Food Poisoning" />
+          <img src="images/food-poisoning.jpg" alt="Food Poisoning" style="width:100%;max-width:400px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1em;"/>
         </div>
         <div class="case-instructions">
           <h2 data-en="How to Handle Food Poisoning" data-ar="كيفية التعامل مع سرطان الطعام">How to Handle Food Poisoning</h2>
@@ -1217,6 +1363,42 @@ function toggleLanguage() {
       el.textContent = isArabic ? ar : en;
     }
   });
+}
+
+function previewProfilePhoto(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById('profile-photo-preview').src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function showLoginForm() {
+  document.getElementById('login-form').style.display = 'block';
+  document.getElementById('signup-form').style.display = 'none';
+  document.getElementById('toggle-login').style.background = '#007bff';
+  document.getElementById('toggle-login').style.color = 'white';
+  document.getElementById('toggle-signup').style.background = 'transparent';
+  document.getElementById('toggle-signup').style.color = '#007bff';
+}
+function showSignupForm() {
+  document.getElementById('login-form').style.display = 'none';
+  document.getElementById('signup-form').style.display = 'block';
+  document.getElementById('toggle-login').style.background = 'transparent';
+  document.getElementById('toggle-login').style.color = '#007bff';
+  document.getElementById('toggle-signup').style.background = '#007bff';
+  document.getElementById('toggle-signup').style.color = 'white';
+}
+// Show login form by default on page load
+if (document.getElementById('login-form') && document.getElementById('signup-form')) {
+  showLoginForm();
+}
+
+function skipProfileAuth() {
+  document.getElementById('auth-section').style.display = 'none';
+  document.getElementById('profile-section').style.display = 'block';
 }
 </script>
 </body>
