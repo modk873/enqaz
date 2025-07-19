@@ -11,17 +11,14 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </head>
 <body>
-  <div id="menu-backdrop" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.25);z-index:1000;"></div>
-  <button id="menu-toggle" aria-label="Open menu" style="position:fixed;top:1em;left:1em;z-index:1001;font-size:2em;background:none;border:none;cursor:pointer;">☰</button>
-  <nav id="main-nav" class="side-nav" style="display:none;">
-    <button id="menu-close" aria-label="Close menu" style="font-size:2em;background:none;border:none;cursor:pointer;float:right;">×</button>
-    <button onclick="toggleLanguage()" class="lang-btn" style="background: #ffffff; color: rgb(45, 12, 233); border: 2px solid #007bff; border-radius: 12px; padding: 10px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-bottom: 1em; box-shadow: 0 2px 8px rgba(0,123,255,0.15); transition: background 0.2s, box-shadow 0.2s;" data-en="Arabic" data-ar="English">Arabic 🌐</button>
+  <nav id="main-nav" class="top-nav">
     <div class="nav-links">
-      <button id="nav-home" onclick="showPage('home');closeMenu();" data-en="Home" data-ar="الرئيسية">Home</button>
-      <button id="nav-about" onclick="showPage('about');closeMenu();" data-en="About" data-ar="حول">About</button>
-      <button id="nav-map" onclick="showPage('map');closeMenu();" data-en="Map" data-ar="الخريطة">Map</button>
-      <button id="nav-community" onclick="showPage('community');closeMenu();" data-en="Community" data-ar="المجتمع">Community</button>
-      <button id="nav-profile" onclick="showPage('profile');closeMenu();" data-en="Profile" data-ar="الملف الشخصي">Profile</button>
+      <button id="nav-home" onclick="showPage('home');" data-en="Home" data-ar="الرئيسية">Home</button>
+      <button id="nav-about" onclick="showPage('about');" data-en="About" data-ar="حول">About</button>
+      <button id="nav-map" onclick="showPage('map');" data-en="Map" data-ar="الخريطة">Map</button>
+      <button id="nav-community" onclick="showPage('community');" data-en="Community" data-ar="المجتمع">Community</button>
+      <button id="nav-profile" onclick="showPage('profile');" data-en="Profile" data-ar="الملف الشخصي">Profile</button>
+      <button onclick="toggleLanguage()" class="lang-btn" style="background: #fff; color: #007bff; border: 2px solid #007bff; border-radius: 12px; padding: 8px 18px; font-size: 1em; font-weight: bold; cursor: pointer; min-width: 80px; min-height: 36px; box-shadow: 0 2px 8px rgba(0,123,255,0.10); transition: background 0.2s, box-shadow 0.2s; margin-left:1em;" data-en="Arabic" data-ar="English">Arabic 🌐</button>
     </div>
   </nav>
   <main>
@@ -32,11 +29,11 @@
           <span data-en="Your safety, our priority. Instantly request help or support in any situation." data-ar="سلامتك أولويتنا. اطلب المساعدة أو الدعم فوراً في أي موقف.">Your safety, our priority. Instantly request help or support in any situation.</span>
         </div>
         <div class="sos-buttons column-layout" style="width:100%;gap:1.5em;">
-          <button id="emergency-sos-btn" class="sos-btn emergency sos-big" data-en="SOS" data-ar="نجدة" style="font-size:2.1em;display:flex;align-items:center;justify-content:center;gap:0.7em;box-shadow:0 4px 18px rgba(220,53,69,0.13);transition:transform 0.12s;">
+          <button id="emergency-sos-btn" class="sos-btn emergency sos-big" data-en="SOS" data-ar="نجدة" style="font-size:2.1em;display:flex;align-items:center;justify-content:center;gap:0.3em;box-shadow:0 4px 18px rgba(220,53,69,0.13);transition:transform 0.12s;">
             <span style="font-size:1.3em;">🚨</span> <span>SOS</span>
           </button>
-          <button id="normal-sos-btn" class="sos-btn normal" data-en="Normal" data-ar="عادي" style="font-size:1.3em;display:flex;align-items:center;justify-content:center;gap:0.6em;box-shadow:0 2px 8px rgba(255,193,7,0.13);transition:transform 0.12s;">
-            <span style="font-size:1.1em;">🆗</span> <span>Normal</span>
+          <button id="normal-sos-btn" class="sos-btn normal" data-en="Assistance" data-ar="مساعدة" style="font-size:1.3em;display:flex;align-items:center;justify-content:center;gap:0.6em;box-shadow:0 2px 8px rgba(255,193,7,0.13);transition:transform 0.12s;">
+            <span style="font-size:1.1em;">🆗</span> <span>Assistance</span>
           </button>
         </div>
         <div id="sos-message" class="message"></div>
@@ -557,16 +554,17 @@
       <p style="text-align: center; color: #666; margin-bottom: 20px;" data-en="Interactive map of Doha, Qatar with emergency facilities and cultural landmarks" data-ar="خريطة متقدمة لدوحة، قطر، تضم أماكن الطوارئ والمعالم الثقافية">Interactive map of Doha, Qatar with emergency facilities and cultural landmarks</p>
       <div class="static-map">
         <div id="map-loading" class="map-loading">Loading map...</div>
-        <div id="emergency-map" class="map-container">
-          <img src="images/doha-map.jpg" 
-               alt="Doha Emergency Map - Hand-drawn map of Doha, Qatar showing landmarks, cultural sites, and emergency facilities" 
-               style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;" 
-               onerror="this.src='https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?w=600&h=400&fit=crop&crop=center'" />
+        <div id="emergency-map" class="map-container" style="width:100%;height:350px;max-width:100vw;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.10);margin-bottom:1.5em;">
+          <iframe
+            width="100%"
+            height="100%"
+            frameborder="0"
+            style="border:0;min-height:350px;"
+            allowfullscreen=""
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d115624.7268616306!2d51.405775!3d25.285447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e45c5e6b2b2b2b1%3A0x6e8e6e8e6e8e6e8e!2sDoha%2C%20Qatar!5e0!3m2!1sen!2sqa!4v1680000000000!5m2!1sen!2sqa">
+          </iframe>
         </div>
-        <button id="refresh-map-btn" onclick="initEmergencyMap()" class="refresh-btn">Load Interactive Map</button>
-        <button id="test-map-btn" onclick="testMap()" class="refresh-btn" style="background: #28a745; margin-left: 10px;">Test Interactive</button>
-        <button id="fallback-btn" onclick="showFallbackMap()" class="refresh-btn" style="background: #6c757d; margin-left: 10px;">Show Facilities</button>
-        <button id="photo-btn" onclick="restorePhotoMap()" class="refresh-btn" style="background: #17a2b8; margin-left: 10px;">Show Photo</button>
       </div>
       
       <div class="facilities-list">
