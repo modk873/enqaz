@@ -1,67 +1,1184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Enqaz SOS App</title>
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f9f9f9; }
-    .header { background: #e60000; color: white; text-align: center; padding: 1.2em; font-size: 28px; font-weight: bold; }
-    .sub-header { text-align: center; margin: 15px; font-size: 18px; color: #555; }
-    .container { padding: 1.2em; }
-    .btn { width: 100%; padding: 20px; font-size: 24px; margin-bottom: 20px; cursor: pointer; border: none; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: 0.2s; }
-    .btn:hover { opacity: 0.9; transform: scale(1.02); }
-    .btn-red { background-color: #e60000; color: white; }
-    .btn-green { background-color: #00cc44; color: white; }
-    .btn-blue { background-color: #0066cc; color: white; }
-    .btn-dark { background-color: #333; color: white; }
-    .btn-toggle { background-color: #ffcc00; color: black; font-size: 18px; margin-bottom: 10px; }
-    .hidden { display: none; }
-    #map { width: 100%; height: 400px; margin-top: 20px; }
-    input, textarea { width: 100%; margin-bottom: 10px; padding: 12px; font-size: 16px; border-radius: 8px; border: 1px solid #ccc; }
-    .footer { text-align: center; font-size: 14px; color: #aaa; margin-top: 40px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enqaz - Emergency SOS App</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Leaflet CSS (for interactive map option) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <!-- Leaflet JavaScript (for interactive map option) -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </head>
 <body>
+  <div id="menu-backdrop" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.25);z-index:1000;"></div>
+  <button id="menu-toggle" aria-label="Open menu" style="position:fixed;top:1em;left:1em;z-index:1001;font-size:2em;background:none;border:none;cursor:pointer;">☰</button>
+  <nav id="main-nav" class="side-nav" style="display:none;">
+    <button id="menu-close" aria-label="Close menu" style="font-size:2em;background:none;border:none;cursor:pointer;float:right;">×</button>
+    <div class="nav-links">
+      <button id="nav-home" onclick="showPage('home');closeMenu();">Home</button>
+      <button id="nav-about" onclick="showPage('about');closeMenu();">About</button>
+      <button id="nav-map" onclick="showPage('map');closeMenu();">Map</button>
+      <button id="nav-community" onclick="showPage('community');closeMenu();">Community</button>
+      <button id="nav-login" onclick="showPage('login');closeMenu();">Login</button>
+      <button id="nav-signup" onclick="showPage('signup');closeMenu();">Sign Up</button>
+      <button id="nav-profile" onclick="showPage('profile');closeMenu();">Profile</button>
 
-<div class="header" id="headerTitle">🚨 Enqaz SOS</div>
-<div class="sub-header" id="subHeader">Helping you during emergencies quickly and effectively.</div>
+    </div>
+  </nav>
+  <main>
+    <section id="home" class="page"> 
+      <h1>Welcome to Enqaz SOS App</h1>
+      <div class="sos-buttons column-layout">
+        <button id="emergency-sos-btn" class="sos-btn emergency sos-big">SOS</button>
+        <button id="normal-sos-btn" class="sos-btn normal">Normal</button>
+      </div>
+      <div id="sos-message" class="message"></div>
+    </section>
+    <section id="login" class="page" style="display:none"> 
+      <h1>Login</h1> 
+      <form id="login-form">
+        <label for="login-username">Username</label>
+        <input id="login-username" type="text" placeholder="Enter your username" required />
+        <label for="login-password">Password</label>
+        <input id="login-password" type="password" placeholder="Enter your password" required />
+        <button type="submit">Login</button>
+        <div class="form-hint">Don't have an account? <a href="#" onclick="showPage('signup');return false;">Sign up</a></div>
+      </form>
+      <div id="login-message" class="message"></div>
+    </section>
+    <section id="signup" class="page" style="display:none"> 
+      <h1>Sign Up</h1> 
+      <form id="signup-form">
+        <label for="signup-username">Username</label>
+        <input id="signup-username" type="text" placeholder="Choose a username" required />
+        <label for="signup-email">Email</label>
+        <input id="signup-email" type="email" placeholder="Enter your email" required />
+        <label for="signup-password">Password</label>
+        <input id="signup-password" type="password" placeholder="Create a password" required />
+        <button type="submit">Sign Up</button>
+        <div class="form-hint">Already have an account? <a href="#" onclick="showPage('login');return false;">Login</a></div>
+      </form>
+      <div id="signup-message" class="message"></div>
+    </section>
 
-<div class="container" id="home">
-  <button class="btn-toggle" onclick="toggleLanguage()">🌐 Switch Language</button>
-  <button class="btn btn-red" id="sosBtn" onclick="sendSOS()">🚨 Emergency (SOS)</button>
-  <button class="btn btn-green" id="helpBtn" onclick="showHelpOptions()">✅ Help Options</button>
-  <button class="btn btn-blue" id="communityBtn" onclick="showCommunity()">👥 Community & Volunteers</button>
-  <button class="btn btn-dark" id="registerBtn" onclick="showRegister()">📝 Register Information</button>
-  <button class="btn" id="aboutBtn" onclick="showAbout()">ℹ️ About</button>
-</div>
+    <section id="community" class="page" style="display:none"> 
+      <h1>Community Hub</h1>
+      
+      <!-- User Status Bar -->
+      <div class="user-status-bar">
+        <div class="current-user-info">
+          <span id="current-user-avatar">👤</span>
+          <span id="current-user-name">Guest</span>
+          <span class="user-status" id="user-status">Offline</span>
+        </div>
+        <button id="toggle-online-status" onclick="toggleOnlineStatus()">Go Online</button>
+      </div>
 
-<!-- Rest of the HTML remains unchanged -->
+      <!-- Community Tabs -->
+      <div class="community-tabs">
+        <button class="tab-btn active" onclick="switchTab('users')">👥 Users Online</button>
+        <button class="tab-btn" onclick="switchTab('chats')">💬 My Chats</button>
+        <button class="tab-btn" onclick="switchTab('alerts')">🚨 Recent Alerts</button>
+      </div>
 
-<script>
-let isArabic = false;
-function toggleLanguage() {
-  isArabic = !isArabic;
-  if (isArabic) {
-    document.getElementById('headerTitle').innerText = '🚨 إنقاذ SOS';
-    document.getElementById('subHeader').innerText = 'مساعدتك بسرعة وفعالية وقت الطوارئ';
-    document.getElementById('sosBtn').innerText = '🚨 طوارئ (SOS)';
-    document.getElementById('helpBtn').innerText = '✅ خيارات المساعدة';
-    document.getElementById('communityBtn').innerText = '👥 المجتمع والمتطوعون';
-    document.getElementById('registerBtn').innerText = '📝 تسجيل المعلومات';
-    document.getElementById('aboutBtn').innerText = 'ℹ️ حول التطبيق';
-  } else {
-    document.getElementById('headerTitle').innerText = '🚨 Enqaz SOS';
-    document.getElementById('subHeader').innerText = 'Helping you during emergencies quickly and effectively.';
-    document.getElementById('sosBtn').innerText = '🚨 Emergency (SOS)';
-    document.getElementById('helpBtn').innerText = '✅ Help Options';
-    document.getElementById('communityBtn').innerText = '👥 Community & Volunteers';
-    document.getElementById('registerBtn').innerText = '📝 Register Information';
-    document.getElementById('aboutBtn').innerText = 'ℹ️ About';
-  }
-}
-</script>
+      <!-- Users Online Tab -->
+      <div id="users-tab" class="tab-content active">
+        <div class="users-header">
+          <h2>Users Online (<span id="online-count">0</span>)</h2>
+          <button onclick="refreshUsersList()" class="refresh-btn">🔄 Refresh</button>
+        </div>
+        <div class="users-grid" id="users-grid">
+          <!-- Users will be populated here -->
+        </div>
+      </div>
 
+      <!-- My Chats Tab -->
+      <div id="chats-tab" class="tab-content">
+        <div class="chats-header">
+          <h2>My Conversations</h2>
+          <button onclick="refreshChats()" class="refresh-btn">🔄 Refresh</button>
+        </div>
+        <div class="chats-list" id="chats-list">
+          <!-- Chat conversations will be populated here -->
+        </div>
+      </div>
+
+      <!-- Recent Alerts Tab -->
+      <div id="alerts-tab" class="tab-content">
+        <div class="alerts-header">
+          <h2>Recent Community Alerts</h2>
+        </div>
+        <div class="alerts-list" id="alerts-list">
+          <!-- Alerts will be populated here -->
+        </div>
+      </div>
+
+      <!-- Chat Modal -->
+      <div id="chat-modal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 id="chat-title">Chat with User</h3>
+            <span class="close" onclick="closeChat()">&times;</span>
+          </div>
+          <div class="chat-messages" id="chat-messages">
+            <!-- Messages will be populated here -->
+          </div>
+          <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Type your message..." onkeypress="handleChatKeyPress(event)">
+            <button onclick="sendChatMessage()" class="send-btn">Send</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="normal-cases" class="page" style="display:none">
+      <h1>Normal Help Cases</h1>
+      <div class="normal-cards">
+        <div class="normal-card">
+          <div class="normal-card-header">
+            <div class="case-title-clickable" onclick="showCaseDetail('lost-item')">
+              <span class="normal-icon">🔎</span> Lost Item
+            </div>
+          </div>
+
+        </div>
+        <div class="normal-card">
+          <div class="normal-card-header">
+            <div class="case-title-clickable" onclick="showCaseDetail('minor-injury')">
+              <span class="normal-icon">🩹</span> Minor Injury
+            </div>
+          </div>
+
+        </div>
+        <div class="normal-card">
+          <div class="normal-card-header">
+            <div class="case-title-clickable" onclick="showCaseDetail('need-directions')">
+              <span class="normal-icon">🗺️</span> Need Directions
+            </div>
+          </div>
+
+        </div>
+        <div class="normal-card">
+          <div class="normal-card-header">
+            <div class="case-title-clickable" onclick="showCaseDetail('flat-tire')">
+              <span class="normal-icon">🚗</span> Flat Tire
+            </div>
+          </div>
+
+        </div>
+        <div class="normal-card">
+          <div class="normal-card-header">
+            <div class="case-title-clickable" onclick="showCaseDetail('locked-out')">
+              <span class="normal-icon">🔑</span> Locked Out
+            </div>
+          </div>
+
+        </div>
+        <div class="normal-card">
+          <div class="normal-card-header">
+            <div class="case-title-clickable" onclick="showCaseDetail('power-outage')">
+              <span class="normal-icon">💡</span> Power Outage
+            </div>
+          </div>
+
+        </div>
+        <div class="normal-card">
+          <div class="normal-card-header">
+            <div class="case-title-clickable" onclick="showCaseDetail('water-leak')">
+              <span class="normal-icon">💧</span> Water Leak
+            </div>
+          </div>
+
+        </div>
+        <div class="normal-card">
+          <div class="normal-card-header">
+            <div class="case-title-clickable" onclick="showCaseDetail('lost-child')">
+              <span class="normal-icon">🧒</span> Lost Child
+            </div>
+          </div>
+
+            <p><strong>Solution:</strong></p>
+            <ol>
+              <li>Alert nearby people and staff immediately.</li>
+              <li>Describe the child’s appearance and clothing.</li>
+              <li>Contact security or the police if not found quickly.</li>
+            </ol>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Lost Child')">Request Help</button>
+            <button class="case-detail-btn" onclick="showCaseDetail('lost-child')">View Full Guide</button>
+          </div>
+        </div>
+        <div class="normal-card">
+          <div class="normal-card-header">
+            <div class="case-title-clickable" onclick="showCaseDetail('stuck-elevator')">
+              <span class="normal-icon">🛗</span> Stuck in Elevator
+            </div>
+          </div>
+
+        </div>
+        <div class="normal-card">
+          <div class="normal-card-header">
+            <div class="case-title-clickable" onclick="showCaseDetail('pet-lost')">
+              <span class="normal-icon">🐾</span> Lost Pet
+            </div>
+          </div>
+
+            <p><strong>Solution:</strong></p>
+            <ol>
+              <li>Search the immediate area and call your pet’s name.</li>
+              <li>Ask neighbors and check with local shelters.</li>
+              <li>Post on social media or community boards.</li>
+            </ol>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Lost Pet')">Request Help</button>
+            <button class="case-detail-btn" onclick="showCaseDetail('pet-lost')">View Full Guide</button>
+          </div>
+        </div>
+        
+        <div class="normal-card">
+          <div class="normal-card-header">
+            <div class="case-title-clickable" onclick="showCaseDetail('car-accident')">
+              <span class="normal-icon">🚗</span> Car Accident
+            </div>
+          </div>
+          <div class="case-details" id="case-car-accident" style="display:none">
+            <p><strong>Solution:</strong></p>
+            <ol>
+              <li>Check for injuries and call emergency services if needed.</li>
+              <li>Move to a safe location if possible.</li>
+              <li>Exchange information with other parties involved.</li>
+            </ol>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Car Accident')">Request Help</button>
+            <button class="case-detail-btn" onclick="showCaseDetail('car-accident')">View Full Guide</button>
+          </div>
+        </div>
+        
+        <div class="normal-card">
+          <div class="normal-card-header">
+            <div class="case-title-clickable" onclick="showCaseDetail('medical-emergency')">
+              <span class="normal-icon">🏥</span> Medical Emergency
+            </div>
+          </div>
+          <div class="case-details" id="case-medical-emergency" style="display:none">
+            <p><strong>Solution:</strong></p>
+            <ol>
+              <li>Assess the situation and call emergency services.</li>
+              <li>Provide first aid if trained to do so.</li>
+              <li>Keep the person calm and comfortable.</li>
+            </ol>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Medical Emergency')">Request Help</button>
+            <button class="case-detail-btn" onclick="showCaseDetail('medical-emergency')">View Full Guide</button>
+          </div>
+        </div>
+        
+        <div class="normal-card">
+          <div class="normal-card-header">
+            <div class="case-title-clickable" onclick="showCaseDetail('fire-emergency')">
+              <span class="normal-icon">🔥</span> Fire Emergency
+            </div>
+          </div>
+          <div class="case-details" id="case-fire-emergency" style="display:none">
+            <p><strong>Solution:</strong></p>
+            <ol>
+              <li>Get out immediately and call fire department.</li>
+              <li>Do not use elevators, use stairs.</li>
+              <li>Stay low to avoid smoke inhalation.</li>
+            </ol>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Fire Emergency')">Request Help</button>
+            <button class="case-detail-btn" onclick="showCaseDetail('fire-emergency')">View Full Guide</button>
+          </div>
+        </div>
+        
+        <div class="normal-card">
+          <div class="normal-card-header">
+            <div class="case-title-clickable" onclick="showCaseDetail('natural-disaster')">
+              <span class="normal-icon">🌪️</span> Natural Disaster
+            </div>
+          </div>
+          <div class="case-details" id="case-natural-disaster" style="display:none">
+            <p><strong>Solution:</strong></p>
+            <ol>
+              <li>Follow local emergency instructions.</li>
+              <li>Move to a safe location or shelter.</li>
+              <li>Stay informed through official channels.</li>
+            </ol>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Natural Disaster')">Request Help</button>
+            <button class="case-detail-btn" onclick="showCaseDetail('natural-disaster')">View Full Guide</button>
+          </div>
+        </div>
+        
+        <div class="normal-card">
+          <div class="normal-card-header">
+            <div class="case-title-clickable" onclick="showCaseDetail('cyber-security')">
+              <span class="normal-icon">💻</span> Cyber Security Issue
+            </div>
+          </div>
+          <div class="case-details" id="case-cyber-security" style="display:none">
+            <p><strong>Solution:</strong></p>
+            <ol>
+              <li>Disconnect from the internet immediately.</li>
+              <li>Change passwords and contact your bank if needed.</li>
+              <li>Report to relevant authorities.</li>
+            </ol>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Cyber Security Issue')">Request Help</button>
+            <button class="case-detail-btn" onclick="showCaseDetail('cyber-security')">View Full Guide</button>
+          </div>
+        </div>
+        
+        <div class="normal-card">
+          <div class="normal-card-header">
+            <div class="case-title-clickable" onclick="showCaseDetail('harassment')">
+              <span class="neutral-icon">🚨</span> Harassment
+            </div>
+          </div>
+          <div class="case-details" id="case-harassment" style="display:none">
+            <p><strong>Solution:</strong></p>
+            <ol>
+              <li>Stay calm and move to a safe location.</li>
+              <li>Document the incident with details.</li>
+              <li>Contact authorities and seek support.</li>
+            </ol>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Harassment')">Request Help</button>
+            <button class="case-detail-btn" onclick="showCaseDetail('harassment')">View Full Guide</button>
+          </div>
+        </div>
+        
+        <div class="normal-card">
+          <div class="normal-card-header">
+            <div class="case-title-clickable" onclick="showCaseDetail('food-poisoning')">
+              <span class="normal-icon">🤢</span> Food Poisoning
+            </div>
+          </div>
+          <div class="case-details" id="case-food-poisoning" style="display:none">
+            <p><strong>Solution:</strong></p>
+            <ol>
+              <li>Stay hydrated and rest.</li>
+              <li>Monitor symptoms closely.</li>
+              <li>Seek medical attention if severe.</li>
+            </ol>
+            <button class="send-alert-btn" onclick="sendNormalCaseAlert('Food Poisoning')">Request Help</button>
+            <button class="case-detail-btn" onclick="showCaseDetail('food-poisoning')">View Full Guide</button>
+          </div>
+        </div>
+      </div>
+      <div id="normal-confirm-message" class="message" style="display:none;"></div>
+      <button onclick="showPage('home')">Back to Home</button>
+    </section>
+    <section id="profile" class="page" style="display:none">
+      <h1>User Profile & Registration</h1>
+      <form id="profile-form">
+        <label for="profile-name">Full Name</label>
+        <input id="profile-name" type="text" placeholder="Enter your full name" required />
+
+        <label for="profile-photo">Photo</label>
+        <input id="profile-photo" type="file" accept="image/*" />
+        <img id="profile-photo-preview" src="" alt="Photo Preview" style="display:none;max-width:120px;margin:1em 0;" />
+
+        <label>Emergency Contacts (up to 3)</label>
+        <div id="contacts-list">
+          <div class="contact-row">
+            <input type="text" class="contact-name" placeholder="Contact Name" />
+            <input type="tel" class="contact-phone" placeholder="Phone Number" />
+          </div>
+        </div>
+        <button type="button" id="add-contact-btn">Add Another Contact</button>
+
+        <label>Location</label>
+        <div style="display:flex;gap:1em;align-items:center;">
+          <input id="profile-location" type="text" placeholder="Location (auto or manual)" readonly />
+          <button type="button" id="get-location-btn">Get Current Location</button>
+        </div>
+
+        <button type="submit">Save Profile</button>
+      </form>
+      <div id="profile-message" class="message"></div>
+    </section>
+    <section id="about" class="page" style="display:none">
+      <h1>About Enqaz SOS App</h1>
+      <div class="about-content">
+        <div class="about-icon">🚨</div>
+        <h2>Our Mission</h2>
+        <p>Enqaz SOS is a simple and smart safety tool designed to help people during emergencies. We connect users with the closest available help, whether it's volunteers, police, or medical services.</p>
+        
+        <div class="features-grid">
+          <div class="feature-item">
+            <span class="feature-icon">📱</span>
+            <h3>Quick SOS</h3>
+            <p>Send emergency alerts with your location and personal details instantly.</p>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">🗺️</span>
+            <h3>Smart Location</h3>
+            <p>Find nearby volunteers and emergency services on the map.</p>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">👥</span>
+            <h3>Community Help</h3>
+            <p>Connect with local volunteers for immediate assistance.</p>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">📞</span>
+            <h3>Direct Contact</h3>
+            <p>Call or message volunteers directly for quick help.</p>
+          </div>
+        </div>
+        
+        <div class="about-footer">
+          <p><strong>Main Goal:</strong> Fast help, safety, and saving lives.</p>
+        </div>
+      </div>
+    </section>
+    
+    <section id="map" class="page" style="display:none">
+      <h1>Emergency Map</h1>
+      <div class="static-map">
+        <div id="map-loading" class="map-loading">Loading map...</div>
+        <div id="emergency-map" class="map-container">
+          <img src="https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?w=600&h=400&fit=crop&crop=center" 
+               alt="Emergency Map" 
+               style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;" />
+        </div>
+        <button id="refresh-map-btn" onclick="initEmergencyMap()" class="refresh-btn">Load Interactive Map</button>
+        <button id="test-map-btn" onclick="testMap()" class="refresh-btn" style="background: #28a745; margin-left: 10px;">Test Interactive</button>
+        <button id="fallback-btn" onclick="showFallbackMap()" class="refresh-btn" style="background: #6c757d; margin-left: 10px;">Show Facilities</button>
+        <button id="photo-btn" onclick="restorePhotoMap()" class="refresh-btn" style="background: #17a2b8; margin-left: 10px;">Show Photo</button>
+      </div>
+      
+      <div class="facilities-list">
+        <h2>Nearby Emergency Facilities</h2>
+        <div class="facility-item">
+          <span class="facility-icon">🚔</span>
+          <div class="facility-info">
+            <h3>Nearest Police Station</h3>
+            <p>Central Police Station - 2.3 km away</p>
+            <button class="facility-btn" onclick="alert('Calling Police Station...')">Call Police</button>
+          </div>
+        </div>
+        
+        <div class="facility-item">
+          <span class="facility-icon">🏥</span>
+          <div class="facility-info">
+            <h3>Nearest Hospital</h3>
+            <p>City General Hospital - 1.8 km away</p>
+            <button class="facility-btn" onclick="alert('Calling Hospital...')">Call Hospital</button>
+          </div>
+        </div>
+        
+        <div class="facility-item">
+          <span class="facility-icon">🏠</span>
+          <div class="facility-info">
+            <h3>Your Home</h3>
+            <p>Saved Location - 0.5 km away</p>
+            <button class="facility-btn" onclick="alert('Getting directions to home...')">Get Directions</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Case Detail Pages -->
+    <section id="case-detail-lost-item" class="page case-detail-page" style="display:none">
+      <div class="case-detail-header">
+        <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
+        <h1>🔎 Lost Item Guide</h1>
+      </div>
+      <div class="case-detail-content">
+        <div class="case-image">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Lost Item" />
+        </div>
+        <div class="case-instructions">
+          <h2>Step-by-Step Instructions</h2>
+          <ol>
+            <li><strong>Stay Calm:</strong> Panicking won't help you find your item faster.</li>
+            <li><strong>Retrace Your Steps:</strong> Go back to where you last remember having the item.</li>
+            <li><strong>Check Common Places:</strong> Look in pockets, bags, car, and common areas.</li>
+            <li><strong>Ask Around:</strong> Check with people nearby or staff members.</li>
+            <li><strong>Contact Lost & Found:</strong> Check with the establishment's lost and found.</li>
+            <li><strong>Use Technology:</strong> If it's a phone, try calling it or using Find My Phone.</li>
+            <li><strong>Report to Authorities:</strong> For valuable items, report to local police.</li>
+          </ol>
+        </div>
+        <div class="case-resources">
+          <h2>Helpful Resources</h2>
+          <div class="resource-links">
+            <a href="https://www.findmyphone.com" target="_blank" class="resource-link">📱 Find My Phone Services</a>
+            <a href="https://www.localpolice.gov" target="_blank" class="resource-link">🚔 Local Police Department</a>
+            <a href="https://www.lostandfound.com" target="_blank" class="resource-link">🔍 Lost & Found Directory</a>
+          </div>
+        </div>
+        <div class="case-tips">
+          <h2>Prevention Tips</h2>
+          <ul>
+            <li>Always check your belongings before leaving a place</li>
+            <li>Use tracking devices for valuable items</li>
+            <li>Take photos of important items</li>
+            <li>Keep a list of important items and their descriptions</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <section id="case-detail-minor-injury" class="page case-detail-page" style="display:none">
+      <div class="case-detail-header">
+        <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
+        <h1>🩹 Minor Injury Guide</h1>
+      </div>
+      <div class="case-detail-content">
+        <div class="case-image">
+          <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&h=300&fit=crop" alt="First Aid" />
+        </div>
+        <div class="case-instructions">
+          <h2>First Aid Instructions</h2>
+          <ol>
+            <li><strong>Assess the Injury:</strong> Determine the type and severity of the injury.</li>
+            <li><strong>Clean the Wound:</strong> Wash with clean water and mild soap.</li>
+            <li><strong>Stop Bleeding:</strong> Apply gentle pressure with a clean cloth.</li>
+            <li><strong>Apply Antiseptic:</strong> Use antiseptic solution to prevent infection.</li>
+            <li><strong>Cover the Wound:</strong> Apply a sterile bandage or dressing.</li>
+            <li><strong>Monitor for Signs:</strong> Watch for infection or worsening symptoms.</li>
+            <li><strong>Seek Medical Help:</strong> If pain persists or symptoms worsen.</li>
+          </ol>
+        </div>
+        <div class="case-resources">
+          <h2>Medical Resources</h2>
+          <div class="resource-links">
+            <a href="https://www.redcross.org/first-aid" target="_blank" class="resource-link">🏥 Red Cross First Aid Guide</a>
+            <a href="https://www.who.int/emergencies" target="_blank" class="resource-link">🌍 WHO Emergency Guidelines</a>
+            <a href="tel:911" class="resource-link">📞 Emergency Services (911)</a>
+          </div>
+        </div>
+        <div class="case-tips">
+          <h2>Safety Tips</h2>
+          <ul>
+            <li>Always have a first aid kit available</li>
+            <li>Learn basic first aid techniques</li>
+            <li>Keep emergency numbers handy</li>
+            <li>Know the location of nearest medical facilities</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <section id="case-detail-car-accident" class="page case-detail-page" style="display:none">
+      <div class="case-detail-header">
+        <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
+        <h1>🚗 Car Accident Guide</h1>
+      </div>
+      <div class="case-detail-content">
+        <div class="case-image">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Car Accident" />
+        </div>
+        <div class="case-instructions">
+          <h2>What to Do After an Accident</h2>
+          <ol>
+            <li><strong>Check for Injuries:</strong> Assess yourself and others for injuries.</li>
+            <li><strong>Call Emergency Services:</strong> Dial 911 if there are injuries or significant damage.</li>
+            <li><strong>Move to Safety:</strong> If possible, move vehicles to the side of the road.</li>
+            <li><strong>Exchange Information:</strong> Get contact and insurance details from other drivers.</li>
+            <li><strong>Document the Scene:</strong> Take photos of damage and the accident scene.</li>
+            <li><strong>Contact Your Insurance:</strong> Report the accident to your insurance company.</li>
+            <li><strong>Seek Medical Attention:</strong> Even minor injuries should be checked.</li>
+          </ol>
+        </div>
+        <div class="case-resources">
+          <h2>Accident Resources</h2>
+          <div class="resource-links">
+            <a href="https://www.nhtsa.gov/accident-reporting" target="_blank" class="resource-link">🚗 NHTSA Accident Reporting</a>
+            <a href="https://www.insurance.com" target="_blank" class="resource-link">📋 Insurance Information</a>
+            <a href="tel:911" class="resource-link">📞 Emergency Services (911)</a>
+          </div>
+        </div>
+        <div class="case-tips">
+          <h2>Prevention Tips</h2>
+          <ul>
+            <li>Always wear your seatbelt</li>
+            <li>Follow traffic laws and speed limits</li>
+            <li>Keep your vehicle well-maintained</li>
+            <li>Avoid distracted driving</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <section id="case-detail-fire-emergency" class="page case-detail-page" style="display:none">
+      <div class="case-detail-header">
+        <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
+        <h1>🔥 Fire Emergency Guide</h1>
+      </div>
+      <div class="case-detail-content">
+        <div class="case-image">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Fire Safety" />
+        </div>
+        <div class="case-instructions">
+          <h2>Fire Safety Instructions</h2>
+          <ol>
+            <li><strong>Get Out Immediately:</strong> Don't try to save belongings, just get out.</li>
+            <li><strong>Call Fire Department:</strong> Dial 911 from a safe location.</li>
+            <li><strong>Use Stairs, Not Elevators:</strong> Elevators may stop working during a fire.</li>
+            <li><strong>Stay Low:</strong> Crawl if necessary to avoid smoke inhalation.</li>
+            <li><strong>Check Doors:</strong> Feel doors before opening - if hot, don't open.</li>
+            <li><strong>Meet at Designated Spot:</strong> Go to your family's meeting point.</li>
+            <li><strong>Don't Go Back:</strong> Never re-enter a burning building.</li>
+          </ol>
+        </div>
+        <div class="case-resources">
+          <h2>Fire Safety Resources</h2>
+          <div class="resource-links">
+            <a href="https://www.nfpa.org/safety-information" target="_blank" class="resource-link">🔥 NFPA Fire Safety</a>
+            <a href="https://www.redcross.org/fire-safety" target="_blank" class="resource-link">🚨 Red Cross Fire Safety</a>
+            <a href="tel:911" class="resource-link">📞 Fire Department (911)</a>
+          </div>
+        </div>
+        <div class="case-tips">
+          <h2>Prevention Tips</h2>
+          <ul>
+            <li>Install and maintain smoke detectors</li>
+            <li>Have a fire escape plan</li>
+            <li>Keep fire extinguishers handy</li>
+            <li>Never leave cooking unattended</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <section id="case-detail-need-directions" class="page case-detail-page" style="display:none">
+      <div class="case-detail-header">
+        <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
+        <h1>🗺️ Need Directions Guide</h1>
+      </div>
+      <div class="case-detail-content">
+        <div class="case-image">
+          <img src="https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?w=600&h=300&fit=crop" alt="Navigation" />
+        </div>
+        <div class="case-instructions">
+          <h2>How to Get Directions</h2>
+          <ol>
+            <li><strong>Use GPS Apps:</strong> Open Google Maps, Apple Maps, or Waze.</li>
+            <li><strong>Ask Locals:</strong> Approach people who look familiar with the area.</li>
+            <li><strong>Look for Landmarks:</strong> Use prominent buildings or signs as reference points.</li>
+            <li><strong>Check Public Transport:</strong> Use bus/train apps for public transportation.</li>
+            <li><strong>Use Street Signs:</strong> Read street names and building numbers.</li>
+            <li><strong>Ask at Businesses:</strong> Staff at shops and restaurants can help.</li>
+            <li><strong>Use Emergency Services:</strong> Call 911 if you're lost in an emergency.</li>
+          </ol>
+        </div>
+        <div class="case-resources">
+          <h2>Navigation Resources</h2>
+          <div class="resource-links">
+            <a href="https://maps.google.com" target="_blank" class="resource-link">🗺️ Google Maps</a>
+            <a href="https://www.apple.com/maps" target="_blank" class="resource-link">🍎 Apple Maps</a>
+            <a href="https://www.waze.com" target="_blank" class="resource-link">🚗 Waze Navigation</a>
+          </div>
+        </div>
+        <div class="case-tips">
+          <h2>Navigation Tips</h2>
+          <ul>
+            <li>Always have a backup navigation method</li>
+            <li>Download offline maps for areas with poor signal</li>
+            <li>Save important locations in your phone</li>
+            <li>Learn basic directions in the local language</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <section id="case-detail-flat-tire" class="page case-detail-page" style="display:none">
+      <div class="case-detail-header">
+        <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
+        <h1>🚗 Flat Tire Guide</h1>
+      </div>
+      <div class="case-detail-content">
+        <div class="case-image">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Flat Tire" />
+        </div>
+        <div class="case-instructions">
+          <h2>How to Handle a Flat Tire</h2>
+          <ol>
+            <li><strong>Pull Over Safely:</strong> Move to a safe location off the road.</li>
+            <li><strong>Turn on Hazard Lights:</strong> Make your vehicle visible to other drivers.</li>
+            <li><strong>Check for Spare Tire:</strong> Locate your spare tire and tools.</li>
+            <li><strong>Loosen Lug Nuts:</strong> Use the lug wrench to loosen nuts before jacking.</li>
+            <li><strong>Jack Up the Car:</strong> Place jack under the designated point and raise.</li>
+            <li><strong>Remove Flat Tire:</strong> Take off the flat tire and replace with spare.</li>
+            <li><strong>Tighten Lug Nuts:</strong> Secure the spare tire properly.</li>
+            <li><strong>Lower the Car:</strong> Carefully lower the vehicle and remove jack.</li>
+          </ol>
+        </div>
+        <div class="case-resources">
+          <h2>Roadside Assistance</h2>
+          <div class="resource-links">
+            <a href="https://www.aaa.com" target="_blank" class="resource-link">🚗 AAA Roadside Assistance</a>
+            <a href="tel:911" class="resource-link">📞 Emergency Services (911)</a>
+            <a href="https://www.youtube.com/watch?v=joBmbh0AGSQ" target="_blank" class="resource-link">📹 How to Change a Tire Video</a>
+          </div>
+        </div>
+        <div class="case-tips">
+          <h2>Prevention Tips</h2>
+          <ul>
+            <li>Regularly check tire pressure and condition</li>
+            <li>Keep a spare tire and tools in your vehicle</li>
+            <li>Learn how to change a tire before you need to</li>
+            <li>Consider roadside assistance membership</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <section id="case-detail-locked-out" class="page case-detail-page" style="display:none">
+      <div class="case-detail-header">
+        <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
+        <h1>🔑 Locked Out Guide</h1>
+      </div>
+      <div class="case-detail-content">
+        <div class="case-image">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Locked Out" />
+        </div>
+        <div class="case-instructions">
+          <h2>What to Do When Locked Out</h2>
+          <ol>
+            <li><strong>Stay Calm:</strong> Panicking won't help you get back in.</li>
+            <li><strong>Check All Doors:</strong> Try all doors and windows.</li>
+            <li><strong>Look for Spare Key:</strong> Check under doormats, flower pots, or with neighbors.</li>
+            <li><strong>Contact Family/Friends:</strong> Call someone who might have a spare key.</li>
+            <li><strong>Call a Locksmith:</strong> Professional locksmiths can help safely.</li>
+            <li><strong>Check for Open Windows:</strong> Look for any unlocked windows.</li>
+            <li><strong>Contact Landlord:</strong> If renting, call your landlord or property manager.</li>
+          </ol>
+        </div>
+        <div class="case-resources">
+          <h2>Lockout Resources</h2>
+          <div class="resource-links">
+            <a href="https://www.findalocksmith.com" target="_blank" class="resource-link">🔑 Find a Locksmith</a>
+            <a href="tel:911" class="resource-link">📞 Emergency Services (911)</a>
+            <a href="https://www.aaa.com" target="_blank" class="resource-link">🚗 AAA Lockout Service</a>
+          </div>
+        </div>
+        <div class="case-tips">
+          <h2>Prevention Tips</h2>
+          <ul>
+            <li>Always carry a spare key</li>
+            <li>Give a spare key to a trusted friend or family member</li>
+            <li>Consider smart locks or keyless entry systems</li>
+            <li>Keep important phone numbers handy</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <section id="case-detail-power-outage" class="page case-detail-page" style="display:none">
+      <div class="case-detail-header">
+        <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
+        <h1>💡 Power Outage Guide</h1>
+      </div>
+      <div class="case-detail-content">
+        <div class="case-image">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Power Outage" />
+        </div>
+        <div class="case-instructions">
+          <h2>How to Handle a Power Outage</h2>
+          <ol>
+            <li><strong>Check Your Circuit Breaker:</strong> Look for tripped breakers in your electrical panel.</li>
+            <li><strong>Check Neighbors:</strong> See if the outage affects your whole area.</li>
+            <li><strong>Report the Outage:</strong> Contact your electricity provider.</li>
+            <li><strong>Use Flashlights:</strong> Avoid candles to prevent fire hazards.</li>
+            <li><strong>Keep Refrigerator Closed:</strong> Food will stay cold longer.</li>
+            <li><strong>Unplug Electronics:</strong> Protect devices from power surges.</li>
+            <li><strong>Stay Informed:</strong> Listen to battery-powered radio for updates.</li>
+          </ol>
+        </div>
+        <div class="case-resources">
+          <h2>Power Company Resources</h2>
+          <div class="resource-links">
+            <a href="https://www.ready.gov/power-outages" target="_blank" class="resource-link">💡 FEMA Power Outage Guide</a>
+            <a href="tel:911" class="resource-link">📞 Emergency Services (911)</a>
+            <a href="https://www.redcross.org/get-help/disaster-relief-and-recovery-services/power-outage-safety.html" target="_blank" class="resource-link">🚨 Red Cross Power Safety</a>
+          </div>
+        </div>
+        <div class="case-tips">
+          <h2>Preparedness Tips</h2>
+          <ul>
+            <li>Keep emergency supplies including flashlights and batteries</li>
+            <li>Have a battery-powered radio for updates</li>
+            <li>Know your power company's contact information</li>
+            <li>Consider a backup generator for extended outages</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <section id="case-detail-water-leak" class="page case-detail-page" style="display:none">
+      <div class="case-detail-header">
+        <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
+        <h1>💧 Water Leak Guide</h1>
+      </div>
+      <div class="case-detail-content">
+        <div class="case-image">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Water Leak" />
+        </div>
+        <div class="case-instructions">
+          <h2>How to Handle a Water Leak</h2>
+          <ol>
+            <li><strong>Turn Off Main Water Supply:</strong> Locate and turn off the main water valve.</li>
+            <li><strong>Stop the Leak:</strong> Use towels, buckets, or containers to catch water.</li>
+            <li><strong>Turn Off Electricity:</strong> If water is near electrical outlets, turn off power.</li>
+            <li><strong>Document the Damage:</strong> Take photos for insurance purposes.</li>
+            <li><strong>Call a Plumber:</strong> Contact a professional for repairs.</li>
+            <li><strong>Contact Insurance:</strong> Report the incident to your insurance company.</li>
+            <li><strong>Prevent Mold:</strong> Dry affected areas thoroughly.</li>
+          </ol>
+        </div>
+        <div class="case-resources">
+          <h2>Plumbing Resources</h2>
+          <div class="resource-links">
+            <a href="https://www.angieslist.com" target="_blank" class="resource-link">🔧 Find a Plumber</a>
+            <a href="tel:911" class="resource-link">📞 Emergency Services (911)</a>
+            <a href="https://www.redcross.org/get-help/disaster-relief-and-recovery-services/water-damage-safety.html" target="_blank" class="resource-link">💧 Water Damage Safety</a>
+          </div>
+        </div>
+        <div class="case-tips">
+          <h2>Prevention Tips</h2>
+          <ul>
+            <li>Regularly inspect pipes and fixtures</li>
+            <li>Know the location of your main water valve</li>
+            <li>Install water leak detectors</li>
+            <li>Keep emergency plumber contact information handy</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <section id="case-detail-lost-child" class="page case-detail-page" style="display:none">
+      <div class="case-detail-header">
+        <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
+        <h1>🧒 Lost Child Guide</h1>
+      </div>
+      <div class="case-detail-content">
+        <div class="case-image">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Lost Child" />
+        </div>
+        <div class="case-instructions">
+          <h2>What to Do When a Child is Lost</h2>
+          <ol>
+            <li><strong>Stay Calm:</strong> Panicking will make the situation worse.</li>
+            <li><strong>Alert Authorities Immediately:</strong> Call 911 or contact security.</li>
+            <li><strong>Provide Description:</strong> Give detailed description of the child.</li>
+            <li><strong>Search the Area:</strong> Check nearby areas with other people.</li>
+            <li><strong>Use Public Address:</strong> Ask for announcements if in a public place.</li>
+            <li><strong>Contact Family:</strong> Notify other family members.</li>
+            <li><strong>Stay in Place:</strong> Remain where you last saw the child.</li>
+            <li><strong>Use Social Media:</strong> Share information on community groups.</li>
+          </ol>
+        </div>
+        <div class="case-resources">
+          <h2>Child Safety Resources</h2>
+          <div class="resource-links">
+            <a href="https://www.missingkids.org" target="_blank" class="resource-link">🧒 National Center for Missing & Exploited Children</a>
+            <a href="tel:911" class="resource-link">📞 Emergency Services (911)</a>
+            <a href="https://www.safekids.org" target="_blank" class="resource-link">🛡️ Safe Kids Worldwide</a>
+          </div>
+        </div>
+        <div class="case-tips">
+          <h2>Prevention Tips</h2>
+          <ul>
+            <li>Teach children to stay in one place if lost</li>
+            <li>Have recent photos of your children</li>
+            <li>Teach children to identify safe adults (police, security)</li>
+            <li>Use child safety apps and tracking devices</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <section id="case-detail-stuck-elevator" class="page case-detail-page" style="display:none">
+      <div class="case-detail-header">
+        <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
+        <h1>🛗 Stuck in Elevator Guide</h1>
+      </div>
+      <div class="case-detail-content">
+        <div class="case-image">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Elevator Emergency" />
+        </div>
+        <div class="case-instructions">
+          <h2>What to Do When Stuck in an Elevator</h2>
+          <ol>
+            <li><strong>Stay Calm:</strong> Panicking won't help and can make the situation worse.</li>
+            <li><strong>Press Emergency Button:</strong> Use the emergency call button or phone.</li>
+            <li><strong>Call for Help:</strong> Use your phone to call building management or 911.</li>
+            <li><strong>Don't Try to Exit:</strong> Never attempt to force open doors or climb out.</li>
+            <li><strong>Stay Near the Door:</strong> Position yourself near the door for easy access.</li>
+            <li><strong>Wait for Professionals:</strong> Let trained personnel handle the rescue.</li>
+            <li><strong>Keep Others Calm:</strong> If others are present, help them stay calm.</li>
+          </ol>
+        </div>
+        <div class="case-resources">
+          <h2>Elevator Safety Resources</h2>
+          <div class="resource-links">
+            <a href="https://www.osha.gov/elevators" target="_blank" class="resource-link">🛗 OSHA Elevator Safety</a>
+            <a href="tel:911" class="resource-link">📞 Emergency Services (911)</a>
+            <a href="https://www.elevatorworld.com" target="_blank" class="resource-link">🏢 Elevator World Safety</a>
+          </div>
+        </div>
+        <div class="case-tips">
+          <h2>Safety Tips</h2>
+          <ul>
+            <li>Always check elevator inspection certificates</li>
+            <li>Use stairs during fire alarms</li>
+            <li>Don't overload elevators</li>
+            <li>Know the location of emergency buttons</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <section id="case-detail-pet-lost" class="page case-detail-page" style="display:none">
+      <div class="case-detail-header">
+        <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
+        <h1>🐾 Lost Pet Guide</h1>
+      </div>
+      <div class="case-detail-content">
+        <div class="case-image">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Lost Pet" />
+        </div>
+        <div class="case-instructions">
+          <h2>How to Find Your Lost Pet</h2>
+          <ol>
+            <li><strong>Search Immediately:</strong> Start searching your neighborhood right away.</li>
+            <li><strong>Call Your Pet's Name:</strong> Use familiar commands and sounds.</li>
+            <li><strong>Check Common Hiding Spots:</strong> Look under porches, in bushes, garages.</li>
+            <li><strong>Ask Neighbors:</strong> Knock on doors and ask people to check their yards.</li>
+            <li><strong>Contact Local Shelters:</strong> Call all nearby animal shelters and vet offices.</li>
+            <li><strong>Post on Social Media:</strong> Use community groups and lost pet pages.</li>
+            <li><strong>Create Flyers:</strong> Make and distribute lost pet posters.</li>
+            <li><strong>Use Pet Tracking Apps:</strong> If your pet has a microchip or GPS collar.</li>
+          </ol>
+        </div>
+        <div class="case-resources">
+          <h2>Pet Recovery Resources</h2>
+          <div class="resource-links">
+            <a href="https://www.petfinder.com" target="_blank" class="resource-link">🐾 Petfinder Lost Pets</a>
+            <a href="https://www.aspca.org" target="_blank" class="resource-link">🏠 ASPCA Pet Recovery</a>
+            <a href="https://www.pawboost.com" target="_blank" class="resource-link">🔍 PawBoost Lost Pet Alerts</a>
+          </div>
+        </div>
+        <div class="case-tips">
+          <h2>Prevention Tips</h2>
+          <ul>
+            <li>Keep your pet's ID tags updated</li>
+            <li>Microchip your pets</li>
+            <li>Use GPS tracking collars</li>
+            <li>Keep recent photos of your pets</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <section id="case-detail-medical-emergency" class="page case-detail-page" style="display:none">
+      <div class="case-detail-header">
+        <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
+        <h1>🏥 Medical Emergency Guide</h1>
+      </div>
+      <div class="case-detail-content">
+        <div class="case-image">
+          <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&h=300&fit=crop" alt="Medical Emergency" />
+        </div>
+        <div class="case-instructions">
+          <h2>How to Handle a Medical Emergency</h2>
+          <ol>
+            <li><strong>Assess the Situation:</strong> Determine if it's life-threatening.</li>
+            <li><strong>Call Emergency Services:</strong> Dial 911 immediately for serious emergencies.</li>
+            <li><strong>Check for Consciousness:</strong> Determine if the person is responsive.</li>
+            <li><strong>Check Breathing:</strong> Look, listen, and feel for breathing.</li>
+            <li><strong>Provide First Aid:</strong> Apply appropriate first aid if trained.</li>
+            <li><strong>Keep Person Calm:</strong> Reassure and comfort the person.</li>
+            <li><strong>Gather Information:</strong> Note symptoms and any relevant medical history.</li>
+            <li><strong>Stay with the Person:</strong> Don't leave until help arrives.</li>
+          </ol>
+        </div>
+        <div class="case-resources">
+          <h2>Medical Emergency Resources</h2>
+          <div class="resource-links">
+            <a href="https://www.redcross.org/first-aid" target="_blank" class="resource-link">🏥 Red Cross First Aid</a>
+            <a href="tel:911" class="resource-link">📞 Emergency Services (911)</a>
+            <a href="https://www.who.int/emergencies" target="_blank" class="resource-link">🌍 WHO Emergency Guidelines</a>
+          </div>
+        </div>
+        <div class="case-tips">
+          <h2>Emergency Preparedness</h2>
+          <ul>
+            <li>Learn basic first aid and CPR</li>
+            <li>Keep a well-stocked first aid kit</li>
+            <li>Know the location of nearest hospitals</li>
+            <li>Have emergency contacts readily available</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <section id="case-detail-natural-disaster" class="page case-detail-page" style="display:none">
+      <div class="case-detail-header">
+        <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
+        <h1>🌪️ Natural Disaster Guide</h1>
+      </div>
+      <div class="case-detail-content">
+        <div class="case-image">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Natural Disaster" />
+        </div>
+        <div class="case-instructions">
+          <h2>How to Handle Natural Disasters</h2>
+          <ol>
+            <li><strong>Stay Informed:</strong> Listen to official weather and emergency broadcasts.</li>
+            <li><strong>Follow Evacuation Orders:</strong> Leave immediately if ordered to evacuate.</li>
+            <li><strong>Move to Safe Location:</strong> Go to designated shelters or safe areas.</li>
+            <li><strong>Stay Indoors:</strong> If sheltering in place, stay away from windows.</li>
+            <li><strong>Have Emergency Kit:</strong> Keep supplies ready including food, water, and medicine.</li>
+            <li><strong>Contact Family:</strong> Let loved ones know you're safe.</li>
+            <li><strong>Follow Official Instructions:</strong> Listen to local authorities.</li>
+            <li><strong>Document Damage:</strong> Take photos for insurance purposes.</li>
+          </ol>
+        </div>
+        <div class="case-resources">
+          <h2>Disaster Resources</h2>
+          <div class="resource-links">
+            <a href="https://www.ready.gov" target="_blank" class="resource-link">🌪️ Ready.gov Disaster Preparedness</a>
+            <a href="https://www.fema.gov" target="_blank" class="resource-link">🏛️ FEMA Emergency Information</a>
+            <a href="https://www.redcross.org/get-help/disaster-relief-and-recovery-services.html" target="_blank" class="resource-link">🚨 Red Cross Disaster Relief</a>
+          </div>
+        </div>
+        <div class="case-tips">
+          <h2>Preparedness Tips</h2>
+          <ul>
+            <li>Create an emergency plan for your family</li>
+            <li>Build an emergency kit with essential supplies</li>
+            <li>Know evacuation routes from your area</li>
+            <li>Stay informed about local emergency procedures</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <section id="case-detail-cyber-security" class="page case-detail-page" style="display:none">
+      <div class="case-detail-header">
+        <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
+        <h1>💻 Cyber Security Issue Guide</h1>
+      </div>
+      <div class="case-detail-content">
+        <div class="case-image">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Cyber Security" />
+        </div>
+        <div class="case-instructions">
+          <h2>How to Handle Cyber Security Issues</h2>
+          <ol>
+            <li><strong>Disconnect from Internet:</strong> Unplug your device immediately.</li>
+            <li><strong>Change Passwords:</strong> Update passwords for all important accounts.</li>
+            <li><strong>Contact Your Bank:</strong> If financial information was compromised.</li>
+            <li><strong>Run Security Scans:</strong> Use antivirus software to scan for malware.</li>
+            <li><strong>Report the Incident:</strong> Contact relevant authorities or companies.</li>
+            <li><strong>Monitor Accounts:</strong> Watch for suspicious activity.</li>
+            <li><strong>Enable Two-Factor Authentication:</strong> Add extra security to accounts.</li>
+            <li><strong>Backup Important Data:</strong> Ensure your data is safely backed up.</li>
+          </ol>
+        </div>
+        <div class="case-resources">
+          <h2>Cyber Security Resources</h2>
+          <div class="resource-links">
+            <a href="https://www.identitytheft.gov" target="_blank" class="resource-link">🛡️ Identity Theft.gov</a>
+            <a href="https://www.ic3.gov" target="_blank" class="resource-link">🚔 FBI Internet Crime Complaint Center</a>
+            <a href="https://www.consumer.ftc.gov" target="_blank" class="resource-link">📋 FTC Consumer Information</a>
+          </div>
+        </div>
+        <div class="case-tips">
+          <h2>Prevention Tips</h2>
+          <ul>
+            <li>Use strong, unique passwords for each account</li>
+            <li>Enable two-factor authentication wherever possible</li>
+            <li>Keep software and systems updated</li>
+            <li>Be cautious of suspicious emails and links</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <section id="case-detail-harassment" class="page case-detail-page" style="display:none">
+      <div class="case-detail-header">
+        <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
+        <h1>🚨 Harassment Guide</h1>
+      </div>
+      <div class="case-detail-content">
+        <div class="case-image">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Harassment" />
+        </div>
+        <div class="case-instructions">
+          <h2>How to Handle Harassment</h2>
+          <ol>
+            <li><strong>Stay Calm:</strong> Try to remain composed and think clearly.</li>
+            <li><strong>Move to Safety:</strong> Get to a safe location with other people.</li>
+            <li><strong>Document Everything:</strong> Write down details of the incident.</li>
+            <li><strong>Tell Someone:</strong> Report to authorities, employer, or trusted person.</li>
+            <li><strong>Contact Police:</strong> Call 911 if you feel threatened or in danger.</li>
+            <li><strong>Save Evidence:</strong> Keep any messages, photos, or recordings.</li>
+            <li><strong>Seek Support:</strong> Talk to friends, family, or professional counselors.</li>
+            <li><strong>Know Your Rights:</strong> Understand your legal protections.</li>
+          </ol>
+        </div>
+        <div class="case-resources">
+          <h2>Harassment Support Resources</h2>
+          <div class="resource-links">
+            <a href="https://www.rainn.org" target="_blank" class="resource-link">🛡️ RAINN National Sexual Assault Hotline</a>
+            <a href="tel:911" class="resource-link">📞 Emergency Services (911)</a>
+            <a href="https://www.stopbullying.gov" target="_blank" class="resource-link">🚫 StopBullying.gov</a>
+          </div>
+        </div>
+        <div class="case-tips">
+          <h2>Safety Tips</h2>
+          <ul>
+            <li>Trust your instincts - if something feels wrong, it probably is</li>
+            <li>Keep emergency contacts easily accessible</li>
+            <li>Learn self-defense techniques</li>
+            <li>Stay aware of your surroundings</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <section id="case-detail-food-poisoning" class="page case-detail-page" style="display:none">
+      <div class="case-detail-header">
+        <button onclick="showPage('normal-cases')" class="back-btn">← Back to Cases</button>
+        <h1>🤢 Food Poisoning Guide</h1>
+      </div>
+      <div class="case-detail-content">
+        <div class="case-image">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=300&fit=crop" alt="Food Poisoning" />
+        </div>
+        <div class="case-instructions">
+          <h2>How to Handle Food Poisoning</h2>
+          <ol>
+            <li><strong>Stay Hydrated:</strong> Drink plenty of water and clear fluids.</li>
+            <li><strong>Rest:</strong> Get adequate rest to help your body recover.</li>
+            <li><strong>Monitor Symptoms:</strong> Watch for severe symptoms like high fever.</li>
+            <li><strong>Eat Bland Foods:</strong> Start with crackers, rice, or toast when ready.</li>
+            <li><strong>Avoid Certain Foods:</strong> Stay away from dairy, caffeine, and alcohol.</li>
+            <li><strong>Seek Medical Attention:</strong> If symptoms are severe or persistent.</li>
+            <li><strong>Report the Incident:</strong> Contact health department if from a restaurant.</li>
+            <li><strong>Prevent Dehydration:</strong> Use oral rehydration solutions if needed.</li>
+          </ol>
+        </div>
+        <div class="case-resources">
+          <h2>Food Safety Resources</h2>
+          <div class="resource-links">
+            <a href="https://www.foodsafety.gov" target="_blank" class="resource-link">🍽️ FoodSafety.gov</a>
+            <a href="https://www.cdc.gov/foodsafety" target="_blank" class="resource-link">🏥 CDC Food Safety</a>
+            <a href="tel:911" class="resource-link">📞 Emergency Services (911)</a>
+          </div>
+        </div>
+        <div class="case-tips">
+          <h2>Prevention Tips</h2>
+          <ul>
+            <li>Wash hands thoroughly before handling food</li>
+            <li>Cook food to proper temperatures</li>
+            <li>Refrigerate perishable foods promptly</li>
+            <li>Be cautious when eating at unfamiliar places</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="main.js"></script>
 </body>
-</html>
+</html> 
