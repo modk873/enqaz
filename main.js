@@ -1,9 +1,26 @@
 function showPage(pageId) {
-  const pages = document.querySelectorAll('.page');
-  pages.forEach(page => {
+  // Hide all pages
+  document.querySelectorAll('.page').forEach(page => {
     page.style.display = 'none';
   });
-  document.getElementById(pageId).style.display = 'block';
+  
+  // Show selected page
+  const selectedPage = document.getElementById(pageId);
+  if (selectedPage) {
+    selectedPage.style.display = 'block';
+    
+    // Initialize maps when showing specific pages
+    if (pageId === 'community') {
+      initCommunityMap();
+    } else if (pageId === 'dashboard') {
+      initDashboardMap();
+    } else if (pageId === 'map') {
+      // Small delay to ensure DOM is ready
+      setTimeout(() => {
+        initEmergencyMap();
+      }, 300);
+    }
+  }
 
   // Highlight active nav button
   const navButtons = [
@@ -434,12 +451,7 @@ function renderUserAlerts() {
 }
 
 // Show map when Community or Dashboard page is shown
-const oldShowPage2 = showPage;
-showPage = function(pageId) {
-  oldShowPage2(pageId);
-  if (pageId === 'community') showCommunityMap();
-  if (pageId === 'dashboard') showDashboardMap();
-};
+// Note: This is now handled in the main showPage function
 
 // Side nav menu logic
 const menuToggle = document.getElementById('menu-toggle');
@@ -455,4 +467,191 @@ if (mainNav) {
 }
 if (menuToggle) menuToggle.style.display = 'none';
 if (menuBackdrop) menuBackdrop.style.display = 'none';
-if (menuClose) menuClose.style.display = 'none'; 
+if (menuClose) menuClose.style.display = 'none';
+
+// Initialize Emergency Map
+let emergencyMap = null;
+
+function initEmergencyMap() {
+  console.log('Initializing emergency map...');
+  
+  // Show loading message
+  const loadingDiv = document.getElementById('map-loading');
+  if (loadingDiv) {
+    loadingDiv.style.display = 'block';
+  }
+  
+  // Hide placeholder text
+  const placeholderDiv = document.getElementById('map-placeholder');
+  if (placeholderDiv) {
+    placeholderDiv.style.display = 'none';
+  }
+  
+  // Check if map container exists
+  const mapContainer = document.getElementById('emergency-map');
+  if (!mapContainer) {
+    console.error('Map container not found!');
+    return;
+  }
+  
+  // Remove existing map if any
+  if (emergencyMap) {
+    emergencyMap.remove();
+    emergencyMap = null;
+  }
+  
+  try {
+    // Check if Leaflet is available
+    if (typeof L === 'undefined') {
+      throw new Error('Leaflet library not loaded');
+    }
+    
+    // Create map centered on a default location (Riyadh coordinates)
+    emergencyMap = L.map('emergency-map').setView([24.7136, 46.6753], 13);
+    
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(emergencyMap);
+    
+    console.log('Map created successfully');
+    
+    // Hide loading message
+    if (loadingDiv) {
+      loadingDiv.style.display = 'none';
+    }
+    
+    // Ensure map is visible
+    if (mapContainer) {
+      mapContainer.style.background = 'transparent';
+      mapContainer.style.border = 'none';
+    }
+    
+    // Add user location marker (if available)
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        const userLat = position.coords.latitude;
+        const userLng = position.coords.longitude;
+        
+        console.log('User location:', userLat, userLng);
+        
+        // Add user marker
+        const userMarker = L.marker([userLat, userLng])
+          .addTo(emergencyMap)
+          .bindPopup('Your Location')
+          .openPopup();
+        
+        // Center map on user location
+        emergencyMap.setView([userLat, userLng], 15);
+        
+        // Add nearby emergency facilities (example locations)
+        const facilities = [
+          { name: 'Police Station', lat: userLat + 0.01, lng: userLng + 0.01, type: 'police' },
+          { name: 'Hospital', lat: userLat - 0.01, lng: userLng - 0.01, type: 'hospital' },
+          { name: 'Fire Station', lat: userLat + 0.005, lng: userLng - 0.005, type: 'fire' }
+        ];
+        
+        facilities.forEach(facility => {
+          const icon = L.divIcon({
+            className: 'facility-marker',
+            html: getFacilityIcon(facility.type),
+            iconSize: [30, 30]
+          });
+          
+          L.marker([facility.lat, facility.lng], { icon: icon })
+            .addTo(emergencyMap)
+            .bindPopup(`
+              <strong>${facility.name}</strong><br>
+              <button onclick="callFacility('${facility.name}')" class="map-btn">Call</button>
+              <button onclick="getDirections(${facility.lat}, ${facility.lng})" class="map-btn">Directions</button>
+            `);
+        });
+      }, function(error) {
+        console.log('Error getting location:', error);
+        // If location not available, show default map with sample facilities
+        addSampleFacilities();
+      });
+    } else {
+      console.log('Geolocation not supported, showing default map');
+      addSampleFacilities();
+    }
+  } catch (error) {
+    console.error('Error creating map:', error);
+    // Hide loading message on error
+    if (loadingDiv) {
+      loadingDiv.style.display = 'none';
+    }
+    // Show placeholder text again
+    if (placeholderDiv) {
+      placeholderDiv.style.display = 'block';
+    }
+  }
+}
+
+function addSampleFacilities() {
+  if (!emergencyMap) return;
+  
+  // Add sample facilities around Riyadh
+  const facilities = [
+    { name: 'Police Station', lat: 24.7136 + 0.01, lng: 46.6753 + 0.01, type: 'police' },
+    { name: 'Hospital', lat: 24.7136 - 0.01, lng: 46.6753 - 0.01, type: 'hospital' },
+    { name: 'Fire Station', lat: 24.7136 + 0.005, lng: 46.6753 - 0.005, type: 'fire' }
+  ];
+  
+  facilities.forEach(facility => {
+    const icon = L.divIcon({
+      className: 'facility-marker',
+      html: getFacilityIcon(facility.type),
+      iconSize: [30, 30]
+    });
+    
+    L.marker([facility.lat, facility.lng], { icon: icon })
+      .addTo(emergencyMap)
+      .bindPopup(`
+        <strong>${facility.name}</strong><br>
+        <button onclick="callFacility('${facility.name}')" class="map-btn">Call</button>
+        <button onclick="getDirections(${facility.lat}, ${facility.lng})" class="map-btn">Directions</button>
+      `);
+  });
+}
+
+function getFacilityIcon(type) {
+  const icons = {
+    police: '🚔',
+    hospital: '🏥',
+    fire: '🚒'
+  };
+  return icons[type] || '📍';
+}
+
+function callFacility(facilityName) {
+  alert(`Calling ${facilityName}...`);
+  // You can integrate with phone dialer here
+}
+
+function getDirections(lat, lng) {
+  // Open directions in Google Maps
+  window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`, '_blank');
+}
+
+function testMap() {
+  console.log('Testing map functionality...');
+  console.log('Leaflet available:', typeof L !== 'undefined');
+  console.log('Map container:', document.getElementById('emergency-map'));
+  console.log('Loading div:', document.getElementById('map-loading'));
+  console.log('Placeholder div:', document.getElementById('map-placeholder'));
+  
+  // Try to create a simple map
+  try {
+    const testMap = L.map('emergency-map').setView([24.7136, 46.6753], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(testMap);
+    
+    alert('Map test successful! Leaflet is working correctly.');
+    testMap.remove();
+  } catch (error) {
+    alert('Map test failed: ' + error.message);
+    console.error('Map test error:', error);
+  }
+} 

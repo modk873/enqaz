@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <meta name="theme-color" content="#dc3545" />
-  <title>Enqaz SOS App</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <link rel="manifest" href="/manifest.json" />
-  <link rel="apple-touch-icon" href="/icon-192.png" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enqaz - Emergency SOS App</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
   <div id="menu-backdrop" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.25);z-index:1000;"></div>
@@ -18,11 +17,14 @@
     <button id="menu-close" aria-label="Close menu" style="font-size:2em;background:none;border:none;cursor:pointer;float:right;">×</button>
     <div class="nav-links">
       <button id="nav-home" onclick="showPage('home');closeMenu();">Home</button>
+      <button id="nav-map" onclick="showPage('map');closeMenu();">Map</button>
+      <button id="nav-about" onclick="showPage('about');closeMenu();">About</button>
       <button id="nav-login" onclick="showPage('login');closeMenu();">Login</button>
       <button id="nav-signup" onclick="showPage('signup');closeMenu();">Sign Up</button>
       <button id="nav-dashboard" onclick="showPage('dashboard');closeMenu();">Dashboard</button>
       <button id="nav-community" onclick="showPage('community');closeMenu();">Community</button>
       <button id="nav-profile" onclick="showPage('profile');closeMenu();">Profile</button>
+
     </div>
   </nav>
   <main>
@@ -259,6 +261,83 @@
         <button type="submit">Save Profile</button>
       </form>
       <div id="profile-message" class="message"></div>
+    </section>
+    <section id="about" class="page" style="display:none">
+      <h1>About Enqaz SOS App</h1>
+      <div class="about-content">
+        <div class="about-icon">🚨</div>
+        <h2>Our Mission</h2>
+        <p>Enqaz SOS is a simple and smart safety tool designed to help people during emergencies. We connect users with the closest available help, whether it's volunteers, police, or medical services.</p>
+        
+        <div class="features-grid">
+          <div class="feature-item">
+            <span class="feature-icon">📱</span>
+            <h3>Quick SOS</h3>
+            <p>Send emergency alerts with your location and personal details instantly.</p>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">🗺️</span>
+            <h3>Smart Location</h3>
+            <p>Find nearby volunteers and emergency services on the map.</p>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">👥</span>
+            <h3>Community Help</h3>
+            <p>Connect with local volunteers for immediate assistance.</p>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">📞</span>
+            <h3>Direct Contact</h3>
+            <p>Call or message volunteers directly for quick help.</p>
+          </div>
+        </div>
+        
+        <div class="about-footer">
+          <p><strong>Main Goal:</strong> Fast help, safety, and saving lives.</p>
+        </div>
+      </div>
+    </section>
+    
+    <section id="map" class="page" style="display:none">
+      <h1>Emergency Map</h1>
+      <div class="static-map">
+        <div id="map-loading" class="map-loading">Loading map...</div>
+        <div id="emergency-map" class="map-container">
+          <div id="map-placeholder">Click "Refresh Map" to load interactive map</div>
+        </div>
+        <button id="refresh-map-btn" onclick="initEmergencyMap()" class="refresh-btn">Load Interactive Map</button>
+        <button id="test-map-btn" onclick="testMap()" class="refresh-btn" style="background: #28a745; margin-left: 10px;">Test Map</button>
+      </div>
+      
+      <div class="facilities-list">
+        <h2>Nearby Emergency Facilities</h2>
+        <div class="facility-item">
+          <span class="facility-icon">🚔</span>
+          <div class="facility-info">
+            <h3>Nearest Police Station</h3>
+            <p>Central Police Station - 2.3 km away</p>
+            <button class="facility-btn" onclick="alert('Calling Police Station...')">Call Police</button>
+          </div>
+        </div>
+        
+        <div class="facility-item">
+          <span class="facility-icon">🏥</span>
+          <div class="facility-info">
+            <h3>Nearest Hospital</h3>
+            <p>City General Hospital - 1.8 km away</p>
+            <button class="facility-btn" onclick="alert('Calling Hospital...')">Call Hospital</button>
+          </div>
+        </div>
+        
+        <div class="facility-item">
+          <span class="facility-icon">🏠</span>
+          <div class="facility-info">
+            <h3>Your Home</h3>
+            <p>Saved Location - 0.5 km away</p>
+            <button class="facility-btn" onclick="alert('Getting directions to home...')">Get Directions</button>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
   <script src="main.js"></script>
