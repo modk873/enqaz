@@ -53,8 +53,8 @@ html {
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  padding: 0;
-  background: #f8f9fa;
+  padding: 0em;
+  background: #3f5a76;
   font-size: 1rem;
   padding-top: 54px !important;
 }
@@ -85,9 +85,9 @@ main {
 }
 .page {
   max-width: 600px;
-  margin: 2em auto;
+  margin: 0em auto;
   background: #b71818;
-  padding: 0.5em;
+  padding: 10em;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
