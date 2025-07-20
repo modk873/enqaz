@@ -54,7 +54,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0em;
-  background: #3f5a76;
+  background: #2c4b6b;
   font-size: 1rem;
   padding-top: 54px !important;
 }
@@ -78,18 +78,18 @@ nav button.active, nav button:focus {
   color: #fff;
 }
 nav button:hover {
-  background: #96b0c9;
+  background: #e2e6ea;
 }
 main {
-  padding: 0em;
+  padding: 0.3em;
 }
 .page {
   max-width: 600px;
   margin: 2em auto;
-  background: #b71818;
-  padding: 10em;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  background: #fff;
+  padding: 0.5em;
+  border-radius: 22px;
+  box-shadow: 0 2px 8px rgb(183, 201, 255);
 }
 form {
   display: flex;
@@ -1471,28 +1471,26 @@ body.menu-open {
   background: #007bff;
   color: #fff;
   font-weight: bold;
-  box-shadow: 0 2px 8px rgba(117, 183, 255, 0.1);
+  box-shadow: 0 2px 8px rgba(0,123,255,0.10);
 }
 
 .home-section {
-  background: linear-gradient(135deg,#99badfc6 0%,#d7d7ed 100%);
-  min-height: 60vh;
+  background: linear-gradient(135deg,#e3f0ff 0%,#f9f9fb 100%);
+  min-height: 70vh;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .home-card {
-  max-width: 480px;
   margin: auto;
-  background: rgb(253, 253, 253);
-  padding: 1.5em 1.5em 1.5em 1.5em;
+  padding: 2.5em 2em 2em 2em;
   border-radius: 22px;
-  box-shadow: 0 4px 32px rgb(0, 119, 255);
+  box-shadow: 0 4px 32px rgba(0,123,255,0.10);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.1em;
+  gap: 2em;
 }
 
 .home-description {
