@@ -66,7 +66,7 @@ nav {
   flex-wrap: wrap;
 }
 nav button {
-  background: #fff;
+  background: #c01717;
   border: none;
   padding: 0.5em 1em;
   border-radius: 4px;
@@ -81,13 +81,13 @@ nav button:hover {
   background: #e2e6ea;
 }
 main {
-  padding: 2em;
+  padding: 0em;
 }
 .page {
   max-width: 600px;
   margin: 2em auto;
-  background: #fff;
-  padding: 2em;
+  background: #b71818;
+  padding: 0.5em;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
@@ -1471,12 +1471,12 @@ body.menu-open {
   background: #007bff;
   color: #fff;
   font-weight: bold;
-  box-shadow: 0 2px 8px rgba(0,123,255,0.10);
+  box-shadow: 0 2px 8px rgba(117, 183, 255, 0.1);
 }
 
 .home-section {
-  background: linear-gradient(135deg,#e3f0ff 0%,#f9f9fb 100%);
-  min-height: 70vh;
+  background: linear-gradient(135deg,#99badfc6 0%,#d7d7ed 100%);
+  min-height: 60vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1485,14 +1485,14 @@ body.menu-open {
 .home-card {
   max-width: 480px;
   margin: auto;
-  background: white;
-  padding: 2.5em 2em 2em 2em;
+  background: rgb(253, 253, 253);
+  padding: 3em 0.25em 3em 0.25em;
   border-radius: 22px;
-  box-shadow: 0 4px 32px rgba(0,123,255,0.10);
+  box-shadow: 0 4px 32px rgb(0, 119, 255);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2em;
+  gap: 0.1em;
 }
 
 .home-description {
