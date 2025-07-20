@@ -78,14 +78,14 @@ nav button.active, nav button:focus {
   color: #fff;
 }
 nav button:hover {
-  background: #e2e6ea;
+  background: #96b0c9;
 }
 main {
   padding: 0em;
 }
 .page {
   max-width: 600px;
-  margin: 0em auto;
+  margin: 2em auto;
   background: #b71818;
   padding: 10em;
   border-radius: 8px;
@@ -1486,7 +1486,7 @@ body.menu-open {
   max-width: 480px;
   margin: auto;
   background: rgb(253, 253, 253);
-  padding: 3em 0.25em 3em 0.25em;
+  padding: 1.5em 1.5em 1.5em 1.5em;
   border-radius: 22px;
   box-shadow: 0 4px 32px rgb(0, 119, 255);
   display: flex;
