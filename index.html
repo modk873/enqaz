@@ -26,32 +26,99 @@
     </style>
 </head>
 <body>
-  <nav id="main-nav" class="top-nav">
+  <nav id="main-nav" class="top-nav sticky-nav" aria-label="Main Navigation">
     <div class="nav-links">
-      <button id="nav-home" onclick="showPage('home');" data-en="Home" data-ar="الرئيسية">Home</button>
-      <button id="nav-about" onclick="showPage('about');" data-en="About" data-ar="حول">About</button>
-      <button id="nav-map" onclick="showPage('map');" data-en="Map" data-ar="الخريطة">Map</button>
-      <button id="nav-community" onclick="showPage('community');" data-en="Community" data-ar="المجتمع">Community</button>
-      <button id="nav-profile" onclick="showPage('profile');" data-en="Profile" data-ar="الملف الشخصي">Profile</button>
-      <button onclick="toggleLanguage()" class="lang-btn" style="background: #fff; color: #007bff; border: 2px solid #007bff; border-radius: 12px; padding: 8px 18px; font-size: 1em; font-weight: bold; cursor: pointer; min-width: 80px; min-height: 36px; box-shadow: 0 2px 8px rgba(0,123,255,0.10); transition: background 0.2s, box-shadow 0.2s; margin-left:1em;" data-en="Arabic" data-ar="English">Arabic 🌐</button>
+      <button id="nav-home" onclick="showPage('home');" data-en="Home" data-ar="الرئيسية" aria-label="Home">Home</button>
+      <button id="nav-about" onclick="showPage('about');" data-en="About" data-ar="حول" aria-label="About">About</button>
+      <button id="nav-map" onclick="showPage('map');" data-en="Map" data-ar="الخريطة" aria-label="Map">Map</button>
+      <button id="nav-community" onclick="showPage('community');" data-en="Community" data-ar="المجتمع" aria-label="Community">Community</button>
+      <button id="nav-profile" onclick="showPage('profile');" data-en="Profile" data-ar="الملف الشخصي" aria-label="Profile">Profile</button>
+      <button onclick="toggleLanguage()" class="lang-btn" data-en="Arabic" data-ar="English" aria-label="Toggle Language">Arabic 🌐</button>
     </div>
   </nav>
   <main>
-    <section id="home" class="page" style="background:linear-gradient(135deg,#e3f0ff 0%,#f9f9fb 100%);min-height:70vh;display:flex;align-items:center;justify-content:center;">
-      <div style="max-width:480px;margin:auto;background:white;padding:2.5em 2em 2em 2em;border-radius:22px;box-shadow:0 4px 32px rgba(0,123,255,0.10);display:flex;flex-direction:column;align-items:center;gap:2em;">
-        <h1 data-en="Welcome to Enqaz SOS App" data-ar="مرحباً بك في تطبيق إنقاذ SOS" style="font-size:2.2em;font-weight:800;text-align:center;margin-bottom:0.2em;letter-spacing:0.01em;">Welcome to Enqaz SOS App</h1>
-        <div style="font-size:1.15em;color:#555;text-align:center;margin-bottom:1em;max-width:350px;">
+    <section id="home" class="page home-section">
+      <!-- Floating Emergency Slide Button -->
+      <button id="emergency-fab" aria-label="Open Emergency List" style="position:fixed;top:50%;right:0;transform:translateY(-50%);z-index:1001;background:#ff4d4f;color:white;border:none;border-radius:24px 0 0 24px;padding:1em 1.2em 1em 0.8em;box-shadow:0 2px 8px rgba(0,0,0,0.18);font-size:1.5em;cursor:pointer;display:flex;align-items:center;gap:0.5em;transition:right 0.3s;">🚨</button>
+      <!-- Emergency Slide-out List -->
+      <div id="emergency-slideout-overlay" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.18);z-index:1001;"></div>
+      <div id="emergency-slideout" style="position:fixed;top:0;right:-350px;width:320px;max-width:90vw;height:100vh;background:#fff;box-shadow:-4px 0 24px rgba(0,0,0,0.18);z-index:1002;transition:right 0.35s cubic-bezier(.4,1.3,.5,1);display:flex;flex-direction:column;">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:1.2em 1em 0.5em 1.2em;border-bottom:1px solid #eee;">
+          <span style="font-size:1.2em;font-weight:bold;">Emergency Cases</span>
+          <button id="close-emergency-slideout" aria-label="Close" style="background:none;border:none;font-size:1.5em;cursor:pointer;">&times;</button>
+        </div>
+        <div style="padding:1em;display:flex;flex-direction:column;gap:1em;">
+          <button onclick="showPage('case-detail-fire-emergency');closeEmergencySlideout();" class="easy-access-btn" style="background:#ff4d4f;color:white;padding:1em 1.5em;border:none;border-radius:12px;font-size:1.1em;display:flex;align-items:center;gap:0.5em;cursor:pointer;"><span>🔥</span>Fire</button>
+          <button onclick="showPage('case-detail-medical-emergency');closeEmergencySlideout();" class="easy-access-btn" style="background:#007bff;color:white;padding:1em 1.5em;border:none;border-radius:12px;font-size:1.1em;display:flex;align-items:center;gap:0.5em;cursor:pointer;"><span>🏥</span>Medical</button>
+          <button onclick="showPage('case-detail-power-outage');closeEmergencySlideout();" class="easy-access-btn" style="background:#ffc107;color:#333;padding:1em 1.5em;border:none;border-radius:12px;font-size:1.1em;display:flex;align-items:center;gap:0.5em;cursor:pointer;"><span>💡</span>Power Outage</button>
+          <button onclick="showPage('case-detail-lost-child');closeEmergencySlideout();" class="easy-access-btn" style="background:#17a2b8;color:white;padding:1em 1.5em;border:none;border-radius:12px;font-size:1.1em;display:flex;align-items:center;gap:0.5em;cursor:pointer;"><span>🧒</span>Lost Child</button>
+          <button onclick="showPage('case-detail-car-accident');closeEmergencySlideout();" class="easy-access-btn" style="background:#343a40;color:white;padding:1em 1.5em;border:none;border-radius:12px;font-size:1.1em;display:flex;align-items:center;gap:0.5em;cursor:pointer;"><span>🚗</span>Car Accident</button>
+        </div>
+      </div>
+      <script>
+      // Emergency Slide-out logic
+      function openEmergencySlideout() {
+        document.getElementById('emergency-slideout').style.right = '0';
+        document.getElementById('emergency-slideout-overlay').style.display = 'block';
+      }
+      function closeEmergencySlideout() {
+        document.getElementById('emergency-slideout').style.right = '-350px';
+        document.getElementById('emergency-slideout-overlay').style.display = 'none';
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+        var fab = document.getElementById('emergency-fab');
+        var slideout = document.getElementById('emergency-slideout');
+        var closeBtn = document.getElementById('close-emergency-slideout');
+        var overlay = document.getElementById('emergency-slideout-overlay');
+        if (fab && slideout && closeBtn) {
+          fab.onclick = openEmergencySlideout;
+          closeBtn.onclick = closeEmergencySlideout;
+          if (overlay) {
+            overlay.onclick = closeEmergencySlideout;
+          }
+        }
+        // Hide FAB and slideout on non-home pages
+        function updateFabVisibility() {
+          var homeSection = document.getElementById('home');
+          var fab = document.getElementById('emergency-fab');
+          var slideout = document.getElementById('emergency-slideout');
+          var overlay = document.getElementById('emergency-slideout-overlay');
+          if (homeSection && fab && slideout) {
+            if (homeSection.style.display === 'none') {
+              fab.style.display = 'none';
+              slideout.style.display = 'none';
+              if (overlay) overlay.style.display = 'none';
+            } else {
+              fab.style.display = 'flex';
+              slideout.style.display = 'flex';
+              if (overlay) overlay.style.display = 'none';
+            }
+          }
+        }
+        // Patch showPage to also update FAB visibility
+        var origShowPage = window.showPage;
+        window.showPage = function(page) {
+          if (typeof origShowPage === 'function') origShowPage(page);
+          updateFabVisibility();
+          closeEmergencySlideout();
+        };
+        updateFabVisibility();
+      });
+      window.closeEmergencySlideout = closeEmergencySlideout;
+      </script>
+      <div class="home-card">
+        <h1 data-en="Welcome to Enqaz SOS App" data-ar="مرحباً بك في تطبيق إنقاذ SOS">Welcome to Enqaz SOS App</h1>
+        <div class="home-description">
           <span data-en="Your safety, our priority. Instantly request help or support in any situation." data-ar="سلامتك أولويتنا. اطلب المساعدة أو الدعم فوراً في أي موقف.">Your safety, our priority. Instantly request help or support in any situation.</span>
         </div>
-        <div class="sos-buttons column-layout" style="width:100%;gap:1.5em;">
-          <a href="emergency-photo.html" id="emergency-sos-btn-link" style="text-decoration:none;display:flex;justify-content:center;max-width:420px;width:100%;margin:auto;">
-            <button id="emergency-sos-btn" class="sos-btn emergency sos-big" data-en="SOS" data-ar="نجدة"
-              style="font-size:1.3em;display:flex;align-items:center;justify-content:center;gap:0.6em;box-shadow:0 2px 8px rgba(220,53,69,0.13);transition:transform 0.12s;min-width:320px;max-width:100%;padding:1.6em 2em;border-radius:16px;width:100%;">
-              <span style="font-size:1.1em;">🚨</span> <span>SOS</span>
+        <div class="sos-buttons column-layout">
+          <a href="#" id="emergency-sos-btn-link" class="sos-btn-link" aria-label="SOS Photo (disabled)">
+            <button id="emergency-sos-btn" class="sos-btn emergency sos-big" data-en="SOS" data-ar="نجدة" aria-label="SOS">
+              <span class="sos-icon">🚨</span> <span>SOS</span>
             </button>
           </a>
-          <button id="normal-sos-btn" class="sos-btn normal" data-en="Assistance" data-ar="مساعدة" style="font-size:1.3em;display:flex;align-items:center;justify-content:center;gap:0.6em;box-shadow:0 2px 8px rgba(255,193,7,0.13);transition:transform 0.12s;">
-            <span style="font-size:1.1em;">🆗</span> <span>Assistance</span>
+          <button id="normal-sos-btn" class="sos-btn normal" data-en="Assistance" data-ar="مساعدة" aria-label="Assistance">
+            <span class="sos-icon">🆗</span> <span>Assistance</span>
           </button>
         </div>
         <div id="sos-message" class="message"></div>
@@ -110,16 +177,7 @@
           <button onclick="refreshUsersList()" class="refresh-btn" data-en="Refresh" data-ar="تحديث">🔄 Refresh</button>
         </div>
         <ul id="static-users-list" style="margin:1em 0 0 0; padding:0 0 0 1.5em; font-size:1.1em; color:#333;">
-          <li>Ahmed Hassan</li>
-          <li>Sarah Johnson</li>
-          <li>Omar Khalil</li>
-          <li>Layla Ahmed</li>
-          <li>David Chen</li>
-          <li>Aisha Mohammed</li>
-          <li>Khalid Al-Rashid</li>
-          <li>Noora Al-Zahra</li>
-          <li>Mariam Al-Otaibi</li>
-          <li>Hassan Al-Ghamdi</li>
+          
         </ul>
         <div class="users-grid" id="users-grid">
           <!-- Users will be populated here -->
@@ -475,34 +533,7 @@
     </section>
     <section id="profile" class="page" style="display:none">
       <div style="max-width:420px;margin:auto;background:#f9f9fb;padding:2em 2.5em 2em 2.5em;border-radius:18px;box-shadow:0 2px 16px rgba(0,123,255,0.08);">
-        <div id="auth-section">
-          <h1 data-en="Account" data-ar="الحساب" style="text-align:center;margin-bottom:1.5em;">Account</h1>
-          <div style="display:flex;justify-content:center;gap:2em;margin-bottom:1em;">
-            <button id="toggle-login" onclick="showLoginForm()" style="padding:0.5em 2em;border-radius:8px;border:1px solid #007bff;background:#007bff;color:white;font-weight:bold;">Login</button>
-            <button id="toggle-signup" onclick="showSignupForm()" style="padding:0.5em 2em;border-radius:8px;border:1px solid #007bff;background:transparent;color:#007bff;font-weight:bold;">Sign Up</button>
-          </div>
-          <form id="login-form" style="display:block;max-width:350px;margin:auto;">
-            <label for="login-username" data-en="Username" data-ar="اسم المستخدم">Username</label>
-            <input id="login-username" type="text" placeholder="Enter your username" required data-en="Enter your username" data-ar="أدخل اسم المستخدم"/>
-            <label for="login-password" data-en="Password" data-ar="كلمة المرور">Password</label>
-            <input id="login-password" type="password" placeholder="Enter your password" required data-en="Enter your password" data-ar="أدخل كلمة المرور"/>
-            <button type="submit" data-en="Login" data-ar="تسجيل الدخول">Login</button>
-            <div class="form-hint" data-en="Don't have an account?" data-ar="ليس لديك حساب؟"><a href="#" onclick="showSignupForm();return false;" data-en="Sign up" data-ar="إنشاء حساب">Sign up</a></div>
-          </form>
-          <form id="signup-form" style="display:none;max-width:350px;margin:auto;">
-            <label for="signup-username" data-en="Username" data-ar="اسم المستخدم">Username</label>
-            <input id="signup-username" type="text" placeholder="Choose a username" required data-en="Choose a username" data-ar="اختر اسم مستخدم"/>
-            <label for="signup-email" data-en="Email" data-ar="البريد الإلكتروني">Email</label>
-            <input id="signup-email" type="email" placeholder="Enter your email" required data-en="Enter your email" data-ar="أدخل بريدك الإلكتروني"/>
-            <label for="signup-password" data-en="Password" data-ar="كلمة المرور">Password</label>
-            <input id="signup-password" type="password" placeholder="Create a password" required data-en="Create a password" data-ar="أنشئ كلمة مرور"/>
-            <button type="submit" data-en="Sign Up" data-ar="إنشاء حساب">Sign Up</button>
-            <div class="form-hint" data-en="Already have an account?" data-ar="لديك حساب بالفعل؟"><a href="#" onclick="showLoginForm();return false;" data-en="Login" data-ar="تسجيل الدخول">Login</a></div>
-          </form>
-          <div id="login-signup-message" class="message"></div>
-          <button id="skip-profile-auth" onclick="skipProfileAuth()" style="margin:1.5em auto 0 auto;display:block;background:#e9ecef;color:#007bff;border:none;padding:0.7em 2em;border-radius:8px;font-weight:bold;font-size:1em;cursor:pointer;">Skip for Guest</button>
-        </div>
-        <div id="profile-section" style="display:none;">
+        <div id="profile-section" style="display:block;">
           <h1 data-en="Profile" data-ar="الملف الشخصي" style="text-align:center;margin-bottom:1.5em;">Profile</h1>
           <form id="profile-form" style="display:flex;flex-direction:column;gap:1.2em;">
             <div style="display:flex;flex-direction:column;align-items:center;gap:0.5em;">
@@ -515,16 +546,62 @@
               <button type="button" onclick="document.getElementById('profile-photo').click()" style="background:transparent;color:#007bff;border:none;font-size:0.95em;cursor:pointer;">Change Photo</button>
             </div>
             <label for="profile-name" data-en="Full Name" data-ar="الاسم الكامل">Full Name</label>
-            <input id="profile-name" type="text" placeholder="Enter your full name" required style="padding:0.7em;border-radius:8px;border:1px solid #007bff;"/>
+            <input id="profile-name" type="text" placeholder="Enter your full name" required style="padding:0.7em;border-radius:8px;border:1px solid #007bff;" aria-label="Full Name"/>
+            <label for="profile-dob" data-en="Date of Birth" data-ar="تاريخ الميلاد">Date of Birth</label>
+            <input id="profile-dob" type="date" style="padding:0.7em;border-radius:8px;border:1px solid #007bff;" aria-label="Date of Birth"/>
+            <label for="profile-gender" data-en="Gender" data-ar="الجنس">Gender</label>
+            <select id="profile-gender" style="padding:0.7em;border-radius:8px;border:1px solid #007bff;" aria-label="Gender">
+              <option value="" disabled selected>Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+              <option value="prefer-not">Prefer not to say</option>
+            </select>
             <label data-en="Emergency Contacts (up to 3)" data-ar="جهات الاتصال (إلى 3)" style="font-weight:bold;">Emergency Contacts (up to 3)</label>
             <div id="contacts-list" style="display:flex;flex-direction:column;gap:0.5em;"></div>
             <button type="button" id="add-contact-btn" style="background:#007bff;color:white;padding:0.5em 1.5em;border-radius:8px;border:none;font-weight:bold;">Add Contact</button>
+            <div style="border-top:1px solid #e0e0e0;margin:1em 0 0.5em 0;padding-top:1em;">
+              <h3 style="margin-bottom:0.5em;display:flex;align-items:center;gap:0.5em;"><span>🩺</span>Medical Info</h3>
+              <label for="profile-blood-type" data-en="Blood Type" data-ar="فصيلة الدم">Blood Type</label>
+              <select id="profile-blood-type" style="padding:0.7em;border-radius:8px;border:1px solid #007bff;" aria-label="Blood Type">
+                <option value="" disabled selected>Select Blood Type</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+              </select>
+              <label for="profile-allergies" data-en="Allergies" data-ar="الحساسية">Allergies</label>
+              <input id="profile-allergies" type="text" placeholder="List any allergies" style="padding:0.7em;border-radius:8px;border:1px solid #007bff;" aria-label="Allergies"/>
+              <label for="profile-medical" data-en="Medical Conditions" data-ar="الحالات الطبية">Medical Conditions</label>
+              <input id="profile-medical" type="text" placeholder="List any medical conditions" style="padding:0.7em;border-radius:8px;border:1px solid #007bff;" aria-label="Medical Conditions"/>
+            </div>
+            <label for="profile-language" data-en="Preferred Language" data-ar="اللغة المفضلة">Preferred Language</label>
+            <select id="profile-language" style="padding:0.7em;border-radius:8px;border:1px solid #007bff;" aria-label="Preferred Language">
+              <option value="en">English</option>
+              <option value="ar">Arabic</option>
+              <option value="other">Other</option>
+            </select>
             <label data-en="Location" data-ar="الموقع" style="font-weight:bold;">Location</label>
             <div style="display:flex;gap:1em;align-items:center;">
-              <input id="profile-location" type="text" placeholder="Location (auto or manual)" readonly style="flex:1;padding:0.7em;border-radius:8px;border:1px solid #007bff;"/>
+              <input id="profile-location" type="text" placeholder="Location (auto or manual)" readonly style="flex:1;padding:0.7em;border-radius:8px;border:1px solid #007bff;" aria-label="Location"/>
               <button type="button" id="get-location-btn" style="background:#007bff;color:white;padding:0.5em 1.5em;border-radius:8px;border:none;font-weight:bold;display:flex;align-items:center;gap:0.4em;"><span>📍</span><span>Get</span></button>
               <span id="location-loading" style="display:none;margin-left:0.5em;color:#007bff;font-size:1.2em;">⏳</span>
             </div>
+            <div style="display:flex;gap:1em;align-items:center;">
+              <label for="profile-privacy" style="font-weight:bold;">Profile Privacy</label>
+              <select id="profile-privacy" style="padding:0.7em;border-radius:8px;border:1px solid #007bff;" aria-label="Profile Privacy">
+                <option value="public">Public</option>
+                <option value="private">Private</option>
+              </select>
+              <label for="profile-location-sharing" style="font-weight:bold;">Share Location</label>
+              <input id="profile-location-sharing" type="checkbox" aria-label="Share Location" checked style="width:1.2em;height:1.2em;"/>
+            </div>
+            <label for="profile-notes" data-en="Other Important Info" data-ar="معلومات أخرى مهمة">Other Important Info</label>
+            <textarea id="profile-notes" rows="3" placeholder="Add any other important notes..." style="padding:0.7em;border-radius:8px;border:1px solid #007bff;resize:vertical;" aria-label="Other Important Info"></textarea>
             <div id="profile-message" class="message" style="display:none;"></div>
             <button type="submit" style="background:#007bff;color:white;padding:0.7em 0;border-radius:8px;border:none;font-weight:bold;font-size:1.1em;">Save Profile</button>
           </form>
@@ -711,7 +788,7 @@
           <div class="resource-links">
             <a href="https://www.redcross.org/first-aid" target="_blank" class="resource-link">🏥 Red Cross First Aid Guide</a>
             <a href="https://www.who.int/emergencies" target="_blank" class="resource-link">🌍 WHO Emergency Guidelines</a>
-            <a href="tel:911" class="resource-link">📞 Emergency Services (911)</a>
+            <a href="tel:911" class="resource-link">�� Emergency Services (911)</a>
           </div>
         </div>
         <div class="case-tips">
